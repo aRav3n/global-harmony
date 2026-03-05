@@ -1,0 +1,18 @@
+@import '../theme.css';
+
+header {
+  align-items: center;
+  background-color: var(--color-bg-header-footer);
+  display: flex;
+  column-gap: calc(4rem);
+  justify-content: center;
+  padding: var(--spacing-sm);
+  row-gap: 2vh;
+  text-align: center;
+  flex-wrap: wrap;
+}
+header img {
+  background-color: #ffffff00;
+  height: 4rem;
+  width: auto;
+}

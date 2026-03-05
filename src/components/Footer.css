@@ -1,0 +1,14 @@
+@import '../theme.css';
+
+footer {
+  background-color: var(--color-bg-header-footer);
+  padding: var(--spacing-sm);
+  text-align: center;
+  margin-top: auto;
+}
+
+footer p {
+  margin: 0;
+  font-size: var(--spacing-lg);
+  color: var(--color-text);
+}

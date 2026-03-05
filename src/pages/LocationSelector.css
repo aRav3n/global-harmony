@@ -1,0 +1,86 @@
+@import '../theme.css';
+
+.attendee-input,
+.city-input {
+  flex: 1;
+  padding: var(--spacing-sm);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+}
+
+.attendee-row {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.attendees-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+button {
+  align-self: start;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-button);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: var(--spacing-xs);
+}
+button:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.date-input {
+  padding: var(--spacing-sm);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  min-width: 80px;
+}
+.date-input:hover {
+  border-color: var(--color-border-hover);
+}
+
+.date-section {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.location-selector-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.location-selector-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.location-selector-main {
+  display: flex;
+  flex: 1;
+  padding: var(--spacing-2xl);
+  gap: var(--spacing-3xl);
+  background-color: var(--color-bg-main);
+}
+
+.lorem-section {
+  flex: 0 0 40%;
+  line-height: 1.6;
+  color: var(--color-text-faint);
+  font-size: 0.95rem;
+}
+
+.lorem-section p {
+  margin: 0;
+}
