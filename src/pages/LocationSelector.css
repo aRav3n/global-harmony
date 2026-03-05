@@ -1,4 +1,4 @@
-@import '../theme.css';
+@import "../theme.css";
 
 .attendee-input,
 .city-input {
@@ -11,13 +11,24 @@
 
 .attendee-row {
   display: flex;
-  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
 }
 
 .attendees-section {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+}
+
+aside.about {
+  line-height: 1.6;
+  color: var(--color-text-faint);
+  font-size: 0.95rem;
+  max-width: 30rem;
+}
+aside.about > p {
+  margin: 0;
 }
 
 button {
@@ -64,23 +75,15 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2xl);
+  max-width: 50rem;
 }
 
 .location-selector-main {
+  background-color: var(--color-bg-main);
   display: flex;
   flex: 1;
-  padding: var(--spacing-2xl);
   gap: var(--spacing-3xl);
-  background-color: var(--color-bg-main);
-}
-
-.lorem-section {
-  flex: 0 0 40%;
-  line-height: 1.6;
-  color: var(--color-text-faint);
-  font-size: 0.95rem;
-}
-
-.lorem-section p {
-  margin: 0;
+  justify-content: center;
+  padding: var(--spacing-2xl);
+  flex-wrap: wrap;
 }

@@ -4,9 +4,13 @@ import { Footer } from "../components/Footer";
 import "./LocationSelector.css";
 import type { LocationSelectorImports } from "../types";
 
-export function LocationSelector({attendees, setAttendees, date, setDate}: LocationSelectorImports) {
+export function LocationSelector({
+  attendees,
+  setAttendees,
+  date,
+  setDate,
+}: LocationSelectorImports) {
   const [nextId, setNextId] = useState(4);
-  
 
   const handleAttendeeChange = (id: number, field: string, value: string) => {
     const newAttendeeArray = attendees.map((a) =>
@@ -229,28 +233,22 @@ export function LocationSelector({attendees, setAttendees, date, setDate}: Locat
           </div>
 
           <div>
-            <button onClick={addMoreLocations}>
-            📍 Add More Locations
-          </button>
-          <button>
-            ⏱️ Pick a Time
-          </button>
+            <button onClick={addMoreLocations}>📍 Add More Locations</button>
+            <button>⏱️ Pick a Time</button>
           </div>
         </div>
 
-        <aside className="lorem-section">
+        <aside className="about">
           <p>
-            Lorem ipsum dolor sit amet. Qui nobis quia 33 quia obcaecati sed
-            tenetur porro est autem voluptates eum molestias voluptas. Rem quia
-            quidem ex enim autem ea nobis officia eum voluptatum exercitationem
-            ut voluptatum exercitationem est deleniti adipisci. Non placeat
-            explicabo et beatae mollitia ut nesciunt quam ex quam enim aut earum
-            odit. Qui veritatis sequi et adipisci rerum id temporibus omnis ut
-            maxime minima aut rerum assumenda ad voluptas dolore! Est incidunt
-            placeat aut quia quam aut autem dolorum. Aut asperiores itaque in
-            velit ratione sed aliquid soluta? Sed architecto exercitationem qui
-            deleniti amet ut eligendi iure non labore dolores ut sapiente
-            repellendus.
+            Seamlessly bridge the gap between diverse time zones with our
+            intuitive scheduling tool. Designed for simplicity, this solution
+            eliminates the hassle of account creation, enabling users to select
+            optimal meeting times effortlessly. By coordinating collaborations
+            when team members are most alert and engaged, the tool helps you
+            prioritize productivity and mitigate the challenges of remote work.
+            Experience a world where scheduling becomes an integral part of your
+            team’s harmony - try it out today and transform how you connect with
+            colleagues across the globe!
           </p>
         </aside>
       </main>
