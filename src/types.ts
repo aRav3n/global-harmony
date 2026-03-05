@@ -2,9 +2,16 @@ export type Attendee = {
   id: number;
   name: string;
   city: string;
+  timezone_offset_std: string;
+  timezone_offset_dst: string;
 };
 
 export type AttendeeArray = Attendee[];
+
+export type LocationInputProps = {
+  attendee: Attendee;
+  handleAttendeeChange: (id: number, field: string, value: string) => void;
+};
 
 export type LocationSelectorImports = {
   attendees: Attendee[];

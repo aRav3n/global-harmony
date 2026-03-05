@@ -3,15 +3,12 @@ import { useState } from "react";
 import { LocationSelector } from "./pages/LocationSelector";
 import { ScheduleViewer } from "./pages/ScheduleViewer";
 import { MeetingCreator } from "./pages/MeetingCreator";
+import type { AttendeeArray } from "./types";
 import "./App.css";
 
 function App() {
-  const [attendees, setAttendees] = useState([
-    { id: 1, name: "", city: "" },
-    { id: 2, name: "", city: "" },
-    { id: 3, name: "", city: "" },
-  ]);
-  const [date, setDate] = useState(new Date());
+  const [attendees, setAttendees] = useState<AttendeeArray>([]);
+  const [date, setDate] = useState<Date>(new Date());
 
   return (
     <Router>

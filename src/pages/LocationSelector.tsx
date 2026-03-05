@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { Header } from "../components/Header";
+import { LocationInput } from "../components/LocationInput";
 import "./LocationSelector.css";
 import type { LocationSelectorImports } from "../types";
 
@@ -10,7 +11,7 @@ export function LocationSelector({
   date,
   setDate,
 }: LocationSelectorImports) {
-  const [nextId, setNextId] = useState(4);
+  const [nextId, setNextId] = useState(1);
 
   const handleAttendeeChange = (id: number, field: string, value: string) => {
     const newAttendeeArray = attendees.map((a) =>
@@ -21,11 +22,26 @@ export function LocationSelector({
   };
 
   const addMoreLocations = () => {
-    const newAttendeeArray = [...attendees, { id: nextId, name: "", city: "" }];
+    const newAttendeeArray = [
+      ...attendees,
+      {
+        id: nextId,
+        name: "",
+        city: "",
+        timezone_offset_std: "",
+        timezone_offset_dst: "",
+      },
+    ];
     setAttendees(newAttendeeArray);
     const newId = nextId + 1;
     setNextId(newId);
   };
+
+  useEffect(() => {
+    if (attendees.length < 2) {
+      addMoreLocations();
+    }
+  }, [attendees]);
 
   const updateDate = (
     year: number | null,
@@ -219,14 +235,9 @@ export function LocationSelector({
                   }
                   className="attendee-input"
                 />
-                <input
-                  type="text"
-                  placeholder={`City ${attendee.id}`}
-                  value={attendee.city}
-                  onChange={(e) =>
-                    handleAttendeeChange(attendee.id, "city", e.target.value)
-                  }
-                  className="city-input"
+                <LocationInput
+                  attendee={attendee}
+                  handleAttendeeChange={handleAttendeeChange}
                 />
               </div>
             ))}
