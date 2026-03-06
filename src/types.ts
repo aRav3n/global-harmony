@@ -61,6 +61,11 @@ export type Meeting = {
   createdBy: string;
 };
 
+export type ScheduleViewerImports = {
+  attendees: Attendee[];
+  date: Date;
+};
+
 export type TimeSlot = {
   time: string;
   attendeeAvailability: {

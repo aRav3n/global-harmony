@@ -27,7 +27,10 @@ function App() {
             />
           }
         />
-        <Route path="/schedule" element={<ScheduleViewer />} />
+        <Route
+          path="/schedule"
+          element={<ScheduleViewer attendees={attendees} date={date} />}
+        />
         <Route path="/create" element={<MeetingCreator />} />
       </Routes>
     </Router>

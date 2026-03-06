@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import type { ScheduleViewerImports } from "../types";
 import "../styles/ScheduleViewer.css";
 
-export function ScheduleViewer() {
-  const [date, setDate] = useState({ year: "", month: "", day: "" });
-
+export function ScheduleViewer({ attendees, date }: ScheduleViewerImports) {
   const timeSlots = Array.from({ length: 24 }, (_, i) => {
     const hour = i.toString().padStart(2, "0");
     const minutes = "00";
@@ -16,43 +15,16 @@ export function ScheduleViewer() {
     <div className="schedule-viewer-container">
       <Header />
       <main className="schedule-viewer-main">
-        <div className="schedule-controls">
-          <div className="date-inputs">
-            <input
-              type="text"
-              placeholder="YYYY"
-              value={date.year}
-              onChange={(e) => setDate({ ...date, year: e.target.value })}
-              className="date-input"
-            />
-            <input
-              type="text"
-              placeholder="Month"
-              value={date.month}
-              onChange={(e) => setDate({ ...date, month: e.target.value })}
-              className="date-input"
-            />
-            <input
-              type="text"
-              placeholder="DD"
-              value={date.day}
-              onChange={(e) => setDate({ ...date, day: e.target.value })}
-              className="date-input"
-            />
-          </div>
-          <button className="calendar-btn">📅</button>
-          <button className="today-btn">Today</button>
-        </div>
+        <h1>{date.toDateString()}</h1>
 
         <p className="instruction-text">
-          Click on a row to select this meeting time, or pick a new date below
+          Click on a row to select this meeting time.
         </p>
 
         <div className="schedule-table-container">
           <table className="schedule-table">
             <thead>
               <tr>
-                <th>Greenwich Mean Time</th>
                 <th>Me</th>
                 <th>Person 2</th>
                 <th>Person 3</th>
@@ -61,7 +33,6 @@ export function ScheduleViewer() {
             <tbody>
               {timeSlots.map((time, index) => (
                 <tr key={index} className="time-slot-row">
-                  <td>Month DD YYYY - Day HH:MM</td>
                   <td>Day {time}</td>
                   <td>Day HH:MM</td>
                   <td>Day HH:MM</td>
