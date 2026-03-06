@@ -1,4 +1,4 @@
-@import '../theme.css';
+@import './theme.css';
 
 .meeting-creator-container {
   display: flex;

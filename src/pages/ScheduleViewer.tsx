@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
-import './ScheduleViewer.css';
+import { useState } from "react";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import "../styles/ScheduleViewer.css";
 
 export function ScheduleViewer() {
-  const [date, setDate] = useState({ year: '', month: '', day: '' });
+  const [date, setDate] = useState({ year: "", month: "", day: "" });
 
   const timeSlots = Array.from({ length: 24 }, (_, i) => {
-    const hour = i.toString().padStart(2, '0');
-    const minutes = '00';
+    const hour = i.toString().padStart(2, "0");
+    const minutes = "00";
     return `${hour}:${minutes}`;
   });
 

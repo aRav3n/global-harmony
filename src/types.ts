@@ -2,15 +2,42 @@ export type Attendee = {
   id: number;
   name: string;
   city: string;
-  timezone_offset_std: string;
-  timezone_offset_dst: string;
+  country: string;
+  timezoneName: string;
+  timezoneOffsetStd: string;
+  timezoneOffsetStdSeconds: number;
+  timezoneOffsetDst: string;
+  timezoneOffsetDstSeconds: number;
 };
 
 export type AttendeeArray = Attendee[];
 
+export type GeoAPIfyObject = {
+  properties: {
+    city: string;
+    country: string;
+    timezone: {
+      name: string;
+      offset_STD: string;
+      offset_STD_seconds: number;
+      offset_DST: string;
+      offset_DST_seconds: number;
+    };
+  };
+};
+
 export type LocationInputProps = {
   attendee: Attendee;
-  handleAttendeeChange: (id: number, field: string, value: string) => void;
+  handleUpdateLocation: (
+    id: number,
+    city: string,
+    country: string,
+    timezoneName: string,
+    timezoneOffsetStd: string,
+    timezoneOffsetStdSeconds: number,
+    timezoneOffsetDst: string,
+    timezoneOffsetDstSeconds: number,
+  ) => void;
 };
 
 export type LocationSelectorImports = {
@@ -18,7 +45,9 @@ export type LocationSelectorImports = {
   setAttendees: React.Dispatch<React.SetStateAction<Attendee[]>>;
   date: Date;
   setDate: React.Dispatch<React.SetStateAction<Date>>;
-}
+  nextId: number;
+  setNextId: React.Dispatch<React.SetStateAction<number>>;
+};
 
 export type Meeting = {
   id: string;

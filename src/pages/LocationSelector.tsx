@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { LocationInput } from "../components/LocationInput";
-import "./LocationSelector.css";
+import "../styles/LocationSelector.css";
 import type { LocationSelectorImports } from "../types";
 
 export function LocationSelector({
@@ -10,38 +11,72 @@ export function LocationSelector({
   setAttendees,
   date,
   setDate,
+  nextId,
+  setNextId,
 }: LocationSelectorImports) {
-  const [nextId, setNextId] = useState(1);
+  const handleAddLocations = (numberOfLocationsToAdd: number) => {
+    const newAttendeeArray = [...attendees];
 
-  const handleAttendeeChange = (id: number, field: string, value: string) => {
-    const newAttendeeArray = attendees.map((a) =>
-      a.id === id ? { ...a, [field]: value } : a,
-    );
-
-    setAttendees(newAttendeeArray);
-  };
-
-  const addMoreLocations = () => {
-    const newAttendeeArray = [
-      ...attendees,
-      {
-        id: nextId,
+    for (let i = 0; i < numberOfLocationsToAdd; i++) {
+      const newPerson = {
+        id: nextId + i,
         name: "",
         city: "",
-        timezone_offset_std: "",
-        timezone_offset_dst: "",
-      },
-    ];
-    setAttendees(newAttendeeArray);
-    const newId = nextId + 1;
+        country: "",
+        timezoneName: "",
+        timezoneOffsetStd: "",
+        timezoneOffsetStdSeconds: 0,
+        timezoneOffsetDst: "",
+        timezoneOffsetDstSeconds: 0,
+      };
+      newAttendeeArray.push(newPerson);
+    }
+
+    const newId = nextId + numberOfLocationsToAdd;
     setNextId(newId);
+    setAttendees(newAttendeeArray);
   };
 
-  useEffect(() => {
-    if (attendees.length < 2) {
-      addMoreLocations();
+  const handleUpdateLocation = (
+    id: number,
+    city: string,
+    country: string,
+    timezoneName: string,
+    timezoneOffsetStd: string,
+    timezoneOffsetStdSeconds: number,
+    timezoneOffsetDst: string,
+    timezoneOffsetDstSeconds: number,
+  ) => {
+    const newAttendeeArray = [...attendees];
+
+    for (let i = 0; i < newAttendeeArray.length; i++) {
+      const currentAttendee = newAttendeeArray[i];
+      if (currentAttendee.id === id) {
+        currentAttendee.city = city;
+        currentAttendee.country = country;
+        currentAttendee.timezoneName = timezoneName;
+        currentAttendee.timezoneOffsetDst = timezoneOffsetDst;
+        currentAttendee.timezoneOffsetDstSeconds = timezoneOffsetDstSeconds;
+        currentAttendee.timezoneOffsetStd = timezoneOffsetStd;
+        currentAttendee.timezoneOffsetStdSeconds = timezoneOffsetStdSeconds;
+        setAttendees(newAttendeeArray);
+        return;
+      }
     }
-  }, [attendees]);
+  };
+
+  const handleUpdateName = (id: number, newName: string) => {
+    const newAttendeeArray = [...attendees];
+
+    for (let i = 0; i < newAttendeeArray.length; i++) {
+      const currentPerson = newAttendeeArray[i];
+      if (currentPerson.id === id) {
+        currentPerson.name = newName;
+        setAttendees(newAttendeeArray);
+        return;
+      }
+    }
+  };
 
   const updateDate = (
     year: number | null,
@@ -203,6 +238,16 @@ export function LocationSelector({
     );
   }
 
+  useEffect(() => {
+    if (attendees.length < 2) {
+      handleAddLocations(2);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(attendees);
+  }, [attendees]);
+
   return (
     <div className="location-selector-container">
       <Header />
@@ -231,21 +276,29 @@ export function LocationSelector({
                   placeholder={`Person ${attendee.id}`}
                   value={attendee.name}
                   onChange={(e) =>
-                    handleAttendeeChange(attendee.id, "name", e.target.value)
+                    handleUpdateName(attendee.id, e.target.value)
                   }
                   className="attendee-input"
                 />
                 <LocationInput
                   attendee={attendee}
-                  handleAttendeeChange={handleAttendeeChange}
+                  handleUpdateLocation={handleUpdateLocation}
                 />
               </div>
             ))}
           </div>
 
           <div>
-            <button onClick={addMoreLocations}>📍 Add More Locations</button>
-            <button>⏱️ Pick a Time</button>
+            <button
+              onClick={() => {
+                handleAddLocations(1);
+              }}
+            >
+              📍 Add More Locations
+            </button>
+            <Link to="/schedule">
+              <button tabIndex={0}>⏱️ Pick a Time</button>
+            </Link>
           </div>
         </div>
 

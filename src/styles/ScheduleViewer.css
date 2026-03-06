@@ -1,4 +1,4 @@
-@import '../theme.css';
+@import './theme.css';
 
 .schedule-viewer-container {
   display: flex;

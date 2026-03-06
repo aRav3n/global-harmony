@@ -1,12 +1,14 @@
-@import "../theme.css";
+@import "./theme.css";
 
 .attendee-input,
-.city-input {
-  flex: 1;
-  padding: var(--spacing-sm);
+.city-input,
+div.geoapify-container input {
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius-sm);
+  flex: 1;
   font-size: 1rem;
+  padding: var(--spacing-sm);
+  width: auto;
 }
 
 .attendee-row {
@@ -62,6 +64,15 @@ button:hover {
   gap: var(--spacing-sm);
   align-items: center;
   flex-wrap: wrap;
+}
+
+div.geoapify-container {
+  display: flex;
+  flex: 1;
+}
+
+.geoapify-close-button {
+  display: none;
 }
 
 .location-selector-container {

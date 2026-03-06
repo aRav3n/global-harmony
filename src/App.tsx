@@ -4,11 +4,12 @@ import { LocationSelector } from "./pages/LocationSelector";
 import { ScheduleViewer } from "./pages/ScheduleViewer";
 import { MeetingCreator } from "./pages/MeetingCreator";
 import type { AttendeeArray } from "./types";
-import "./App.css";
+import "./styles/App.css";
 
 function App() {
   const [attendees, setAttendees] = useState<AttendeeArray>([]);
   const [date, setDate] = useState<Date>(new Date());
+  const [nextId, setNextId] = useState<number>(1);
 
   return (
     <Router>
@@ -21,6 +22,8 @@ function App() {
               setAttendees={setAttendees}
               date={date}
               setDate={setDate}
+              nextId={nextId}
+              setNextId={setNextId}
             />
           }
         />

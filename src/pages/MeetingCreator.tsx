@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
-import './MeetingCreator.css';
+import { useState } from "react";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import "../styles/MeetingCreator.css";
 
 export function MeetingCreator() {
-  const [title, setTitle] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [videoLink, setVideoLink] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState({ year: '', month: '', day: '' });
+  const [title, setTitle] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState({ year: "", month: "", day: "" });
   const [timezones, setTimezones] = useState({
-    me: '',
-    person2: '',
-    person3: '',
-    person4: '',
+    me: "",
+    person2: "",
+    person3: "",
+    person4: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
