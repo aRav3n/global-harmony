@@ -7,12 +7,26 @@ header {
   column-gap: calc(4rem);
   justify-content: center;
   padding: var(--spacing-sm);
+  position: relative;
   row-gap: 2vh;
   text-align: center;
   flex-wrap: wrap;
+}
+header a {
+  left: 2rem;
+  position: absolute;
+  top: calc(50% - 2rem);
 }
 header img {
   background-color: #ffffff00;
   height: 4rem;
   width: auto;
+}
+
+@media (width < 37.5rem) {
+  header a {
+    left: 0;
+    position: relative;
+    top: 0;
+  }
 }
