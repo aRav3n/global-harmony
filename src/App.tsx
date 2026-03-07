@@ -35,6 +35,7 @@ function App() {
   const [attendees, setAttendees] = useState<AttendeeArray>(testAttendeeArray);
   // const [attendees, setAttendees] = useState<AttendeeArray>([]);
   const [date, setDate] = useState<Date>(new Date());
+  const [meetingTime, setMeetingTime] = useState<Date | null>(null);
   const [nextId, setNextId] = useState<number>(1);
 
   return (
@@ -55,9 +56,18 @@ function App() {
         />
         <Route
           path="/schedule"
-          element={<ScheduleViewer attendees={attendees} date={date} />}
+          element={
+            <ScheduleViewer
+              attendees={attendees}
+              date={date}
+              setMeetingTime={setMeetingTime}
+            />
+          }
         />
-        <Route path="/create" element={<MeetingCreator />} />
+        <Route
+          path="/create"
+          element={<MeetingCreator meetingTime={meetingTime} />}
+        />
       </Routes>
     </Router>
   );

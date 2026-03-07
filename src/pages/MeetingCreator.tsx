@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import type { MeetingCreatorImports } from "../types";
 import "../styles/MeetingCreator.css";
 
-export function MeetingCreator() {
+export function MeetingCreator({ meetingTime }: MeetingCreatorImports) {
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");

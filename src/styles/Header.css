@@ -20,7 +20,7 @@ header a {
 header img {
   background-color: #ffffff00;
   height: 4rem;
-  width: auto;
+  width: 4rem;
 }
 
 @media (width < 37.5rem) {

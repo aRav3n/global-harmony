@@ -61,14 +61,18 @@ export type Meeting = {
   createdBy: string;
 };
 
+export type MeetingCreatorImports = {
+  meetingTime: Date | null;
+};
+
 export type ScheduleViewerImports = {
   attendees: Attendee[];
   date: Date;
+  setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
 export type TableRowProps = {
   time: Date;
-  index: number;
 };
 
 export type TimeSlot = {

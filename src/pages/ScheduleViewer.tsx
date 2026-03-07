@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import type { ScheduleViewerImports, TableRowProps } from "../types";
 import "../styles/ScheduleViewer.css";
 
-export function ScheduleViewer({ attendees, date }: ScheduleViewerImports) {
+export function ScheduleViewer({
+  attendees,
+  date,
+  setMeetingTime,
+}: ScheduleViewerImports) {
   const earliestAcceptableTime = 6;
   const latestAcceptableTime = 22;
+  const navigate = useNavigate();
   const timeSlots: Date[] = [];
   for (let i = 0; i < 24; i++) {
     const timeslot = new Date(
@@ -50,9 +55,15 @@ export function ScheduleViewer({ attendees, date }: ScheduleViewerImports) {
     return dateTimeString;
   };
 
-  function TableRow({ time, index }: TableRowProps) {
+  function TableRow({ time }: TableRowProps) {
     return (
-      <tr className="time-slot-row">
+      <tr
+        className="time-slot-row"
+        onClick={() => {
+          setMeetingTime(time);
+          navigate("/create");
+        }}
+      >
         {attendees.map((attendee) => {
           const localDateTimeString = convertDateToString(
             time,
@@ -96,7 +107,7 @@ export function ScheduleViewer({ attendees, date }: ScheduleViewerImports) {
             </thead>
             <tbody>
               {timeSlots.map((time, index) => (
-                <TableRow key={index} time={time} index={index} />
+                <TableRow key={index} time={time} />
               ))}
             </tbody>
           </table>
