@@ -28,9 +28,13 @@ aside.about {
   color: var(--color-text-faint);
   font-size: 0.95rem;
   max-width: 30rem;
+  min-width: 300px;
+  padding: 0;
+  width: 50%;
 }
 aside.about > p {
   margin: 0;
+  padding: 0;
 }
 
 button {
