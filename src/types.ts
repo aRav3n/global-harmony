@@ -66,6 +66,11 @@ export type ScheduleViewerImports = {
   date: Date;
 };
 
+export type TableRowProps = {
+  time: Date;
+  index: number;
+};
+
 export type TimeSlot = {
   time: string;
   attendeeAvailability: {

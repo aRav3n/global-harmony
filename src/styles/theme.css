@@ -7,16 +7,17 @@
   --border-width: 0.0625rem;
 
   /* Colors */
+  --color-bad: #dea09a;
   --color-bg-alt: #f0f0f0;
-  --color-bg-header-footer: #83CC88cc;
-  --color-bg-hover: #A1D6D3;
-  --color-bg-main: #58A2C122;
-  --color-border: #A8C6B9;
-  --color-border-hover: #B0E0B6;
+  --color-bg-header-footer: #83cc88cc;
+  --color-bg-hover: #a1d6d3;
+  --color-bg-main: #58a2c122;
+  --color-border: #a8c6b9;
+  --color-border-hover: #b0e0b6;
   --color-button: #ededed;
   --color-text: #2d2d2d;
   --color-text-faint: #656363;
-  --color-text-hover: #FF6F61;
+  --color-text-hover: #ff6f61;
 
   /* Typography */
   --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -35,6 +36,7 @@
 /* Updated dark mode colors */
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-bad: #d24d41;
     --color-bg-main: #1e1e1e;
     --color-bg-hover: #333333;
     --color-bg-header-footer: #2d2d2d;

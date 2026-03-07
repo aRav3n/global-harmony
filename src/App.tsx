@@ -7,7 +7,33 @@ import type { AttendeeArray } from "./types";
 import "./styles/App.css";
 
 function App() {
-  const [attendees, setAttendees] = useState<AttendeeArray>([]);
+  const testAttendeeArray = [
+    {
+      id: 1,
+      name: "One",
+      city: "Minneapolis",
+      country: "United States",
+      timezoneName: "America/Chicago",
+      timezoneOffsetStd: "-06:00",
+      timezoneOffsetStdSeconds: -21600,
+      timezoneOffsetDst: "-05:00",
+      timezoneOffsetDstSeconds: -18000,
+    },
+    {
+      id: 2,
+      name: "Two",
+      city: "Colombo",
+      country: "Sri Lanka",
+      timezoneName: "Asia/Colombo",
+      timezoneOffsetStd: "+05:30",
+      timezoneOffsetStdSeconds: 19800,
+      timezoneOffsetDst: "+05:30",
+      timezoneOffsetDstSeconds: 19800,
+    },
+  ];
+
+  const [attendees, setAttendees] = useState<AttendeeArray>(testAttendeeArray);
+  // const [attendees, setAttendees] = useState<AttendeeArray>([]);
   const [date, setDate] = useState<Date>(new Date());
   const [nextId, setNextId] = useState<number>(1);
 

@@ -66,3 +66,8 @@
   background-color: var(--color-bg-hover);
   cursor: pointer;
 }
+
+.schedule-table td.bad-time {
+  background-color: var(--color-bad);
+  text-decoration: line-through;
+}

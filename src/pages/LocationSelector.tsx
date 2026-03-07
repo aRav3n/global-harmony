@@ -244,10 +244,6 @@ export function LocationSelector({
     }
   }, []);
 
-  useEffect(() => {
-    console.log(attendees);
-  }, [attendees]);
-
   return (
     <div className="location-selector-container">
       <Header />
