@@ -1,33 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import type { MeetingCreatorImports } from "../types";
+import {
+  convertDateTimeToHhMmFormat,
+  convertDateToString,
+  generateHeadingTimeString,
+  getEndTime,
+  updateMeetingTimeFromString,
+} from "../utils";
 import "../styles/MeetingCreator.css";
 
-export function MeetingCreator({ meetingTime }: MeetingCreatorImports) {
-  const [title, setTitle] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [videoLink, setVideoLink] = useState("");
+export function MeetingCreator({
+  attendees,
+  meetingTime,
+  setMeetingTime,
+}: MeetingCreatorImports) {
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState({ year: "", month: "", day: "" });
-  const [timezones, setTimezones] = useState({
-    me: "",
-    person2: "",
-    person3: "",
-    person4: "",
-  });
+  const [duration, setDuration] = useState<number>(1);
+  const [meetingTimeString, setMeetingTimeString] = useState<string>("");
+  const [title, setTitle] = useState("");
+  const [location, setLocation] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const updateMeetingTimeString = () => {
+    if (!meetingTime) {
+      return null;
+    }
+    const newString = convertDateTimeToHhMmFormat(
+      meetingTime,
+      attendees[0].timezoneName,
+    );
+    setMeetingTimeString(newString);
+  };
+
+  // When meetingTime updates, set meetingTimeString or nav to schedule page
+  useEffect(() => {
+    if (meetingTime) {
+      updateMeetingTimeString();
+    } else {
+      navigate("/schedule");
+    }
+  }, [meetingTime]);
+
+  const handleSubmit = (e: React.SubmitEvent) => {
+    if (!meetingTime) {
+      return null;
+    }
+
     e.preventDefault();
-    console.log({
+    const endTime = getEndTime(meetingTime, duration);
+    const startTime = meetingTime;
+    const meetingObject = {
       title,
-      date,
+      description,
       startTime,
       endTime,
-      videoLink,
-      description,
-      timezones,
+      location,
+    };
+    console.log(meetingObject);
+  };
+
+  const handleUpdateStartTime = (newTimeString: string) => {
+    if (!meetingTime) {
+      return null;
+    }
+    updateMeetingTimeFromString({
+      meetingTime,
+      setMeetingTime,
+      meetingTimeString,
+      newTimeString,
     });
   };
 
@@ -37,57 +80,30 @@ export function MeetingCreator({ meetingTime }: MeetingCreatorImports) {
       <main className="meeting-creator-main">
         <form onSubmit={handleSubmit} className="meeting-form">
           <div className="date-timezone-section">
-            <div className="date-inputs">
-              <input
-                type="text"
-                placeholder="YYYY"
-                value={date.year}
-                onChange={(e) => setDate({ ...date, year: e.target.value })}
-                className="date-input"
-              />
-              <input
-                type="text"
-                placeholder="Month"
-                value={date.month}
-                onChange={(e) => setDate({ ...date, month: e.target.value })}
-                className="date-input"
-              />
-              <input
-                type="text"
-                placeholder="DD"
-                value={date.day}
-                onChange={(e) => setDate({ ...date, day: e.target.value })}
-                className="date-input"
-              />
-            </div>
+            <h1>
+              {meetingTime ? (
+                generateHeadingTimeString(meetingTime)
+              ) : (
+                <Link to={"/schedule"}>
+                  You need to go back and select a meeting time.
+                </Link>
+              )}
+            </h1>
 
             <div className="timezone-list">
-              <div className="timezone-item">
-                <span>Time Zone - Me</span>
-              </div>
-              <div className="timezone-item">
-                <input
-                  type="text"
-                  placeholder="YYYY"
-                  readOnly
-                  className="timezone-display"
-                />
-                <input
-                  type="text"
-                  placeholder="Month"
-                  readOnly
-                  className="timezone-display"
-                />
-                <input
-                  type="text"
-                  placeholder="DD"
-                  readOnly
-                  className="timezone-display"
-                />
-              </div>
-              <div className="timezone-item">Time Zone - Person 2</div>
-              <div className="timezone-item">Time Zone - Person 3</div>
-              <div className="timezone-item">Time Zone - Person 4</div>
+              {meetingTime &&
+                attendees.map((attendee) => {
+                  return (
+                    <div key={attendee.id} className="timezone-item">
+                      <span>
+                        {`${attendee.name} - ${convertDateToString(
+                          meetingTime,
+                          attendee.timezoneName,
+                        )} - (${attendee.timezoneName} timezone)`}
+                      </span>
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
@@ -101,52 +117,56 @@ export function MeetingCreator({ meetingTime }: MeetingCreatorImports) {
 
           <div className="time-section">
             <div className="time-group">
-              <label>Start Time</label>
               <div className="time-inputs">
-                <input
-                  type="text"
-                  placeholder="HH:MM"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
-                  className="time-input"
-                />
-                <input
-                  type="text"
-                  placeholder="H:MMam"
-                  className="time-input"
-                  readOnly
-                />
+                <label>
+                  <span>Start Time: </span>
+                  <input
+                    type="time"
+                    placeholder="HH:MM"
+                    value={meetingTimeString}
+                    onChange={(e) => {
+                      handleUpdateStartTime(e.target.value);
+                    }}
+                    className="time-input"
+                  />
+                  <span>{` - ${meetingTimeString}`}</span>
+                </label>
+
+                <label>
+                  <span>Duration: </span>
+                  <select
+                    className="time-input"
+                    name="duration"
+                    id="duration"
+                    value={duration.toString()}
+                    onChange={(e) => {
+                      setDuration(Number(e.target.value));
+                    }}
+                  >
+                    <option value="0.5">1/2 hour</option>
+                    <option value="1">1 hour</option>
+                    <option value="1.5">1 - 1/2 hours</option>
+                    <option value="2">2 hours</option>
+                    <option value="2.5">2 - 1/2 hours</option>
+                    <option value="3">3 hours</option>
+                    <option value="3.5">3 - 1/2 hours</option>
+                    <option value="4">4 hours</option>
+                    <option value="4.5">4 - 1/2 hours</option>
+                    <option value="5">5 hours</option>
+                    <option value="5.5">5 - 1/2 hours</option>
+                    <option value="6">6 hours</option>
+                    <option value="6.5">6 - 1/2 hours</option>
+                  </select>
+                </label>
               </div>
             </div>
-
-            <div className="time-group">
-              <label>End Time</label>
-              <div className="time-inputs">
-                <input
-                  type="text"
-                  placeholder="HH:MM"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                  className="time-input"
-                />
-                <input
-                  type="text"
-                  placeholder="H:MMam"
-                  className="time-input"
-                  readOnly
-                />
-              </div>
-            </div>
-
-            <button className="calendar-btn">📅</button>
-            <span className="date-display">YYYY - Month - DD</span>
           </div>
 
           <input
             type="text"
             placeholder="Video conference link"
-            value={videoLink}
-            onChange={(e) => setVideoLink(e.target.value)}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             className="link-input"
           />
 

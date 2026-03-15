@@ -1,4 +1,49 @@
-@import './theme.css';
+@import "./theme.css";
+
+.date-display {
+  align-self: flex-end;
+  padding: var(--spacing-sm);
+  color: var(--color-text-secondary);
+}
+
+.date-input {
+  padding: var(--spacing-sm);
+  border: var(--border-width) solid var(--color-border-primary);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  min-width: 70px;
+}
+
+.date-inputs {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.date-timezone-section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xl);
+}
+
+.description-input {
+  padding: var(--spacing-md);
+  border: var(--border-width) solid var(--color-border-primary);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  min-height: 200px;
+  width: 100%;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.link-input {
+  padding: var(--spacing-md);
+  border: var(--border-width) solid var(--color-border-primary);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  width: 100%;
+}
 
 .meeting-creator-container {
   display: flex;
@@ -20,36 +65,35 @@
   gap: var(--spacing-xl);
 }
 
-.date-timezone-section {
+.time-group {
   display: flex;
-  gap: var(--spacing-2xl);
-  flex-wrap: wrap;
-}
-
-.date-inputs {
-  display: flex;
+  flex-direction: column;
   gap: var(--spacing-sm);
 }
+.time-group label {
+  font-weight: bold;
+  color: var(--color-text-secondary);
+}
 
-.date-input {
+.time-input {
   padding: var(--spacing-sm);
   border: var(--border-width) solid var(--color-border-primary);
   border-radius: var(--border-radius-sm);
   font-size: 1rem;
-  min-width: 70px;
+  min-width: 90px;
 }
 
-.timezone-list {
+.time-inputs {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-  flex: 1;
+  gap: var(--spacing-md);
 }
 
-.timezone-item {
-  padding: var(--spacing-sm);
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
+.time-section {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
 }
 
 .timezone-display {
@@ -62,82 +106,25 @@
   margin-right: var(--spacing-xs);
 }
 
+.timezone-item {
+  padding: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.timezone-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
 .title-input {
   padding: var(--spacing-md);
   border: var(--border-width) solid var(--color-border-primary);
   border-radius: var(--border-radius-sm);
   font-size: 1rem;
   width: 100%;
-}
-
-.time-section {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-lg);
-  flex-wrap: wrap;
-}
-
-.time-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.time-group label {
-  font-weight: bold;
-  color: var(--color-text-secondary);
-}
-
-.time-inputs {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.time-input {
-  padding: var(--spacing-sm);
-  border: var(--border-width) solid var(--color-border-primary);
-  border-radius: var(--border-radius-sm);
-  font-size: 1rem;
-  min-width: 90px;
-}
-
-.calendar-btn {
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border: var(--border-width) solid var(--color-border-primary);
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-bg-white);
-  cursor: pointer;
-  font-size: 1rem;
-  align-self: flex-end;
-}
-
-.calendar-btn:hover {
-  background-color: var(--color-hover-bg);
-}
-
-.date-display {
-  align-self: flex-end;
-  padding: var(--spacing-sm);
-  color: var(--color-text-secondary);
-}
-
-.link-input {
-  padding: var(--spacing-md);
-  border: var(--border-width) solid var(--color-border-primary);
-  border-radius: var(--border-radius-sm);
-  font-size: 1rem;
-  width: 100%;
-}
-
-.description-input {
-  padding: var(--spacing-md);
-  border: var(--border-width) solid var(--color-border-primary);
-  border-radius: var(--border-radius-sm);
-  font-size: 1rem;
-  min-height: 200px;
-  width: 100%;
-  font-family: inherit;
-  resize: vertical;
 }
 
 .share-btn {
@@ -150,7 +137,6 @@
   font-weight: bold;
   align-self: flex-start;
 }
-
 .share-btn:hover {
   background-color: var(--color-hover-bg);
 }

@@ -2,11 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import type { ScheduleViewerImports, TableRowProps } from "../types";
+import { convertDateToString, generateHeadingTimeString } from "../utils";
 import "../styles/ScheduleViewer.css";
+import { useEffect } from "react";
 
 export function ScheduleViewer({
   attendees,
   date,
+  meetingTime,
   setMeetingTime,
 }: ScheduleViewerImports) {
   const earliestAcceptableTime = 6;
@@ -26,33 +29,6 @@ export function ScheduleViewer({
     return hour < earliestAcceptableTime || hour > latestAcceptableTime
       ? false
       : true;
-  };
-
-  const convertDateToString = function convertUtcDateToLocalStringWithOptions(
-    dateTime: Date,
-    timezone: string,
-  ) {
-    const dateTimeString = dateTime.toLocaleString(undefined, {
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      month: "long",
-      timeZone: timezone,
-      weekday: "short",
-    });
-    return dateTimeString;
-  };
-
-  const generateHeadingTimeString = () => {
-    const dateTimeString = timeSlots[0].toLocaleString(undefined, {
-      day: "numeric",
-      month: "long",
-      timeZone: "UTC",
-      weekday: "long",
-      timeZoneName: "short",
-      year: "numeric",
-    });
-    return dateTimeString;
   };
 
   function TableRow({ time }: TableRowProps) {
@@ -90,7 +66,7 @@ export function ScheduleViewer({
     <div className="schedule-viewer-container">
       <Header />
       <main className="schedule-viewer-main">
-        <h1>{generateHeadingTimeString()}</h1>
+        <h1>{generateHeadingTimeString(timeSlots[0])}</h1>
 
         <p className="instruction-text">
           Click on a row to select this meeting time.

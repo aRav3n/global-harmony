@@ -1,30 +1,87 @@
-export const formatDate = (date: Date): string => {
-  return date.toISOString().split('T')[0];
+import type { UpdateMeetingTimeFromStringImports } from "./types";
+
+export const addHoursToMmHhString = (
+  timeString: string,
+  hoursToAdd: number,
+) => {
+  const [hours, minutes] = timeString.split(":").map(Number);
+  const newHours = hours + hoursToAdd;
+  const newHoursString = newHours.toString().padStart(2, "0");
+  const newMinutesString = minutes.toString().padStart(2, "0");
+  return `${newHoursString}:${newMinutesString}`;
 };
 
-export const parseDate = (dateString: string): Date => {
-  return new Date(dateString + 'T00:00:00');
+const calculateHhMmTimeStringDifference = (
+  previousTimeString: string,
+  newTimeString: string,
+) => {
+  const toMinutes = (timeString: string) => {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
+
+  return toMinutes(newTimeString) - toMinutes(previousTimeString);
 };
 
-export const convertToTimezone = (date: Date, timezone: string): Date => {
-  const formatter = new Intl.DateTimeFormat('en-US', {
+export const convertDateTimeToHhMmFormat = (
+  dateTime: Date,
+  timezone: string,
+) => {
+  const dateTimeString = dateTime.toLocaleTimeString("en-gb", {
+    hour: "2-digit",
+    minute: "2-digit",
     timeZone: timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
   });
-  return new Date(formatter.format(date));
+  return dateTimeString;
 };
 
-export const getTimezoneAbbreviation = (timezone: string): string => {
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    timeZoneName: 'short',
+export const convertDateToString =
+  function convertUtcDateToLocalStringWithOptions(
+    dateTime: Date,
+    timezone: string,
+  ) {
+    const dateTimeString = dateTime.toLocaleString(undefined, {
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      month: "long",
+      timeZone: timezone,
+      weekday: "short",
+    });
+    return dateTimeString;
+  };
+
+export const generateHeadingTimeString = (dateTime: Date) => {
+  const dateTimeString = dateTime.toLocaleString(undefined, {
+    day: "numeric",
+    month: "long",
+    timeZone: "UTC",
+    weekday: "long",
+    timeZoneName: "short",
+    year: "numeric",
   });
-  const parts = formatter.formatToParts(new Date());
-  const timeZonePart = parts.find((p) => p.type === 'timeZoneName');
-  return timeZonePart?.value || timezone;
+  return dateTimeString;
+};
+
+export const getEndTime = (startTime: Date, durationHours: number) => {
+  const durationMinutes = durationHours * 60;
+  startTime.setMinutes(startTime.getMinutes() + durationMinutes);
+  return startTime;
+};
+
+export const updateMeetingTimeFromString = ({
+  meetingTime,
+  setMeetingTime,
+  meetingTimeString,
+  newTimeString,
+}: UpdateMeetingTimeFromStringImports) => {
+  const minutesIncreased = calculateHhMmTimeStringDifference(
+    meetingTimeString,
+    newTimeString,
+  );
+
+  const newMeetingTime = new Date(meetingTime);
+  newMeetingTime.setMinutes(meetingTime.getMinutes() + minutesIncreased);
+
+  setMeetingTime(newMeetingTime);
 };

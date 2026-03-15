@@ -7,10 +7,10 @@ import type { AttendeeArray } from "./types";
 import "./styles/App.css";
 
 function App() {
-  const testAttendeeArray = [
+  const initialAttendeeArray = [
     {
       id: 1,
-      name: "One",
+      name: "Me",
       city: "Minneapolis",
       country: "United States",
       timezoneName: "America/Chicago",
@@ -32,7 +32,7 @@ function App() {
     },
   ];
 
-  const [attendees, setAttendees] = useState<AttendeeArray>(testAttendeeArray);
+  const [attendees, setAttendees] = useState<AttendeeArray>(initialAttendeeArray);
   // const [attendees, setAttendees] = useState<AttendeeArray>([]);
   const [date, setDate] = useState<Date>(new Date());
   const [meetingTime, setMeetingTime] = useState<Date | null>(null);
@@ -60,13 +60,20 @@ function App() {
             <ScheduleViewer
               attendees={attendees}
               date={date}
+              meetingTime={meetingTime}
               setMeetingTime={setMeetingTime}
             />
           }
         />
         <Route
           path="/create"
-          element={<MeetingCreator meetingTime={meetingTime} />}
+          element={
+            <MeetingCreator
+              attendees={attendees}
+              meetingTime={meetingTime}
+              setMeetingTime={setMeetingTime}
+            />
+          }
         />
       </Routes>
     </Router>

@@ -62,12 +62,15 @@ export type Meeting = {
 };
 
 export type MeetingCreatorImports = {
+  attendees: Attendee[];
   meetingTime: Date | null;
+  setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
 export type ScheduleViewerImports = {
   attendees: Attendee[];
   date: Date;
+  meetingTime: Date | null;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
@@ -80,4 +83,11 @@ export type TimeSlot = {
   attendeeAvailability: {
     [key: string]: string;
   };
+};
+
+export type UpdateMeetingTimeFromStringImports = {
+  meetingTime: Date;
+  setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
+  meetingTimeString: string;
+  newTimeString: string;
 };
