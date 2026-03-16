@@ -16,7 +16,7 @@ export function ScheduleViewer({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!attendees.length || typeof date !== "object") {
+    if (!attendees[0] || !attendees[0].timezoneName || typeof date !== "object") {
       navigate("/");
     }
   }, []);
