@@ -90,22 +90,27 @@ export function MeetingCreator({
             </div>
           </div>
 
-          <input
-            type="text"
-            placeholder="Add title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="title-input"
-          />
+          <label htmlFor="title">
+            Title
+            <input
+              type="text"
+              placeholder="Add title"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="title-input"
+            />
+          </label>
 
           <div className="time-section">
             <div className="time-group">
               <div className="time-inputs">
-                <label>
+                <label htmlFor="start-time">
                   <span>Start Time: </span>
                   <input
                     type="time"
                     placeholder="HH:MM"
+                    id="start-time"
                     value={meetingTimeString}
                     onChange={(e) => {
                       handleUpdateStartTime(e.target.value);
@@ -115,7 +120,7 @@ export function MeetingCreator({
                   <span>{` - ${meetingTimeString}`}</span>
                 </label>
 
-                <label>
+                <label htmlFor="duration">
                   <span>Duration: </span>
                   <select
                     className="time-input"
@@ -145,20 +150,28 @@ export function MeetingCreator({
             </div>
           </div>
 
-          <input
-            type="text"
-            placeholder="Video conference link"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="link-input"
-          />
+          <label htmlFor="location">
+            Meeting link
+            <input
+              type="text"
+              id="location"
+              placeholder="Video conference link"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="link-input"
+            />
+          </label>
 
-          <textarea
-            placeholder="Add description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="description-input"
-          />
+          <label htmlFor="description">
+            Description
+            <textarea
+              placeholder="Add description"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="description-input"
+            />
+          </label>
 
           {meetingTime && (
             <AddToCalendarButton
