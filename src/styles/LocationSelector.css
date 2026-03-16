@@ -37,6 +37,11 @@ aside.about > p {
   padding: 0;
 }
 
+button.today-button {
+  align-self: end;
+  margin: 0;
+}
+
 .date-input {
   padding: var(--spacing-sm);
   border: var(--border-width) solid var(--color-border);
@@ -49,9 +54,9 @@ aside.about > p {
 }
 
 .date-section {
+  align-items: end;
   display: flex;
   gap: var(--spacing-sm);
-  align-items: center;
   flex-wrap: wrap;
 }
 

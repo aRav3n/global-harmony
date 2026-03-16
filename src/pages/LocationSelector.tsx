@@ -154,19 +154,22 @@ export function LocationSelector({
     };
 
     return (
-      <input
-        onKeyDown={(e) => {
-          e.preventDefault();
-        }}
-        type="date"
-        name="calendar"
-        id="calendar"
-        className="date-input"
-        value={calendarDisplayDate}
-        onChange={(e) => {
-          handleCalendarDayChange(e.target.value);
-        }}
-      />
+      <label htmlFor="calendar">
+        Or select a date
+        <input
+          onKeyDown={(e) => {
+            e.preventDefault();
+          }}
+          type="date"
+          name="calendar"
+          id="calendar"
+          className="date-input"
+          value={calendarDisplayDate}
+          onChange={(e) => {
+            handleCalendarDayChange(e.target.value);
+          }}
+        />
+      </label>
     );
   }
 
@@ -191,44 +194,52 @@ export function LocationSelector({
     }
 
     return (
-      <select
-        value={date.getDate().toString()}
-        className="date-input"
-        onChange={(e) => updateDay(e.target.value.toString())}
-      >
-        <option disabled>-- Day --</option>
-        {daysArray.map((day) => {
-          return (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          );
-        })}
-      </select>
+      <label htmlFor="day-select">
+        Day
+        <select
+          value={date.getDate().toString()}
+          className="date-input"
+          id="day-select"
+          onChange={(e) => updateDay(e.target.value.toString())}
+        >
+          <option disabled>-- Day --</option>
+          {daysArray.map((day) => {
+            return (
+              <option key={day} value={day}>
+                {day}
+              </option>
+            );
+          })}
+        </select>
+      </label>
     );
   }
 
   function MonthSelect() {
     return (
-      <select
-        value={date.getMonth().toString()}
-        onChange={(e) => updateMonth(e.target.value)}
-        className="date-input"
-      >
-        <option disabled>-- Month --</option>
-        <option value="0">January</option>
-        <option value="1">February</option>
-        <option value="2">March</option>
-        <option value="3">April</option>
-        <option value="4">May</option>
-        <option value="5">June</option>
-        <option value="6">July</option>
-        <option value="7">August</option>
-        <option value="8">September</option>
-        <option value="9">October</option>
-        <option value="10">November</option>
-        <option value="11">December</option>
-      </select>
+      <label htmlFor="month-select">
+        Month
+        <select
+          value={date.getMonth().toString()}
+          onChange={(e) => updateMonth(e.target.value)}
+          className="date-input"
+          id="month-select"
+        >
+          <option disabled>-- Month --</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+      </label>
     );
   }
 
@@ -239,19 +250,23 @@ export function LocationSelector({
     }
 
     return (
-      <select
-        value={date.getFullYear().toString()}
-        onChange={(e) => updateYear(e.target.value)}
-        className="date-input"
-      >
-        {yearsArray.map((year) => {
-          return (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          );
-        })}
-      </select>
+      <label htmlFor="year-select">
+        Year
+        <select
+          value={date.getFullYear().toString()}
+          onChange={(e) => updateYear(e.target.value)}
+          className="date-input"
+          id="year-select"
+        >
+          {yearsArray.map((year) => {
+            return (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            );
+          })}
+        </select>
+      </label>
     );
   }
 
@@ -272,6 +287,7 @@ export function LocationSelector({
             <DaySelect />
             <CalendarSelect />
             <button
+              className="today-button"
               onClick={() => {
                 const today = new Date();
                 setDate(today);
@@ -284,15 +300,19 @@ export function LocationSelector({
           <div className="attendees-section">
             {attendees.map((attendee) => (
               <div key={attendee.id} className="attendee-row">
-                <input
-                  type="text"
-                  placeholder={`Person ${attendee.id}`}
-                  value={attendee.name}
-                  onChange={(e) =>
-                    handleUpdateName(attendee.id, e.target.value)
-                  }
-                  className="attendee-input"
-                />
+                <label htmlFor={`${attendee.id}-name`}>
+                  Name
+                  <input
+                    type="text"
+                    id={`${attendee.id}-name`}
+                    placeholder={`Person ${attendee.name}`}
+                    value={attendee.name}
+                    onChange={(e) =>
+                      handleUpdateName(attendee.id, e.target.value)
+                    }
+                    className="attendee-input"
+                  />
+                </label>
                 <LocationInput
                   attendee={attendee}
                   handleUpdateLocation={handleUpdateLocation}

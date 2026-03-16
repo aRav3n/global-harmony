@@ -32,16 +32,19 @@ export function LocationInput({
 
   return (
     <div className="geoapify-container">
-      <GeoapifyContext apiKey={apiKey}>
-        <GeoapifyGeocoderAutocomplete
-          placeholder="Search for a location"
-          type="city"
-          lang="en"
-          addDetails={true}
-          limit={5}
-          placeSelect={onPlaceSelect}
-        />
-      </GeoapifyContext>
+      <label>
+        Location
+        <GeoapifyContext apiKey={apiKey}>
+          <GeoapifyGeocoderAutocomplete
+            placeholder="Search for a location"
+            type="city"
+            lang="en"
+            addDetails={true}
+            limit={5}
+            placeSelect={onPlaceSelect}
+          />
+        </GeoapifyContext>
+      </label>
     </div>
   );
 }
