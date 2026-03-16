@@ -51,26 +51,26 @@ export function AddToCalendarButton({
         </div>
         <ul>
           {
+            // icon credit: https://icons8.com/icon/30840/apple-inc
+            calendarUrls.appleCalendar && (
+              <li>
+                <a href={calendarUrls.appleCalendar} target="_blank">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=30840&format=png&color=000000"
+                    alt=""
+                  />{" "}
+                  Apple Calendar
+                </a>
+              </li>
+            )
+          }
+          {
             // icon credit: https://icons8.com/icon/WKF3bm1munsk/google-calendar
             calendarUrls.google && (
               <li>
                 <a href={calendarUrls.google} target="_blank">
                   <img src="https://img.icons8.com/?size=100&id=WKF3bm1munsk&format=png&color=000000" />{" "}
                   Google Calendar
-                </a>
-              </li>
-            )
-          }
-          {
-            // icon credit: https://icons8.com/icon/WnHyYA2ecNqL/outlook-calendar
-            calendarUrls.outlook && (
-              <li>
-                <a href={calendarUrls.outlook} target="_blank">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=WnHyYA2ecNqL&format=png&color=000000"
-                    alt=""
-                  />{" "}
-                  Outlook
                 </a>
               </li>
             )
@@ -90,6 +90,20 @@ export function AddToCalendarButton({
             )
           }
           {
+            // icon credit: https://icons8.com/icon/WnHyYA2ecNqL/outlook-calendar
+            calendarUrls.outlook && (
+              <li>
+                <a href={calendarUrls.outlook} target="_blank">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=WnHyYA2ecNqL&format=png&color=000000"
+                    alt=""
+                  />{" "}
+                  Outlook
+                </a>
+              </li>
+            )
+          }
+          {
             // icon credit: https://icons8.com/icon/G3F1h1aX2vpT/yahoo
             calendarUrls.yahoo && (
               <li>
@@ -99,20 +113,6 @@ export function AddToCalendarButton({
                     alt=""
                   />{" "}
                   Yahoo Calendar
-                </a>
-              </li>
-            )
-          }
-          {
-            // icon credit: https://icons8.com/icon/30840/apple-inc
-            calendarUrls.appleCalendar && (
-              <li>
-                <a href={calendarUrls.appleCalendar} target="_blank">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=30840&format=png&color=000000"
-                    alt=""
-                  />{" "}
-                  Apple Calendar
                 </a>
               </li>
             )
