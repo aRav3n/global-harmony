@@ -12,6 +12,7 @@
   "dependencies": {
     "@geoapify/geocoder-autocomplete": "^3.0.1",
     "@geoapify/react-geocoder-autocomplete": "^3.0.0",
+    "@types/node": "^25.5.0",
     "calendar-link": "^2.11.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
