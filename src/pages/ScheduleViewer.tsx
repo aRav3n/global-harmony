@@ -9,12 +9,18 @@ import { useEffect } from "react";
 export function ScheduleViewer({
   attendees,
   date,
-  meetingTime,
   setMeetingTime,
 }: ScheduleViewerImports) {
   const earliestAcceptableTime = 6;
   const latestAcceptableTime = 22;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!attendees.length || typeof date !== "object") {
+      navigate("/");
+    }
+  }, []);
+
   const timeSlots: Date[] = [];
   for (let i = 0; i < 24; i++) {
     const timeslot = new Date(

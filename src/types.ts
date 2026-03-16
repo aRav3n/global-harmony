@@ -86,7 +86,6 @@ export type MeetingCreatorImports = {
 export type ScheduleViewerImports = {
   attendees: Attendee[];
   date: Date;
-  meetingTime: Date | null;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
