@@ -37,21 +37,6 @@ aside.about > p {
   padding: 0;
 }
 
-button {
-  align-self: start;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-button);
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  margin: var(--spacing-xs);
-}
-button:hover {
-  background-color: var(--color-bg-hover);
-}
-
 .date-input {
   padding: var(--spacing-sm);
   border: var(--border-width) solid var(--color-border);
