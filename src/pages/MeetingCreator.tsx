@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { AddToCalendarButton } from "../components/AddToCalendarButton";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import type { MeetingCreatorImports } from "../types";
@@ -7,7 +9,6 @@ import {
   convertDateTimeToHhMmFormat,
   convertDateToString,
   generateHeadingTimeString,
-  getEndTime,
   updateMeetingTimeFromString,
 } from "../utils";
 import "../styles/MeetingCreator.css";
@@ -44,24 +45,6 @@ export function MeetingCreator({
     }
   }, [meetingTime]);
 
-  const handleSubmit = (e: React.SubmitEvent) => {
-    if (!meetingTime) {
-      return null;
-    }
-
-    e.preventDefault();
-    const endTime = getEndTime(meetingTime, duration);
-    const startTime = meetingTime;
-    const meetingObject = {
-      title,
-      description,
-      startTime,
-      endTime,
-      location,
-    };
-    console.log(meetingObject);
-  };
-
   const handleUpdateStartTime = (newTimeString: string) => {
     if (!meetingTime) {
       return null;
@@ -78,7 +61,7 @@ export function MeetingCreator({
     <div className="meeting-creator-container">
       <Header />
       <main className="meeting-creator-main">
-        <form onSubmit={handleSubmit} className="meeting-form">
+        <form className="meeting-form">
           <div className="date-timezone-section">
             <h1>
               {meetingTime ? (
@@ -177,9 +160,15 @@ export function MeetingCreator({
             className="description-input"
           />
 
-          <button type="submit" className="share-btn">
-            📅{" "}Add to calendar
-          </button>
+          {meetingTime && (
+            <AddToCalendarButton
+              title={title}
+              description={description}
+              start={meetingTime}
+              durationMinutes={duration * 60}
+              location={location}
+            />
+          )}
         </form>
       </main>
       <Footer />
