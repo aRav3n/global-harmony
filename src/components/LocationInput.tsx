@@ -37,7 +37,9 @@ function LocationInputComponent({
         <GeoapifyContext apiKey={apiKey}>
           <GeoapifyGeocoderAutocomplete
             placeholder={
-              `${attendee.city}, ${attendee.country}` || "Search for a city"
+              attendee.city
+                ? `${attendee.city}, ${attendee.country}`
+                : "Search for a city"
             }
             type="city"
             lang="en"
