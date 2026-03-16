@@ -117,6 +117,20 @@ export function AddToCalendarButton({
               </li>
             )
           }
+          {
+            // icon credit: https://icons8.com/icon/12776/calendar
+            calendarUrls.appleCalendar && (
+              <li>
+                <a href={calendarUrls.appleCalendar} target="_blank">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=12776&format=png&color=000000"
+                    alt=""
+                  />{" "}
+                  Other (download an ics file)
+                </a>
+              </li>
+            )
+          }
         </ul>
       </div>
       <button type="button" onClick={handleClick}>

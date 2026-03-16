@@ -5,7 +5,7 @@ div.calendar-button-container {
 }
 
 div.calendar-popup {
-  background-color: var(--color-bg-main);
+  background-color: var(--color-bg-alt);
   border: var(--border-width) var(--border-style) var(--color-border);
   border-radius: var(--border-radius-sm);
   bottom: 100%;
