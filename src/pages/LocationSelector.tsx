@@ -14,6 +14,7 @@ export function LocationSelector({
   nextId,
   setNextId,
 }: LocationSelectorImports) {
+  const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
   const navigate = useNavigate();
 
   const handleAddLocations = (numberOfLocationsToAdd: number) => {
@@ -128,8 +129,6 @@ export function LocationSelector({
   };
 
   function CalendarSelect() {
-    const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
-
     const handleSetCalendarDisplayDate = (
       year: string | null,
       month: string | null,
