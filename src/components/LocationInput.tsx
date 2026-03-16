@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   GeoapifyGeocoderAutocomplete,
   GeoapifyContext,
@@ -11,13 +12,14 @@ import type { GeoAPIfyObject, LocationInputProps } from "../types";
 // Example return JSON: https://api.geoapify.com/v1/geocode/search?text=11%20Av.%20de%20la%20Bourdonnais%2C%2075007%20Paris%2C%20France&format=json&apiKey=d548c5ed24604be6a9dd0d989631f783
 const apiKey = import.meta.env.VITE_GEOAPIFY_API_KEY;
 
-export function LocationInput({
+function LocationInputComponent({
   attendee,
   handleUpdateLocation,
 }: LocationInputProps) {
   function onPlaceSelect(value: GeoAPIfyObject) {
     const placeInfo = value.properties;
     const timezoneInfo = placeInfo.timezone;
+
     handleUpdateLocation(
       attendee.id,
       placeInfo.city,
@@ -31,12 +33,12 @@ export function LocationInput({
   }
 
   return (
-    <div className="geoapify-container">
-      <label>
-        Location
+    <label htmlFor="City">
+      City
+      <div className="geoapify-container">
         <GeoapifyContext apiKey={apiKey}>
           <GeoapifyGeocoderAutocomplete
-            placeholder="Search for a location"
+            placeholder="Search for a city"
             type="city"
             lang="en"
             addDetails={true}
@@ -44,7 +46,15 @@ export function LocationInput({
             placeSelect={onPlaceSelect}
           />
         </GeoapifyContext>
-      </label>
-    </div>
+      </div>
+    </label>
   );
 }
+
+export const LocationInput = memo(
+  LocationInputComponent,
+  (prevProps, nextProps) => {
+    // Only re-render if the attendee id changes, not if other attendee properties change
+    return prevProps.attendee.id === nextProps.attendee.id;
+  },
+);
