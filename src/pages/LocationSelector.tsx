@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { LocationInput } from "../components/LocationInput";
@@ -14,6 +14,8 @@ export function LocationSelector({
   nextId,
   setNextId,
 }: LocationSelectorImports) {
+  const navigate = useNavigate();
+
   const handleAddLocations = (numberOfLocationsToAdd: number) => {
     const newAttendeeArray = [...attendees];
 
@@ -35,6 +37,22 @@ export function LocationSelector({
     const newId = nextId + numberOfLocationsToAdd;
     setNextId(newId);
     setAttendees(newAttendeeArray);
+  };
+
+  const handlePickATime = () => {
+    const newAttendeesArray = [];
+    for (let i = 0; i < attendees.length; i++) {
+      if (attendees[i].timezoneName && attendees[i].name) {
+        newAttendeesArray.push(attendees[i]);
+      }
+    }
+    if (newAttendeesArray.length) {
+      setAttendees(newAttendeesArray);
+    }
+
+    if (newAttendeesArray[0] && newAttendeesArray[0].timezoneName) {
+      navigate("/schedule");
+    }
   };
 
   const handleUpdateLocation = (
@@ -292,9 +310,9 @@ export function LocationSelector({
             >
               📍 Add More Locations
             </button>
-            <Link to="/schedule">
-              <button tabIndex={0}>⏱️ Pick a Time</button>
-            </Link>
+            <button tabIndex={0} onClick={handlePickATime}>
+              ⏱️ Pick a Time
+            </button>
           </div>
         </div>
 
