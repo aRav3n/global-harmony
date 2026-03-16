@@ -178,7 +178,7 @@ export function MeetingCreator({
           />
 
           <button type="submit" className="share-btn">
-            Share Meeting
+            📅{" "}Add to calendar
           </button>
         </form>
       </main>
