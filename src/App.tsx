@@ -32,11 +32,13 @@ function App() {
     },
   ];
 
-  const [attendees, setAttendees] = useState<AttendeeArray>(initialAttendeeArray);
+  const [attendees, setAttendees] =
+    useState<AttendeeArray>(initialAttendeeArray);
   // const [attendees, setAttendees] = useState<AttendeeArray>([]);
   const [date, setDate] = useState<Date>(new Date());
   const [meetingTime, setMeetingTime] = useState<Date | null>(null);
-  const [nextId, setNextId] = useState<number>(1);
+  // const [nextId, setNextId] = useState<number>(1);
+  const [nextId, setNextId] = useState<number>(initialAttendeeArray.length + 1);
 
   return (
     <Router>

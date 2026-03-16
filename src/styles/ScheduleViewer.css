@@ -4,6 +4,7 @@
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   margin: 0;
+  text-align: center;
 }
 
 .schedule-controls {
@@ -23,6 +24,10 @@
   text-align: left;
   color: var(--color-text-secondary);
 }
+.schedule-table td.bad-time {
+  background-color: var(--color-bad);
+  text-decoration: line-through;
+}
 .schedule-table th {
   background-color: var(--color-bg-hover);
   padding: var(--spacing-md);
@@ -34,10 +39,11 @@
 }
 
 .schedule-table-container {
-  overflow-x: auto;
+  align-self: center;
+  background-color: var(--color-bg-main);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
-  background-color: var(--color-bg-main);
+  overflow-x: auto;
 }
 
 .schedule-viewer-container {
@@ -67,7 +73,3 @@
   cursor: pointer;
 }
 
-.schedule-table td.bad-time {
-  background-color: var(--color-bad);
-  text-decoration: line-through;
-}

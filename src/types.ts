@@ -13,12 +13,20 @@ export type Attendee = {
 export type AttendeeArray = Attendee[];
 
 export type CalendarButtonImports = {
-  title: string,
-  description: string,
-  start: Date,
-  durationMinutes: number,
-  location: string,
-}
+  title: string;
+  description: string;
+  start: Date;
+  durationMinutes: number;
+  location: string;
+};
+
+export type CalendarUrls = {
+  google?: string;
+  outlook?: string;
+  office365?: string;
+  yahoo?: string;
+  appleCalendar?: string;
+};
 
 export type GeoAPIfyObject = {
   properties: {
