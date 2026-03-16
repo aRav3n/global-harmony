@@ -25,10 +25,6 @@ function LocationInputComponent({
       placeInfo.city,
       placeInfo.country,
       timezoneInfo.name,
-      timezoneInfo.offset_STD,
-      timezoneInfo.offset_STD_seconds,
-      timezoneInfo.offset_DST,
-      timezoneInfo.offset_DST_seconds,
     );
   }
 
@@ -40,7 +36,9 @@ function LocationInputComponent({
       <div className="geoapify-container">
         <GeoapifyContext apiKey={apiKey}>
           <GeoapifyGeocoderAutocomplete
-            placeholder={attendee.city || "Search for a city"}
+            placeholder={
+              `${attendee.city}, ${attendee.country}` || "Search for a city"
+            }
             type="city"
             lang="en"
             addDetails={true}

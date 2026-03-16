@@ -26,11 +26,7 @@ export function LocationSelector({
         name: "",
         city: "",
         country: "",
-        timezoneName: "",
-        timezoneOffsetStd: "",
-        timezoneOffsetStdSeconds: 0,
-        timezoneOffsetDst: "",
-        timezoneOffsetDstSeconds: 0,
+        timezoneName: ""
       };
       newAttendeeArray.push(newPerson);
     }
@@ -61,10 +57,6 @@ export function LocationSelector({
     city: string,
     country: string,
     timezoneName: string,
-    timezoneOffsetStd: string,
-    timezoneOffsetStdSeconds: number,
-    timezoneOffsetDst: string,
-    timezoneOffsetDstSeconds: number,
   ) => {
     const newAttendeeArray = [...attendees];
 
@@ -74,10 +66,6 @@ export function LocationSelector({
         currentAttendee.city = city;
         currentAttendee.country = country;
         currentAttendee.timezoneName = timezoneName;
-        currentAttendee.timezoneOffsetDst = timezoneOffsetDst;
-        currentAttendee.timezoneOffsetDstSeconds = timezoneOffsetDstSeconds;
-        currentAttendee.timezoneOffsetStd = timezoneOffsetStd;
-        currentAttendee.timezoneOffsetStdSeconds = timezoneOffsetStdSeconds;
         setAttendees(newAttendeeArray);
         return;
       }

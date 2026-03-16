@@ -4,10 +4,6 @@ export type Attendee = {
   city: string;
   country: string;
   timezoneName: string;
-  timezoneOffsetStd: string;
-  timezoneOffsetStdSeconds: number;
-  timezoneOffsetDst: string;
-  timezoneOffsetDstSeconds: number;
 };
 
 export type AttendeeArray = Attendee[];
@@ -49,10 +45,6 @@ export type LocationInputProps = {
     city: string,
     country: string,
     timezoneName: string,
-    timezoneOffsetStd: string,
-    timezoneOffsetStdSeconds: number,
-    timezoneOffsetDst: string,
-    timezoneOffsetDstSeconds: number,
   ) => void;
 };
 
