@@ -65,8 +65,18 @@ export type LocationSelectorImports = {
   setNextId: React.Dispatch<React.SetStateAction<number>>;
 };
 
+export type MeetingInfo = {
+  description: string;
+  duration: number;
+  meetingTimeString: string;
+  title: string;
+  location: string;
+};
+
 export type MeetingCreatorImports = {
   attendees: Attendee[];
+  meetingInfo: MeetingInfo;
+  setMeetingInfo: React.Dispatch<React.SetStateAction<MeetingInfo>>;
   meetingTime: Date | null;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };

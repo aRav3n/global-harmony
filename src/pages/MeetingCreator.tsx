@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { AddToCalendarButton } from "../components/AddToCalendarButton";
@@ -15,15 +15,42 @@ import "../styles/MeetingCreator.css";
 
 export function MeetingCreator({
   attendees,
+  meetingInfo,
+  setMeetingInfo,
   meetingTime,
   setMeetingTime,
 }: MeetingCreatorImports) {
-  const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState<number>(1);
-  const [meetingTimeString, setMeetingTimeString] = useState<string>("");
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
   const navigate = useNavigate();
+
+  function setDescription(newDescription: string) {
+    const newMeetingInfo = { ...meetingInfo };
+    newMeetingInfo.description = newDescription;
+    setMeetingInfo(newMeetingInfo);
+  }
+
+  function setDuration(newDuration: number) {
+    const newMeetingInfo = { ...meetingInfo };
+    newMeetingInfo.duration = newDuration;
+    setMeetingInfo(newMeetingInfo);
+  }
+
+  function setMeetingTimeString(newTimeString: string) {
+    const newMeetingInfo = { ...meetingInfo };
+    newMeetingInfo.meetingTimeString = newTimeString;
+    setMeetingInfo(newMeetingInfo);
+  }
+
+  function setTitle(newTitle: string) {
+    const newMeetingInfo = { ...meetingInfo };
+    newMeetingInfo.title = newTitle;
+    setMeetingInfo(newMeetingInfo);
+  }
+
+  function setLocation(newLocation: string) {
+    const newMeetingInfo = { ...meetingInfo };
+    newMeetingInfo.location = newLocation;
+    setMeetingInfo(newMeetingInfo);
+  }
 
   const updateMeetingTimeString = () => {
     if (!meetingTime) {
@@ -52,7 +79,7 @@ export function MeetingCreator({
     updateMeetingTimeFromString({
       meetingTime,
       setMeetingTime,
-      meetingTimeString,
+      meetingTimeString: meetingInfo.meetingTimeString,
       newTimeString,
     });
   };
@@ -96,7 +123,7 @@ export function MeetingCreator({
               type="text"
               placeholder="Add title"
               id="title"
-              value={title}
+              value={meetingInfo.title}
               onChange={(e) => setTitle(e.target.value)}
               className="title-input"
             />
@@ -111,13 +138,13 @@ export function MeetingCreator({
                     type="time"
                     placeholder="HH:MM"
                     id="start-time"
-                    value={meetingTimeString}
+                    value={meetingInfo.meetingTimeString}
                     onChange={(e) => {
                       handleUpdateStartTime(e.target.value);
                     }}
                     className="time-input"
                   />
-                  <span>{` - ${meetingTimeString}`}</span>
+                  <span>{` - ${meetingInfo.meetingTimeString}`}</span>
                 </label>
 
                 <label htmlFor="duration">
@@ -126,7 +153,7 @@ export function MeetingCreator({
                     className="time-input"
                     name="duration"
                     id="duration"
-                    value={duration.toString()}
+                    value={meetingInfo.duration.toString()}
                     onChange={(e) => {
                       setDuration(Number(e.target.value));
                     }}
@@ -156,7 +183,7 @@ export function MeetingCreator({
               type="text"
               id="location"
               placeholder="Video conference link"
-              value={location}
+              value={meetingInfo.location}
               onChange={(e) => setLocation(e.target.value)}
               className="link-input"
             />
@@ -167,7 +194,7 @@ export function MeetingCreator({
             <textarea
               placeholder="Add description"
               id="description"
-              value={description}
+              value={meetingInfo.description}
               onChange={(e) => setDescription(e.target.value)}
               className="description-input"
             />
@@ -175,11 +202,11 @@ export function MeetingCreator({
 
           {meetingTime && (
             <AddToCalendarButton
-              title={title}
-              description={description}
+              title={meetingInfo.title}
+              description={meetingInfo.description}
               start={meetingTime}
-              durationMinutes={duration * 60}
-              location={location}
+              durationMinutes={meetingInfo.duration * 60}
+              location={meetingInfo.location}
             />
           )}
         </form>

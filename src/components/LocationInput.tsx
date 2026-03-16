@@ -32,13 +32,15 @@ function LocationInputComponent({
     );
   }
 
+  console.log(attendee);
+
   return (
     <label htmlFor="City">
       City
       <div className="geoapify-container">
         <GeoapifyContext apiKey={apiKey}>
           <GeoapifyGeocoderAutocomplete
-            placeholder="Search for a city"
+            placeholder={attendee.city || "Search for a city"}
             type="city"
             lang="en"
             addDetails={true}
