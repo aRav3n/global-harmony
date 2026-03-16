@@ -1,16 +1,5 @@
 import type { UpdateMeetingTimeFromStringImports } from "./types";
 
-export const addHoursToMmHhString = (
-  timeString: string,
-  hoursToAdd: number,
-) => {
-  const [hours, minutes] = timeString.split(":").map(Number);
-  const newHours = hours + hoursToAdd;
-  const newHoursString = newHours.toString().padStart(2, "0");
-  const newMinutesString = minutes.toString().padStart(2, "0");
-  return `${newHoursString}:${newMinutesString}`;
-};
-
 const calculateHhMmTimeStringDifference = (
   previousTimeString: string,
   newTimeString: string,
@@ -61,12 +50,6 @@ export const generateHeadingTimeString = (dateTime: Date) => {
     year: "numeric",
   });
   return dateTimeString;
-};
-
-export const getEndTime = (startTime: Date, durationHours: number) => {
-  const durationMinutes = durationHours * 60;
-  startTime.setMinutes(startTime.getMinutes() + durationMinutes);
-  return startTime;
 };
 
 export const updateMeetingTimeFromString = ({
