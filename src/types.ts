@@ -65,18 +65,6 @@ export type LocationSelectorImports = {
   setNextId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type Meeting = {
-  id: string;
-  title: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  videoLink: string;
-  description: string;
-  attendees: Attendee[];
-  createdBy: string;
-};
-
 export type MeetingCreatorImports = {
   attendees: Attendee[];
   meetingTime: Date | null;
@@ -91,13 +79,6 @@ export type ScheduleViewerImports = {
 
 export type TableRowProps = {
   time: Date;
-};
-
-export type TimeSlot = {
-  time: string;
-  attendeeAvailability: {
-    [key: string]: string;
-  };
 };
 
 export type UpdateMeetingTimeFromStringImports = {
