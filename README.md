@@ -15,7 +15,7 @@
 
 ## Description
 
-This is a simple scheduling website. It uses the GeoApify API for locations and timezones and assists users in scheduling meetings with people in different timezones.
+This is an intuitive scheduling website that uses the GeoApify API for locations and timezones. This tool assists users in coordinating meetings seamlessly across different timezones.
 
 ### Features
 
