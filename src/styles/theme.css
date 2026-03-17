@@ -36,6 +36,19 @@
 /* Updated dark mode colors */
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-bad: #75342e;
+    --color-bg-alt: #30302f;
+    --color-bg-header-footer: #1e4721;
+    --color-bg-hover: #264a49;
+    --color-bg-main: #132e38;
+    --color-border: #324d41;
+    --color-border-hover: #32633a;
+    --color-button: #2d2d2d;
+    --color-text: #f2f2f2;
+    --color-text-faint: #bfbebe;
+    --color-text-hover: #fed0cc;
+
+    /*
     --color-bad: #d24d41;
     --color-bg-main: #1e1e1e;
     --color-bg-hover: #333333;
@@ -45,5 +58,6 @@
     --color-text: #ffffff;
     --color-text-faint: #a9a9a9;
     --color-text-hover: #cbcbcb;
+    */
   }
 }

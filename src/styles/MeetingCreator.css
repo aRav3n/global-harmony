@@ -34,7 +34,7 @@
   min-height: 200px;
   width: 100%;
   font-family: inherit;
-  resize: vertical;
+  resize: none;
 }
 
 .link-input {

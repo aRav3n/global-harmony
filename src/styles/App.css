@@ -10,6 +10,7 @@ button {
   background-color: var(--color-button);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius-sm);
+  color: var(--color-text);
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
@@ -20,6 +21,15 @@ button {
 }
 button:hover {
   background-color: var(--color-bg-hover);
+  border: var(--border-width) solid var(--color-border-hover);
+}
+
+input,
+select,
+textarea {
+  accent-color: var(--color-text);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
 }
 
 label {

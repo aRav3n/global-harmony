@@ -42,6 +42,20 @@ button.today-button {
   margin: 0;
 }
 
+div.geoapify-autocomplete-items {
+  border: 0px solid black;
+  border-bottom: var(--border-width) solid var(--color-border);
+  border-left: var(--border-width) solid var(--color-border);
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  border-right: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+}
+div.geoapify-autocomplete-items *,
+div.geoapify-autocomplete-items span.secondary-part {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
 .date-input {
   padding: var(--spacing-sm);
   border: var(--border-width) solid var(--color-border);
