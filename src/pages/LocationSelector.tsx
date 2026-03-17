@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { LocationInput } from "../components/LocationInput";
+import { AttendeesSection } from "../components/AttendeesSection";
 import "../styles/LocationSelector.css";
 import type { LocationSelectorImports } from "../types";
+import { handleAddLocations } from "../utils";
 
 export function LocationSelector({
   attendees,
@@ -15,75 +16,6 @@ export function LocationSelector({
   setNextId,
 }: LocationSelectorImports) {
   const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
-  const navigate = useNavigate();
-
-  const handleAddLocations = (numberOfLocationsToAdd: number) => {
-    const newAttendeeArray = [...attendees];
-
-    for (let i = 0; i < numberOfLocationsToAdd; i++) {
-      const newPerson = {
-        id: nextId + i,
-        name: "",
-        city: "",
-        country: "",
-        timezoneName: ""
-      };
-      newAttendeeArray.push(newPerson);
-    }
-
-    const newId = nextId + numberOfLocationsToAdd;
-    setNextId(newId);
-    setAttendees(newAttendeeArray);
-  };
-
-  const handlePickATime = () => {
-    const newAttendeesArray = [];
-    for (let i = 0; i < attendees.length; i++) {
-      if (attendees[i].timezoneName && attendees[i].name) {
-        newAttendeesArray.push(attendees[i]);
-      }
-    }
-    if (newAttendeesArray.length) {
-      setAttendees(newAttendeesArray);
-    }
-
-    if (newAttendeesArray[0] && newAttendeesArray[0].timezoneName) {
-      navigate("/schedule");
-    }
-  };
-
-  const handleUpdateLocation = (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => {
-    const newAttendeeArray = [...attendees];
-
-    for (let i = 0; i < newAttendeeArray.length; i++) {
-      const currentAttendee = newAttendeeArray[i];
-      if (currentAttendee.id === id) {
-        currentAttendee.city = city;
-        currentAttendee.country = country;
-        currentAttendee.timezoneName = timezoneName;
-        setAttendees(newAttendeeArray);
-        return;
-      }
-    }
-  };
-
-  const handleUpdateName = (id: number, newName: string) => {
-    const newAttendeeArray = [...attendees];
-
-    for (let i = 0; i < newAttendeeArray.length; i++) {
-      const currentPerson = newAttendeeArray[i];
-      if (currentPerson.id === id) {
-        currentPerson.name = newName;
-        setAttendees(newAttendeeArray);
-        return;
-      }
-    }
-  };
 
   const updateDate = (
     year: number | null,
@@ -260,7 +192,7 @@ export function LocationSelector({
 
   useEffect(() => {
     if (attendees.length < 2) {
-      handleAddLocations(2);
+      handleAddLocations(2, attendees, setAttendees, nextId, setNextId);
     }
   }, []);
 
@@ -285,42 +217,12 @@ export function LocationSelector({
             </button>
           </div>
 
-          <div className="attendees-section">
-            {attendees.map((attendee) => (
-              <div key={attendee.id} className="attendee-row">
-                <label htmlFor={`${attendee.id}-name`}>
-                  Name
-                  <input
-                    type="text"
-                    id={`${attendee.id}-name`}
-                    placeholder={`Person ${attendee.name}`}
-                    value={attendee.name}
-                    onChange={(e) =>
-                      handleUpdateName(attendee.id, e.target.value)
-                    }
-                    className="attendee-input"
-                  />
-                </label>
-                <LocationInput
-                  attendee={attendee}
-                  handleUpdateLocation={handleUpdateLocation}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <button
-              onClick={() => {
-                handleAddLocations(1);
-              }}
-            >
-              📍 Add More Locations
-            </button>
-            <button tabIndex={0} onClick={handlePickATime}>
-              ⏱️ Pick a Time
-            </button>
-          </div>
+          <AttendeesSection
+            attendees={attendees}
+            setAttendees={setAttendees}
+            nextId={nextId}
+            setNextId={setNextId}
+          />
         </div>
 
         <aside className="about">

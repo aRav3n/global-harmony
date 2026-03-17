@@ -1,4 +1,9 @@
-import type { UpdateMeetingTimeFromStringImports } from "./types";
+import type React from "react";
+import type {
+  AttendeeArray,
+  SetAttendees,
+  UpdateMeetingTimeFromStringImports,
+} from "./types";
 
 const calculateHhMmTimeStringDifference = (
   previousTimeString: string,
@@ -50,6 +55,31 @@ export const generateHeadingTimeString = (dateTime: Date) => {
     year: "numeric",
   });
   return dateTimeString;
+};
+
+export const handleAddLocations = (
+  numberOfLocationsToAdd: number,
+  attendees: AttendeeArray,
+  setAttendees: SetAttendees,
+  nextId: number,
+  setNextId: React.Dispatch<React.SetStateAction<number>>,
+) => {
+  const newAttendeeArray = [...attendees];
+
+  for (let i = 0; i < numberOfLocationsToAdd; i++) {
+    const newPerson = {
+      id: nextId + i,
+      name: "",
+      city: "",
+      country: "",
+      timezoneName: "",
+    };
+    newAttendeeArray.push(newPerson);
+  }
+
+  const newId = nextId + numberOfLocationsToAdd;
+  setNextId(newId);
+  setAttendees(newAttendeeArray);
 };
 
 export const updateMeetingTimeFromString = ({

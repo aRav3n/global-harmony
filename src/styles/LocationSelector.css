@@ -12,9 +12,14 @@ div.geoapify-container input {
 }
 
 .attendee-row {
+  align-items: flex-end;
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
+}
+.attendee-row > button {
+  align-self: end;
+  margin: 0;
 }
 
 .attendees-section {

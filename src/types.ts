@@ -1,12 +1,27 @@
+type OfficeHourBlock = {
+  start: string;
+  end: string;
+};
+
 export type Attendee = {
   id: number;
   name: string;
   city: string;
   country: string;
   timezoneName: string;
+  officeHours?: OfficeHourBlock[];
 };
 
 export type AttendeeArray = Attendee[];
+
+export type SetAttendees = React.Dispatch<React.SetStateAction<AttendeeArray>>;
+
+export type AttendeesSectionImports = {
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  nextId: number;
+  setNextId: React.Dispatch<React.SetStateAction<number>>;
+};
 
 export type CalendarButtonImports = {
   title: string;
@@ -50,7 +65,7 @@ export type LocationInputProps = {
 
 export type LocationSelectorImports = {
   attendees: Attendee[];
-  setAttendees: React.Dispatch<React.SetStateAction<Attendee[]>>;
+  setAttendees: SetAttendees;
   date: Date;
   setDate: React.Dispatch<React.SetStateAction<Date>>;
   nextId: number;
@@ -71,6 +86,12 @@ export type MeetingCreatorImports = {
   setMeetingInfo: React.Dispatch<React.SetStateAction<MeetingInfo>>;
   meetingTime: Date | null;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
+};
+
+export type SingleAttendeeSectionImports = {
+  attendee: Attendee;
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
 };
 
 export type ScheduleViewerImports = {
