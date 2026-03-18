@@ -13,13 +13,16 @@ export function AttendeesSection({
 }: AttendeesSectionImports) {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(attendees);
+  }, [attendees]);
+
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
-    const existingOfficeHourArray = attendee.officeHours || [];
     const newOfficeHourBlock = {
       start: "06:00",
       end: "23:00",
+      id: attendee.officeHours.length,
     };
-    existingOfficeHourArray.push(newOfficeHourBlock);
 
     const newAttendeesArray = [];
 
@@ -27,9 +30,7 @@ export function AttendeesSection({
       const currentAttendee = attendees[i];
       if (attendee.id === currentAttendee.id) {
         const updatedAttendee = currentAttendee;
-        updatedAttendee.officeHours
-          ? updatedAttendee.officeHours.push(newOfficeHourBlock)
-          : (updatedAttendee.officeHours = [newOfficeHourBlock]);
+        updatedAttendee.officeHours.push(newOfficeHourBlock);
       }
       newAttendeesArray.push(currentAttendee);
     }

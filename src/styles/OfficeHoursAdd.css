@@ -1,0 +1,6 @@
+@import "./theme.css";
+
+div.office-hour-block {
+  align-self: flex-start;
+  display: flex;
+}

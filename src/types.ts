@@ -1,4 +1,5 @@
 type OfficeHourBlock = {
+  id: number;
   start: string;
   end: string;
 };
@@ -9,7 +10,7 @@ export type Attendee = {
   city: string;
   country: string;
   timezoneName: string;
-  officeHours?: OfficeHourBlock[];
+  officeHours: OfficeHourBlock[];
 };
 
 export type AttendeeArray = Attendee[];

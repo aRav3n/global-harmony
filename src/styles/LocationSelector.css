@@ -61,17 +61,6 @@ div.geoapify-autocomplete-items span.secondary-part {
   color: var(--color-text);
 }
 
-.date-input {
-  padding: var(--spacing-sm);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius-sm);
-  font-size: 1rem;
-  min-width: 80px;
-}
-.date-input:hover {
-  border-color: var(--color-border-hover);
-}
-
 .date-section {
   align-items: end;
   display: flex;
@@ -86,6 +75,17 @@ div.geoapify-container {
 
 .geoapify-close-button {
   display: none;
+}
+
+input {
+  padding: var(--spacing-sm);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  min-width: 80px;
+}
+input:hover {
+  border-color: var(--color-border-hover);
 }
 
 .location-selector-container {
