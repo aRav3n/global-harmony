@@ -1,4 +1,4 @@
-type OfficeHourBlock = {
+export type OfficeHourBlock = {
   id: number;
   start: string;
   end: string;
@@ -56,6 +56,11 @@ export type GeoAPIfyObject = {
 
 type HandleAddOfficeHourBlock = (attendee: Attendee) => void;
 
+type handleOfficeHourChange = (
+  attendee: Attendee,
+  newOfficeHourBlock: OfficeHourBlock,
+) => void;
+
 export type LocationInputProps = {
   attendee: Attendee;
   handleUpdateLocation: (
@@ -94,12 +99,14 @@ export type MeetingCreatorImports = {
 export type OfficeHourAddImports = {
   attendee: Attendee;
   handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
+  handleOfficeHourChange: handleOfficeHourChange;
 };
 
 export type SingleAttendeeSectionImports = {
   key: number;
   attendee: Attendee;
   handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
+  handleOfficeHourChange: handleOfficeHourChange;
   handleUpdateLocation: (
     id: number,
     city: string,

@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
-import type { Attendee, AttendeesSectionImports } from "../types";
+import type {
+  Attendee,
+  AttendeeArray,
+  AttendeesSectionImports,
+  OfficeHourBlock,
+} from "../types";
 import { SingleAttendeeSection } from "./SingleAttendeeSection";
 import { handleAddLocations } from "../utils";
-import { useEffect } from "react";
 
 export function AttendeesSection({
   attendees,
@@ -12,10 +16,6 @@ export function AttendeesSection({
   setNextId,
 }: AttendeesSectionImports) {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(attendees);
-  }, [attendees]);
 
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
     const newOfficeHourBlock = {
@@ -36,6 +36,31 @@ export function AttendeesSection({
     }
 
     setAttendees(newAttendeesArray);
+  };
+
+  const handleOfficeHourChange = (
+    attendee: Attendee,
+    newOfficeHourBlock: OfficeHourBlock,
+  ) => {
+    const updatedAttendee = { ...attendee };
+    const updatedOfficeHourArray = [];
+    for (let i = 0; i < attendee.officeHours.length; i++) {
+      const officeHourBlockToPush =
+        attendee.officeHours[i].id === newOfficeHourBlock.id
+          ? newOfficeHourBlock
+          : { ...attendee.officeHours[i] };
+      updatedOfficeHourArray.push(officeHourBlockToPush);
+    }
+    updatedAttendee.officeHours = updatedOfficeHourArray;
+
+    const updatedAttendeesArray: AttendeeArray = [];
+    for (let i = 0; i < attendees.length; i++) {
+      const attendeeToPush =
+        attendees[i].id === updatedAttendee.id ? updatedAttendee : attendees[i];
+      updatedAttendeesArray.push(attendeeToPush);
+    }
+
+    setAttendees(updatedAttendeesArray);
   };
 
   const handlePickATime = () => {
@@ -94,6 +119,7 @@ export function AttendeesSection({
             key={attendee.id}
             attendee={attendee}
             handleAddOfficeHourBlock={handleAddOfficeHourBlock}
+            handleOfficeHourChange={handleOfficeHourChange}
             handleUpdateLocation={handleUpdateLocation}
             handleUpdateName={handleUpdateName}
           />

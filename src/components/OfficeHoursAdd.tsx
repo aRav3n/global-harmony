@@ -1,10 +1,24 @@
-import type { OfficeHourAddImports } from "../types";
+import type { Attendee, OfficeHourAddImports } from "../types";
 import "../styles/OfficeHoursAdd.css";
 
 export function OfficeHoursAdd({
   attendee,
   handleAddOfficeHourBlock,
+  handleOfficeHourChange,
 }: OfficeHourAddImports) {
+  const updateOfficeHours = (
+    newTimeString: string,
+    hourBlockId: number,
+    isStartTime: boolean,
+  ) => {
+    const newHourBlock = { ...attendee.officeHours[hourBlockId] };
+    isStartTime
+      ? (newHourBlock.start = newTimeString)
+      : (newHourBlock.end = newTimeString);
+
+    handleOfficeHourChange(attendee, newHourBlock);
+  };
+
   return (
     <div>
       {attendee.officeHours.map((officeHourBlock) => {
@@ -20,6 +34,9 @@ export function OfficeHoursAdd({
                 type="time"
                 name="start"
                 value={officeHourBlock.start}
+                onChange={(e) => {
+                  updateOfficeHours(e.target.value, officeHourBlock.id, true);
+                }}
               />
             </label>
             <label htmlFor={`${officeHourBlock.id}-end-time`}>
@@ -29,6 +46,9 @@ export function OfficeHoursAdd({
                 type="time"
                 name="end"
                 value={officeHourBlock.end}
+                onChange={(e) => {
+                  updateOfficeHours(e.target.value, officeHourBlock.id, false);
+                }}
               />
             </label>
           </div>

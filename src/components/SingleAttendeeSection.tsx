@@ -5,6 +5,7 @@ import { OfficeHoursAdd } from "./OfficeHoursAdd";
 export function SingleAttendeeSection({
   attendee,
   handleAddOfficeHourBlock,
+  handleOfficeHourChange,
   handleUpdateLocation,
   handleUpdateName,
 }: SingleAttendeeSectionImports) {
@@ -30,6 +31,7 @@ export function SingleAttendeeSection({
       <OfficeHoursAdd
         attendee={attendee}
         handleAddOfficeHourBlock={handleAddOfficeHourBlock}
+        handleOfficeHourChange={handleOfficeHourChange}
       />
     </div>
   );
