@@ -28,8 +28,6 @@ function LocationInputComponent({
     );
   }
 
-  console.log(attendee);
-
   return (
     <label htmlFor="City">
       City
