@@ -53,6 +53,8 @@ export type GeoAPIfyObject = {
   };
 };
 
+type HandleAddOfficeHourBlock = (attendee: Attendee) => void;
+
 export type LocationInputProps = {
   attendee: Attendee;
   handleUpdateLocation: (
@@ -88,10 +90,22 @@ export type MeetingCreatorImports = {
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
-export type SingleAttendeeSectionImports = {
+export type OfficeHourAddImports = {
   attendee: Attendee;
-  attendees: AttendeeArray;
-  setAttendees: SetAttendees;
+  handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
+};
+
+export type SingleAttendeeSectionImports = {
+  key: number;
+  attendee: Attendee;
+  handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
+  handleUpdateLocation: (
+    id: number,
+    city: string,
+    country: string,
+    timezoneName: string,
+  ) => void;
+  handleUpdateName: (id: number, newName: string) => void;
 };
 
 export type ScheduleViewerImports = {

@@ -17,7 +17,7 @@ div.geoapify-container input {
   flex-wrap: wrap;
   gap: var(--spacing-xs);
 }
-.attendee-row > button {
+.attendee-row > div > button {
   align-self: end;
   margin: 0;
 }
