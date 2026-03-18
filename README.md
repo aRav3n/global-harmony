@@ -76,6 +76,7 @@ Here is what our meeting looks like in Google calendar. Keep in mind that the ti
 - Let users set and share their available hours via a URL
 - Add local storage to save users location
 - Add method to get users current location so they don't have to fill it in
+- Add functionality to delete attendees
 
 ## Installation Instructions
 
