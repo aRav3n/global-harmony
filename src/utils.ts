@@ -1,6 +1,7 @@
 import type React from "react";
 import type {
   AttendeeArray,
+  OfficeHourBlock,
   SetAttendees,
   UpdateMeetingTimeFromStringImports,
 } from "./types";
@@ -15,6 +16,48 @@ const calculateHhMmTimeStringDifference = (
   };
 
   return toMinutes(newTimeString) - toMinutes(previousTimeString);
+};
+
+export const checkIfAcceptableMeetingTime = (
+  time: Date,
+  timezone: string,
+  attendeeOfficeHours: OfficeHourBlock[],
+) => {
+  const timeString = time.toLocaleTimeString("en-gb", { timeZone: timezone });
+
+  if (attendeeOfficeHours.length === 0) {
+    const defaultEarliestAcceptableTime = 6;
+    const defaultLatestAcceptableTime = 22;
+    const hour = Number(timeString.slice(0, 2));
+
+    return hour < defaultEarliestAcceptableTime ||
+      hour > defaultLatestAcceptableTime
+      ? false
+      : true;
+  }
+
+  for (let i = 0; i < attendeeOfficeHours.length; i++) {
+    const blockToCompare = attendeeOfficeHours[i];
+    const startTimeBeforeEndTime: boolean =
+      calculateHhMmTimeStringDifference(
+        blockToCompare.start,
+        blockToCompare.end,
+      ) > 0;
+
+    if (startTimeBeforeEndTime) {
+      return (
+        calculateHhMmTimeStringDifference(blockToCompare.start, timeString) >=
+          0 &&
+        calculateHhMmTimeStringDifference(timeString, blockToCompare.end) >= 60
+      );
+    }
+
+    return (
+      calculateHhMmTimeStringDifference(blockToCompare.start, timeString) >=
+        0 ||
+      calculateHhMmTimeStringDifference(timeString, blockToCompare.end) >= 60
+    );
+  }
 };
 
 export const convertDateTimeToHhMmFormat = (

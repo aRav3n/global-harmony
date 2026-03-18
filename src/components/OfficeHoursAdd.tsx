@@ -1,4 +1,4 @@
-import type { Attendee, OfficeHourAddImports } from "../types";
+import type { OfficeHourAddImports } from "../types";
 import "../styles/OfficeHoursAdd.css";
 
 export function OfficeHoursAdd({

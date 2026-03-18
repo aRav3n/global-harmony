@@ -1,22 +1,26 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import type { ScheduleViewerImports, TableRowProps } from "../types";
-import { convertDateToString, generateHeadingTimeString } from "../utils";
+import { generateHeadingTimeString } from "../utils";
+import { ScheduleTableData } from "../components/ScheduleTableData";
 import "../styles/ScheduleViewer.css";
-import { useEffect } from "react";
 
 export function ScheduleViewer({
   attendees,
   date,
   setMeetingTime,
 }: ScheduleViewerImports) {
-  const earliestAcceptableTime = 6;
-  const latestAcceptableTime = 22;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!attendees[0] || !attendees[0].timezoneName || typeof date !== "object") {
+    if (
+      !attendees[0] ||
+      !attendees[0].timezoneName ||
+      typeof date !== "object"
+    ) {
       navigate("/");
     }
   }, []);
@@ -29,14 +33,6 @@ export function ScheduleViewer({
     timeSlots.push(timeslot);
   }
 
-  const checkIfAcceptableMeetingTime = (time: Date, timezone: string) => {
-    const timeString = time.toLocaleTimeString("en-gb", { timeZone: timezone });
-    const hour = Number(timeString.slice(0, 2));
-    return hour < earliestAcceptableTime || hour > latestAcceptableTime
-      ? false
-      : true;
-  };
-
   function TableRow({ time }: TableRowProps) {
     return (
       <tr
@@ -46,24 +42,13 @@ export function ScheduleViewer({
           navigate("/create");
         }}
       >
-        {attendees.map((attendee) => {
-          const localDateTimeString = convertDateToString(
-            time,
-            attendee.timezoneName,
-          );
-          const acceptableMeetingTime = checkIfAcceptableMeetingTime(
-            time,
-            attendee.timezoneName,
-          );
-          return (
-            <td
-              className={acceptableMeetingTime ? "" : "bad-time"}
-              key={attendee.id}
-            >
-              {localDateTimeString}
-            </td>
-          );
-        })}
+        {attendees.map((attendee) => (
+          <ScheduleTableData
+            key={attendee.id}
+            attendee={attendee}
+            time={time}
+          />
+        ))}
       </tr>
     );
   }

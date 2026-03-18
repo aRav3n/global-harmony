@@ -102,6 +102,11 @@ export type OfficeHourAddImports = {
   handleOfficeHourChange: handleOfficeHourChange;
 };
 
+export type ScheduleTableDataImports = {
+  attendee: Attendee;
+  time: Date;
+}
+
 export type SingleAttendeeSectionImports = {
   key: number;
   attendee: Attendee;
