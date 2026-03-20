@@ -1,20 +1,33 @@
 import type { ShareHoursButtonImports } from "../types";
 import "../styles/ShareHoursButton.css";
 import { useNavigate } from "react-router-dom";
+import {
+  copyStringToClipboard,
+  generatePreloadStringSegmentForAttendee,
+} from "../utils";
 
 export function ShareHoursButton({
   fullTeam,
   attendeeArray,
   attendee,
 }: ShareHoursButtonImports) {
-  const basePageUrl = `${window.location.href}preload/`;
+  if (!attendeeArray && !attendee) {
+    return null;
+  }
 
-  
+  const basePageUrl = `${window.location.href}preload`;
 
-  const preloadLink = basePageUrl + "";
+  const attendees = attendeeArray ? attendeeArray : [attendee];
 
   const handleClick = () => {
-    console.log({ preloadLink });
+    let preloadLink = basePageUrl;
+    for (let i = 0; i < attendees.length; i++) {
+      const preloadStringSegment = generatePreloadStringSegmentForAttendee(
+        attendees[i],
+      );
+      preloadLink += preloadStringSegment;
+    }
+    copyStringToClipboard(preloadLink);
   };
 
   return (

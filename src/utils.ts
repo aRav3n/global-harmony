@@ -1,5 +1,6 @@
 import type React from "react";
 import type {
+  Attendee,
   AttendeeArray,
   OfficeHourBlock,
   SetAttendees,
@@ -99,6 +100,19 @@ export const convertDateToString =
     return dateTimeString;
   };
 
+export const copyStringToClipboard = async (stringToCopy: string) => {
+  try {
+    await navigator.clipboard.writeText(stringToCopy);
+  } catch (err) {
+    const textArea = document.createElement("textarea");
+    textArea.value = stringToCopy;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+  }
+};
+
 export const generateHeadingTimeString = (dateTime: Date) => {
   const dateTimeString = dateTime.toLocaleString(undefined, {
     day: "numeric",
@@ -109,6 +123,82 @@ export const generateHeadingTimeString = (dateTime: Date) => {
     year: "numeric",
   });
   return dateTimeString;
+};
+
+export const generatePreloadStringSegmentForAttendee = (
+  attendee: Attendee | null,
+) => {
+  if (!attendee) {
+    return null;
+  }
+
+  const replaceBackslashInString = (string: string | number) => {
+    if (typeof string === "number") {
+      return string.toString();
+    }
+
+    const stringArray = string.split("/");
+    let stringToReturn = "";
+    for (let i = 0; i < stringArray.length; i++) {
+      if (stringToReturn.length > 0) {
+        stringToReturn += "%30";
+      }
+      stringToReturn += stringArray[i];
+    }
+    return stringToReturn;
+  };
+
+  const replaceDashInString = (string: string | number) => {
+    if (typeof string === "number") {
+      return string.toString();
+    }
+
+    const stringArray = string.split("-");
+    let stringToReturn = "";
+    for (let i = 0; i < stringArray.length; i++) {
+      if (stringToReturn.length > 0) {
+        stringToReturn += "%40";
+      }
+      stringToReturn += stringArray[i];
+    }
+    return stringToReturn;
+  };
+
+  const replaceUndesirableCharacters = (string: string | number) => {
+    const stringWithBackslashesReplaced = replaceBackslashInString(string);
+    const stringWithBackslashesAndDashesReplaced = replaceDashInString(
+      stringWithBackslashesReplaced,
+    );
+    return stringWithBackslashesAndDashesReplaced;
+  };
+
+  let preloadStringSegment = "?user=";
+
+  const appendToStringSegment = (key: string, value: string | number) => {
+    preloadStringSegment += `${key}-${replaceUndesirableCharacters(value)}_`;
+  };
+
+  for (const key in attendee) {
+    const value = attendee[key as keyof Attendee];
+
+    // The only object typeof, as controlled by Attendee type, is the hour block array
+    if (typeof value === "object") {
+      for (const hourBlock of value) {
+        for (const hourKey in hourBlock) {
+          const hourValue = hourBlock[hourKey as keyof OfficeHourBlock];
+          appendToStringSegment(`${hourKey}HourBlock`, hourValue);
+        }
+      }
+    } else {
+      appendToStringSegment(key, value);
+    }
+  }
+  preloadStringSegment = preloadStringSegment.substring(
+    0,
+    preloadStringSegment.length - 1,
+  );
+
+  return preloadStringSegment;
 };
 
 export const handleAddLocations = (

@@ -62,7 +62,7 @@ function App() {
           }
         />
         <Route
-          path="/preload/:jsonString"
+          path="/preload"
           element={
             <LocationSelector
               attendees={attendees}
