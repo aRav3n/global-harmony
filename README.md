@@ -21,6 +21,7 @@ This is an intuitive scheduling website that uses the GeoApify API for locations
 
 - Select a meeting date
 - View time slots compared between timezones
+- Add custom office hours for attendees
 - Output a meeting to various calendars
   - Currently supported:
     - Apple calendar
@@ -73,7 +74,7 @@ Here is what our meeting looks like in Google calendar. Keep in mind that the ti
 
 ## Future Improvements
 
-- Let users set and share their available hours via a URL
+- Let users share their available hours via a URL
 - Add local storage to save users location
 - Add method to get users current location so they don't have to fill it in
 - Add functionality to delete attendees
