@@ -1,0 +1,22 @@
+@import "./theme.css";
+
+div#copy-notification {
+  background-color: var(--color-bg-hover);
+  border: var(--border-width) var(--border-style) var(--color-border);
+  border-radius: calc(var(--border-radius-md) / 2);
+  bottom: 0;
+  box-sizing: border-box;
+  min-height: min(50vh, 200px);
+  padding: var(--spacing-sm);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+div#copy-notification h1 {
+  color: var(--color-text);
+  text-align: center;
+}
+div#copy-notification p {
+  color: var(--color-text);
+}

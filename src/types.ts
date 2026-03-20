@@ -133,6 +133,11 @@ export type ScheduleViewerImports = {
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
+export type SuccessfulCopyNotificationImports = {
+  success: boolean | null;
+  setSuccess: React.Dispatch<React.SetStateAction<boolean | null>>;
+};
+
 export type TableRowProps = {
   time: Date;
 };

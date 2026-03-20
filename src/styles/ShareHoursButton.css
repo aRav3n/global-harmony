@@ -3,6 +3,7 @@
 div.share-hours-container {
   display: flex;
   gap: var(--spacing-sm);
+  position: relative;
 }
 div.share-hours-container > button {
   text-wrap: nowrap;
