@@ -11,22 +11,29 @@ export function SingleAttendeeSection({
   handleUpdateName,
 }: SingleAttendeeSectionImports) {
   return (
-    <div>
-      <div key={attendee.id} className="attendee-row">
-        <label htmlFor={`${attendee.id}-name`}>
-          Name
-          <input
-            type="text"
-            id={`${attendee.id}-name`}
-            placeholder={`Person ${attendee.name}`}
-            value={attendee.name}
-            onChange={(e) => handleUpdateName(attendee.id, e.target.value)}
-            className="attendee-input"
+    <>
+      <div>
+        <div key={attendee.id} className="attendee-row">
+          <label htmlFor={`${attendee.id}-name`}>
+            Name
+            <input
+              type="text"
+              id={`${attendee.id}-name`}
+              placeholder={`Person ${attendee.name}`}
+              value={attendee.name}
+              onChange={(e) => handleUpdateName(attendee.id, e.target.value)}
+              className="attendee-input"
+            />
+          </label>
+          <LocationInput
+            attendee={attendee}
+            handleUpdateLocation={handleUpdateLocation}
           />
-        </label>
-        <LocationInput
+        </div>
+        <ShareHoursButton
+          fullTeam={false}
+          attendeeArray={null}
           attendee={attendee}
-          handleUpdateLocation={handleUpdateLocation}
         />
       </div>
       <OfficeHoursAdd
@@ -34,7 +41,6 @@ export function SingleAttendeeSection({
         handleAddOfficeHourBlock={handleAddOfficeHourBlock}
         handleOfficeHourChange={handleOfficeHourChange}
       />
-      <ShareHoursButton fullTeam={false} attendeeArray={null} attendee={attendee}/>
-    </div>
+    </>
   );
 }

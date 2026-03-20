@@ -3,4 +3,15 @@
 div.office-hour-block {
   align-self: flex-start;
   display: flex;
+  gap: var(--spacing-xs);
+}
+
+div.office-hours-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.office-hours-section {
+  display: flex;
+  flex-direction: column;
 }
