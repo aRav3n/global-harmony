@@ -105,7 +105,13 @@ export type OfficeHourAddImports = {
 export type ScheduleTableDataImports = {
   attendee: Attendee;
   time: Date;
-}
+};
+
+export type ShareHoursButtonImports = {
+  fullTeam: boolean;
+  attendeeArray: AttendeeArray | null;
+  attendee: Attendee | null;
+};
 
 export type SingleAttendeeSectionImports = {
   key: number;

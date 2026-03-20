@@ -1,6 +1,7 @@
 import { LocationInput } from "./LocationInput";
 import type { SingleAttendeeSectionImports } from "../types";
 import { OfficeHoursAdd } from "./OfficeHoursAdd";
+import { ShareHoursButton } from "./ShareHoursButton";
 
 export function SingleAttendeeSection({
   attendee,
@@ -33,6 +34,7 @@ export function SingleAttendeeSection({
         handleAddOfficeHourBlock={handleAddOfficeHourBlock}
         handleOfficeHourChange={handleOfficeHourChange}
       />
+      <ShareHoursButton fullTeam={false} attendeeArray={null} attendee={attendee}/>
     </div>
   );
 }

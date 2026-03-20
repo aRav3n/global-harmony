@@ -8,6 +8,7 @@ import type {
 } from "../types";
 import { SingleAttendeeSection } from "./SingleAttendeeSection";
 import { handleAddLocations } from "../utils";
+import { ShareHoursButton } from "./ShareHoursButton";
 
 export function AttendeesSection({
   attendees,
@@ -137,6 +138,11 @@ export function AttendeesSection({
         <button tabIndex={0} onClick={handlePickATime}>
           ⏱️ Pick a Time
         </button>
+        <ShareHoursButton
+          fullTeam={true}
+          attendee={null}
+          attendeeArray={attendees}
+        />
       </div>
     </>
   );

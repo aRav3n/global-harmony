@@ -1,0 +1,9 @@
+@import "./theme.css";
+
+div.share-hours-container {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+div.share-hours-container > button {
+  text-wrap: nowrap;
+}

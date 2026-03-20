@@ -3,6 +3,7 @@ import { useState } from "react";
 import { LocationSelector } from "./pages/LocationSelector";
 import { ScheduleViewer } from "./pages/ScheduleViewer";
 import { MeetingCreator } from "./pages/MeetingCreator";
+import { NotFound } from "./pages/NotFound";
 import type { AttendeeArray, MeetingInfo } from "./types";
 import "./styles/App.css";
 
@@ -60,6 +61,20 @@ function App() {
             />
           }
         />
+        <Route
+          path="/preload/:jsonString"
+          element={
+            <LocationSelector
+              attendees={attendees}
+              setAttendees={setAttendees}
+              date={date}
+              setDate={setDate}
+              nextId={nextId}
+              setNextId={setNextId}
+            />
+          }
+        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
