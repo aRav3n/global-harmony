@@ -53,7 +53,6 @@ export const checkIfAcceptableMeetingTime = (
           0 &&
         calculateHhMmTimeStringDifference(timeString, blockToCompare.end) >= 60;
 
-      console.log({ timeString, timeIsGood });
       if (timeIsGood && !acceptableTime) {
         setAcceptableTime(timeIsGood);
       }
@@ -63,7 +62,6 @@ export const checkIfAcceptableMeetingTime = (
           0 ||
         calculateHhMmTimeStringDifference(timeString, blockToCompare.end) >= 60;
 
-      console.log({ timeString, timeIsGood });
       if (timeIsGood && !acceptableTime) {
         setAcceptableTime(timeIsGood);
       }
