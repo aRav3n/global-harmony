@@ -6,11 +6,11 @@ div#copy-notification {
   border-radius: calc(var(--border-radius-md) / 2);
   bottom: 0;
   box-sizing: border-box;
+  left: 0;
   min-height: min(50vh, 200px);
   padding: var(--spacing-sm);
   position: absolute;
-  left: 0;
-  width: 100%;
+  width: min(80vw, 400px);
   z-index: 1;
 }
 div#copy-notification h1 {

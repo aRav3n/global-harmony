@@ -39,11 +39,13 @@ export function ShareHoursButton({
   };
 
   return (
-    <div className="share-hours-container">
-      <button type="button" onClick={handleClick}>
-        🔗 Get My {fullTeam ? "Team's" : null} Link
-      </button>
+    <>
+      <div className="share-hours-container">
+        <button type="button" onClick={handleClick}>
+          🔗 Get My {fullTeam ? "Team's" : null} Link
+        </button>
+      </div>
       <SuccessfulCopyNotification success={success} setSuccess={setSuccess} />
-    </div>
+    </>
   );
 }

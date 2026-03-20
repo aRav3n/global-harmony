@@ -28,18 +28,16 @@ div.geoapify-container input {
   gap: var(--spacing-md);
 }
 
-aside.about {
-  line-height: 1.6;
-  color: var(--color-text-faint);
-  font-size: 0.95rem;
-  max-width: 30rem;
-  min-width: 300px;
-  padding: 0;
-  width: 50%;
+.attendees-section > div {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  position: relative;
 }
-aside.about > p {
+
+.attendees-section > div button {
   margin: 0;
-  padding: 0;
 }
 
 button.today-button {
@@ -95,11 +93,11 @@ input:hover {
 }
 
 .location-selector-content {
+  align-items: center;
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2xl);
-  max-width: 50rem;
 }
 
 .location-selector-main {

@@ -224,20 +224,6 @@ export function LocationSelector({
             setNextId={setNextId}
           />
         </div>
-
-        <aside className="about">
-          <p>
-            Seamlessly bridge the gap between diverse time zones with our
-            intuitive scheduling tool. Designed for simplicity, this solution
-            eliminates the hassle of account creation, enabling users to select
-            optimal meeting times effortlessly. By coordinating collaborations
-            when team members are most alert and engaged, the tool helps you
-            prioritize productivity and mitigate the challenges of remote work.
-            Experience a world where scheduling becomes an integral part of your
-            team’s harmony - try it out today and transform how you connect with
-            colleagues across the globe!
-          </p>
-        </aside>
       </main>
       <Footer />
     </div>
