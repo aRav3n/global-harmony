@@ -113,6 +113,10 @@ export const copyStringToClipboard = async (stringToCopy: string) => {
   }
 };
 
+export const createAttendeeObjectFromString = (attendeeString: string) => {
+  const attendeeObject = {};
+};
+
 export const generateHeadingTimeString = (dateTime: Date) => {
   const dateTimeString = dateTime.toLocaleString(undefined, {
     day: "numeric",
@@ -164,12 +168,32 @@ export const generatePreloadStringSegmentForAttendee = (
     return stringToReturn;
   };
 
+  const replaceSpaceInString = (string: string | number) => {
+    if (typeof string === "number") {
+      return string.toString();
+    }
+
+    const stringArray = string.split(" ");
+    let stringToReturn = "";
+    for (let i = 0; i < stringArray.length; i++) {
+      if (stringToReturn.length > 0) {
+        stringToReturn += "%20";
+      }
+      stringToReturn += stringArray[i];
+    }
+    return stringToReturn;
+  };
+
+  // replace characters, %20 = space, %30 = backslash, %40 = dash
   const replaceUndesirableCharacters = (string: string | number) => {
     const stringWithBackslashesReplaced = replaceBackslashInString(string);
     const stringWithBackslashesAndDashesReplaced = replaceDashInString(
       stringWithBackslashesReplaced,
     );
-    return stringWithBackslashesAndDashesReplaced;
+    const finalizedString = replaceSpaceInString(
+      stringWithBackslashesAndDashesReplaced,
+    );
+    return finalizedString;
   };
 
   let preloadStringSegment = "?user=";
