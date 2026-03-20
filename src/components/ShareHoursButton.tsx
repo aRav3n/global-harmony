@@ -30,8 +30,12 @@ export function ShareHoursButton({
       );
       preloadLink += preloadStringSegment;
     }
-    await copyStringToClipboard(preloadLink);
-    setSuccess(true);
+    if (preloadLink.length === basePageUrl.length) {
+      setSuccess(false);
+    } else {
+      await copyStringToClipboard(preloadLink);
+      setSuccess(true);
+    }
   };
 
   return (

@@ -128,8 +128,8 @@ export const generateHeadingTimeString = (dateTime: Date) => {
 export const generatePreloadStringSegmentForAttendee = (
   attendee: Attendee | null,
 ) => {
-  if (!attendee) {
-    return null;
+  if (!attendee || attendee.name === "" || attendee.city === "") {
+    return "";
   }
 
   const replaceBackslashInString = (string: string | number) => {

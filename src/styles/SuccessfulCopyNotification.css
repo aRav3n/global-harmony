@@ -20,3 +20,7 @@ div#copy-notification h1 {
 div#copy-notification p {
   color: var(--color-text);
 }
+
+div#copy-notification.failure {
+  background-color: var(--color-bad);
+}
