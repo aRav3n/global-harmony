@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import type {
   Attendee,
@@ -7,16 +7,35 @@ import type {
   OfficeHourBlock,
 } from "../types";
 import { SingleAttendeeSection } from "./SingleAttendeeSection";
-import { handleAddLocations } from "../utils";
+import {
+  addNewAttendeeToArray,
+  generateAttendeeArrayFromParamString,
+  handleAddLocations,
+} from "../utils";
 import { ShareHoursButton } from "./ShareHoursButton";
+import { useEffect } from "react";
 
 export function AttendeesSection({
   attendees,
   setAttendees,
-  nextId,
-  setNextId,
 }: AttendeesSectionImports) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const userParams = searchParams.getAll("user");
+
+  useEffect(() => {
+    if (userParams.length > 0) {
+      const preloadedAttendees =
+        generateAttendeeArrayFromParamString(userParams);
+      if (preloadedAttendees.length < 2) {
+        addNewAttendeeToArray(preloadedAttendees)
+      }
+      setAttendees(preloadedAttendees);
+    } else {
+      handleAddLocations(2, attendees, setAttendees);
+    }
+  }, []);
 
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
     const newOfficeHourBlock = {
@@ -28,10 +47,10 @@ export function AttendeesSection({
     const newAttendeesArray = [];
 
     for (let i = 0; i < attendees.length; i++) {
-      const currentAttendee = attendees[i];
+      const currentAttendee = {...attendees[i]};
       if (attendee.id === currentAttendee.id) {
         const updatedAttendee = currentAttendee;
-        updatedAttendee.officeHours.push(newOfficeHourBlock);
+        updatedAttendee.officeHours = [...currentAttendee.officeHours, newOfficeHourBlock];
       }
       newAttendeesArray.push(currentAttendee);
     }
@@ -45,11 +64,11 @@ export function AttendeesSection({
   ) => {
     const updatedAttendee = { ...attendee };
     const updatedOfficeHourArray = [];
-    for (let i = 0; i < attendee.officeHours.length; i++) {
+    for (let i = 0; i < updatedAttendee.officeHours.length; i++) {
       const officeHourBlockToPush =
-        attendee.officeHours[i].id === newOfficeHourBlock.id
+        updatedAttendee.officeHours[i].id === newOfficeHourBlock.id
           ? newOfficeHourBlock
-          : { ...attendee.officeHours[i] };
+          : { ...updatedAttendee.officeHours[i] };
       updatedOfficeHourArray.push(officeHourBlockToPush);
     }
     updatedAttendee.officeHours = updatedOfficeHourArray;
@@ -130,7 +149,7 @@ export function AttendeesSection({
       <div>
         <button
           onClick={() => {
-            handleAddLocations(1, attendees, setAttendees, nextId, setNextId);
+            handleAddLocations(1, attendees, setAttendees);
           }}
         >
           📍 Add More Locations

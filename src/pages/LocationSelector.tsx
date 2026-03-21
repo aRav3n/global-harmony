@@ -5,15 +5,12 @@ import { Header } from "../components/Header";
 import { AttendeesSection } from "../components/AttendeesSection";
 import "../styles/LocationSelector.css";
 import type { LocationSelectorImports } from "../types";
-import { handleAddLocations } from "../utils";
 
 export function LocationSelector({
   attendees,
   setAttendees,
   date,
   setDate,
-  nextId,
-  setNextId,
 }: LocationSelectorImports) {
   const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
 
@@ -190,12 +187,6 @@ export function LocationSelector({
     );
   }
 
-  useEffect(() => {
-    if (attendees.length < 2) {
-      handleAddLocations(2, attendees, setAttendees, nextId, setNextId);
-    }
-  }, []);
-
   return (
     <div className="location-selector-container">
       <Header />
@@ -217,12 +208,7 @@ export function LocationSelector({
             </button>
           </div>
 
-          <AttendeesSection
-            attendees={attendees}
-            setAttendees={setAttendees}
-            nextId={nextId}
-            setNextId={setNextId}
-          />
+          <AttendeesSection attendees={attendees} setAttendees={setAttendees} />
         </div>
       </main>
       <Footer />

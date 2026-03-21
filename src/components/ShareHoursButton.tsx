@@ -18,7 +18,7 @@ export function ShareHoursButton({
     return null;
   }
 
-  const basePageUrl = `${window.location.href}preload`;
+  const basePageUrl = `${window.location.href}preload?`;
 
   const attendees = attendeeArray ? attendeeArray : [attendee];
 
@@ -28,6 +28,9 @@ export function ShareHoursButton({
       const preloadStringSegment = generatePreloadStringSegmentForAttendee(
         attendees[i],
       );
+      if (preloadLink.length > basePageUrl.length) {
+        preloadLink += "&";
+      }
       preloadLink += preloadStringSegment;
     }
     if (preloadLink.length === basePageUrl.length) {

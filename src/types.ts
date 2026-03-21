@@ -15,13 +15,32 @@ export type Attendee = {
 
 export type AttendeeArray = Attendee[];
 
+type AttendeeKeyStrings =
+  | "id"
+  | "name"
+  | "city"
+  | "country"
+  | "timezoneName"
+  | "officeHours";
+
+export const attendeeKeyStringTypeGuard = (
+  key: string,
+): key is AttendeeKeyStrings => {
+  return [
+    "id",
+    "name",
+    "city",
+    "country",
+    "timezoneName",
+    "officeHours",
+  ].includes(key as AttendeeKeyStrings);
+};
+
 export type SetAttendees = React.Dispatch<React.SetStateAction<AttendeeArray>>;
 
 export type AttendeesSectionImports = {
   attendees: AttendeeArray;
   setAttendees: SetAttendees;
-  nextId: number;
-  setNextId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type CalendarButtonImports = {
@@ -76,8 +95,6 @@ export type LocationSelectorImports = {
   setAttendees: SetAttendees;
   date: Date;
   setDate: React.Dispatch<React.SetStateAction<Date>>;
-  nextId: number;
-  setNextId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type MeetingInfo = {
@@ -101,6 +118,16 @@ export type OfficeHourAddImports = {
   handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
   handleOfficeHourChange: handleOfficeHourChange;
 };
+
+export type OfficeHourBlockKeyStrings = "id" | "start" | "end";
+
+export const officeHourBlockKeyStringTypeGuard = (
+  key: string,
+): key is OfficeHourBlockKeyStrings => {
+  return ["id", "start", "end"].includes(key as OfficeHourBlockKeyStrings);
+};
+
+export type ParamArrayType = string[];
 
 export type ScheduleTableDataImports = {
   attendee: Attendee;

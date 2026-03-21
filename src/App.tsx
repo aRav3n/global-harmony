@@ -21,7 +21,6 @@ function App() {
   const [meetingInfo, setMeetingInfo] =
     useState<MeetingInfo>(initialMeetingInfo);
   const [meetingTime, setMeetingTime] = useState<Date | null>(null);
-  const [nextId, setNextId] = useState<number>(1);
 
   return (
     <Router>
@@ -34,8 +33,6 @@ function App() {
               setAttendees={setAttendees}
               date={date}
               setDate={setDate}
-              nextId={nextId}
-              setNextId={setNextId}
             />
           }
         />
@@ -69,8 +66,6 @@ function App() {
               setAttendees={setAttendees}
               date={date}
               setDate={setDate}
-              nextId={nextId}
-              setNextId={setNextId}
             />
           }
         />

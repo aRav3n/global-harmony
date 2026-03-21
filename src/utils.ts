@@ -1,12 +1,29 @@
-import type React from "react";
-import type {
-  Attendee,
-  AttendeeArray,
-  OfficeHourBlock,
-  SetAttendees,
-  UpdateMeetingTimeFromStringImports,
+import {
+  attendeeKeyStringTypeGuard,
+  officeHourBlockKeyStringTypeGuard,
+  type Attendee,
+  type AttendeeArray,
+  type OfficeHourBlock,
+  type ParamArrayType,
+  type SetAttendees,
+  type UpdateMeetingTimeFromStringImports,
 } from "./types";
 import { useState } from "react";
+
+const addNewAttendeeToArray = (attendeesArray: AttendeeArray) => {
+  const newPerson: Attendee = {
+    id:
+      attendeesArray.length > 0
+        ? attendeesArray[attendeesArray.length - 1].id + 1
+        : 0,
+    name: "",
+    city: "",
+    country: "",
+    timezoneName: "",
+    officeHours: [],
+  };
+  attendeesArray.push(newPerson);
+};
 
 const calculateHhMmTimeStringDifference = (
   previousTimeString: string,
@@ -20,12 +37,12 @@ const calculateHhMmTimeStringDifference = (
   return toMinutes(newTimeString) - toMinutes(previousTimeString);
 };
 
-export const checkIfAcceptableMeetingTime = (
+const checkIfAcceptableMeetingTime = (
   time: Date,
   timezone: string,
   attendeeOfficeHours: OfficeHourBlock[],
 ) => {
-  const [acceptableTime, setAcceptableTime] = useState<boolean>(false);
+  let acceptableTime;
 
   const timeString = time.toLocaleTimeString("en-gb", { timeZone: timezone });
 
@@ -55,7 +72,7 @@ export const checkIfAcceptableMeetingTime = (
         calculateHhMmTimeStringDifference(timeString, blockToCompare.end) >= 60;
 
       if (timeIsGood && !acceptableTime) {
-        setAcceptableTime(timeIsGood);
+        acceptableTime = timeIsGood;
       }
     } else {
       const timeIsGood =
@@ -64,7 +81,7 @@ export const checkIfAcceptableMeetingTime = (
         calculateHhMmTimeStringDifference(timeString, blockToCompare.end) >= 60;
 
       if (timeIsGood && !acceptableTime) {
-        setAcceptableTime(timeIsGood);
+        acceptableTime = timeIsGood;
       }
     }
   }
@@ -72,10 +89,7 @@ export const checkIfAcceptableMeetingTime = (
   return acceptableTime;
 };
 
-export const convertDateTimeToHhMmFormat = (
-  dateTime: Date,
-  timezone: string,
-) => {
+const convertDateTimeToHhMmFormat = (dateTime: Date, timezone: string) => {
   const dateTimeString = dateTime.toLocaleTimeString("en-gb", {
     hour: "2-digit",
     minute: "2-digit",
@@ -84,23 +98,22 @@ export const convertDateTimeToHhMmFormat = (
   return dateTimeString;
 };
 
-export const convertDateToString =
-  function convertUtcDateToLocalStringWithOptions(
-    dateTime: Date,
-    timezone: string,
-  ) {
-    const dateTimeString = dateTime.toLocaleString(undefined, {
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      month: "long",
-      timeZone: timezone,
-      weekday: "short",
-    });
-    return dateTimeString;
-  };
+const convertDateToString = function convertUtcDateToLocalStringWithOptions(
+  dateTime: Date,
+  timezone: string,
+) {
+  const dateTimeString = dateTime.toLocaleString(undefined, {
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "long",
+    timeZone: timezone,
+    weekday: "short",
+  });
+  return dateTimeString;
+};
 
-export const copyStringToClipboard = async (stringToCopy: string) => {
+const copyStringToClipboard = async (stringToCopy: string) => {
   try {
     await navigator.clipboard.writeText(stringToCopy);
   } catch (err) {
@@ -113,11 +126,71 @@ export const copyStringToClipboard = async (stringToCopy: string) => {
   }
 };
 
-export const createAttendeeObjectFromString = (attendeeString: string) => {
-  const attendeeObject = {};
+const generateAttendeeObjectFromParamString = (userParamsString: string) => {
+  const attendeeObject: Partial<Attendee> = { officeHours: [] };
+
+  const initialArray = userParamsString.split("_");
+
+  let officeHourBlock: Partial<OfficeHourBlock> = {};
+  const addToOfficeHours = (key: string, value: string) => {
+    if (officeHourBlockKeyStringTypeGuard(key)) {
+      switch (key) {
+        case "id":
+          officeHourBlock.id = Number(value);
+          break;
+        case "start":
+          officeHourBlock.start = value;
+          break;
+        case "end":
+          officeHourBlock.end = value;
+          break;
+      }
+
+      if (Object.keys(officeHourBlock).length === 3) {
+        attendeeObject.officeHours !== undefined &&
+          attendeeObject.officeHours.push(officeHourBlock as OfficeHourBlock);
+        officeHourBlock = {} as Partial<OfficeHourBlock>;
+      }
+    }
+  };
+
+  // get key value pairs
+  for (let i = 0; i < initialArray.length; i++) {
+    const keyValuePairArray = initialArray[i].split("-");
+    const key = keyValuePairArray[0];
+    const value = keyValuePairArray[1];
+
+    // Sort out officeHours
+    if (key === "startHourBlock") {
+      addToOfficeHours("start", value);
+    } else if (key === "endHourBlock") {
+      addToOfficeHours("end", value);
+    } else if (key === "idHourBlock") {
+      addToOfficeHours("id", value);
+    } else if (attendeeKeyStringTypeGuard(key)) {
+      if (key === "id") {
+        attendeeObject.id = Number(value);
+      } else {
+        (attendeeObject as any)[keyValuePairArray[0] as keyof Attendee] = value;
+      }
+    }
+  }
+
+  return attendeeObject as Attendee;
 };
 
-export const generateHeadingTimeString = (dateTime: Date) => {
+const generateAttendeeArrayFromParamString = (paramArray: ParamArrayType) => {
+  const attendeeArray: AttendeeArray = [];
+
+  for (let i = 0; i < paramArray.length; i++) {
+    const attendee = paramArray[i];
+    const attendeeObject = generateAttendeeObjectFromParamString(attendee);
+    attendeeArray.push(attendeeObject);
+  }
+  return attendeeArray;
+};
+
+const generateHeadingTimeString = (dateTime: Date) => {
   const dateTimeString = dateTime.toLocaleString(undefined, {
     day: "numeric",
     month: "long",
@@ -129,74 +202,30 @@ export const generateHeadingTimeString = (dateTime: Date) => {
   return dateTimeString;
 };
 
-export const generatePreloadStringSegmentForAttendee = (
-  attendee: Attendee | null,
-) => {
+const generatePreloadStringSegmentForAttendee = (attendee: Attendee | null) => {
   if (!attendee || attendee.name === "" || attendee.city === "") {
     return "";
   }
 
-  const replaceBackslashInString = (string: string | number) => {
-    if (typeof string === "number") {
-      return string.toString();
-    }
-
-    const stringArray = string.split("/");
-    let stringToReturn = "";
-    for (let i = 0; i < stringArray.length; i++) {
-      if (stringToReturn.length > 0) {
-        stringToReturn += "%30";
-      }
-      stringToReturn += stringArray[i];
-    }
-    return stringToReturn;
-  };
-
-  const replaceDashInString = (string: string | number) => {
-    if (typeof string === "number") {
-      return string.toString();
-    }
-
-    const stringArray = string.split("-");
-    let stringToReturn = "";
-    for (let i = 0; i < stringArray.length; i++) {
-      if (stringToReturn.length > 0) {
-        stringToReturn += "%40";
-      }
-      stringToReturn += stringArray[i];
-    }
-    return stringToReturn;
-  };
-
-  const replaceSpaceInString = (string: string | number) => {
-    if (typeof string === "number") {
-      return string.toString();
-    }
-
-    const stringArray = string.split(" ");
-    let stringToReturn = "";
-    for (let i = 0; i < stringArray.length; i++) {
-      if (stringToReturn.length > 0) {
-        stringToReturn += "%20";
-      }
-      stringToReturn += stringArray[i];
-    }
-    return stringToReturn;
-  };
-
-  // replace characters, %20 = space, %30 = backslash, %40 = dash
+  // replace characters, %20 = space, %30 = backslash, %40 = dash,
+  // %50 = underscore, %60 = colon
   const replaceUndesirableCharacters = (string: string | number) => {
-    const stringWithBackslashesReplaced = replaceBackslashInString(string);
-    const stringWithBackslashesAndDashesReplaced = replaceDashInString(
-      stringWithBackslashesReplaced,
-    );
-    const finalizedString = replaceSpaceInString(
-      stringWithBackslashesAndDashesReplaced,
-    );
+    if (typeof string === "number") {
+      return string.toString();
+    }
+
+    const finalizedString = string
+      .replaceAll(" ", "%20")
+      .replaceAll("/", "%2F")
+      .replaceAll("-", "~DASH~")
+      .replaceAll("_", "~UNDERSCORE~")
+      .replaceAll(":", "%3A")
+      .replaceAll("?", "%3F");
+
     return finalizedString;
   };
 
-  let preloadStringSegment = "?user=";
+  let preloadStringSegment = "user=";
 
   const appendToStringSegment = (key: string, value: string | number) => {
     preloadStringSegment += `${key}-${replaceUndesirableCharacters(value)}_`;
@@ -225,33 +254,21 @@ export const generatePreloadStringSegmentForAttendee = (
   return preloadStringSegment;
 };
 
-export const handleAddLocations = (
+const handleAddLocations = (
   numberOfLocationsToAdd: number,
   attendees: AttendeeArray,
   setAttendees: SetAttendees,
-  nextId: number,
-  setNextId: React.Dispatch<React.SetStateAction<number>>,
 ) => {
   const newAttendeeArray = [...attendees];
 
   for (let i = 0; i < numberOfLocationsToAdd; i++) {
-    const newPerson = {
-      id: nextId + i,
-      name: "",
-      city: "",
-      country: "",
-      timezoneName: "",
-      officeHours: [],
-    };
-    newAttendeeArray.push(newPerson);
+    addNewAttendeeToArray(newAttendeeArray);
   }
 
-  const newId = nextId + numberOfLocationsToAdd;
-  setNextId(newId);
   setAttendees(newAttendeeArray);
 };
 
-export const updateMeetingTimeFromString = ({
+const updateMeetingTimeFromString = ({
   meetingTime,
   setMeetingTime,
   meetingTimeString,
@@ -266,4 +283,24 @@ export const updateMeetingTimeFromString = ({
   newMeetingTime.setMinutes(meetingTime.getMinutes() + minutesIncreased);
 
   setMeetingTime(newMeetingTime);
+};
+
+export {
+  // Attendee and location functions
+  addNewAttendeeToArray,
+  generateAttendeeArrayFromParamString,
+  generatePreloadStringSegmentForAttendee,
+  handleAddLocations,
+
+  // Meeting time functions
+  checkIfAcceptableMeetingTime,
+  updateMeetingTimeFromString,
+
+  // General dateTime functions
+  convertDateTimeToHhMmFormat,
+  convertDateToString,
+
+  // General functions
+  copyStringToClipboard,
+  generateHeadingTimeString,
 };

@@ -100,6 +100,10 @@ input:hover {
   gap: var(--spacing-2xl);
 }
 
+.location-selector-content > div {
+  position: relative;
+}
+
 .location-selector-main {
   background-color: var(--color-bg-main);
   display: flex;
