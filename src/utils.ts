@@ -8,7 +8,6 @@ import {
   type SetAttendees,
   type UpdateMeetingTimeFromStringImports,
 } from "./types";
-import { useState } from "react";
 
 const addNewAttendeeToArray = (attendeesArray: AttendeeArray) => {
   const newPerson: Attendee = {
