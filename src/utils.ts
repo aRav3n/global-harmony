@@ -153,6 +153,18 @@ const generateAttendeeObjectFromParamString = (userParamsString: string) => {
     }
   };
 
+  const convertValueFromValueString = (valueString: string) => {
+    const finalizedString = valueString
+      .replaceAll("%20", " ")
+      .replaceAll("%2F", "/")
+      .replaceAll("~DASH~", "-")
+      .replaceAll("~UNDERSCORE~", "_")
+      .replaceAll("%3A", ":")
+      .replaceAll("%3F", "?");
+
+    return finalizedString;
+  };
+
   // get key value pairs
   for (let i = 0; i < initialArray.length; i++) {
     const keyValuePairArray = initialArray[i].split("-");
@@ -170,7 +182,8 @@ const generateAttendeeObjectFromParamString = (userParamsString: string) => {
       if (key === "id") {
         attendeeObject.id = Number(value);
       } else {
-        (attendeeObject as any)[keyValuePairArray[0] as keyof Attendee] = value;
+        (attendeeObject as any)[keyValuePairArray[0] as keyof Attendee] =
+          convertValueFromValueString(value);
       }
     }
   }
