@@ -27,11 +27,11 @@ export function OfficeHoursAdd({
           handleAddOfficeHourBlock(attendee);
         }}
       >
-        ⏳{" Add "}
+        ⏳{" "}
         {attendee.officeHours !== undefined && attendee.officeHours.length > 0
-          ? "More"
-          : null}{" "}
-        Office Hours
+          ? "Add More"
+          : "Set"}{" "}
+        Available Hours
       </button>
       <div className="office-hours-section">
         {attendee.officeHours.map((officeHourBlock) => {
