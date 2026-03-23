@@ -74,7 +74,6 @@ Here is what our meeting looks like in Google calendar. Keep in mind that the ti
 
 ## Future Improvements
 
-- Add local storage to save users location
 - Add method to get users current location so they don't have to fill it in
 
 ## Installation Instructions

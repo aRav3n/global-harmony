@@ -23,6 +23,7 @@ export function AttendeesSection({
   const [searchParams] = useSearchParams();
 
   const userParams = searchParams.getAll("user");
+  const localAttendeeArray = localStorage.getItem("attendeesArray");
 
   useEffect(() => {
     if (userParams.length > 0) {
@@ -32,10 +33,18 @@ export function AttendeesSection({
         addNewAttendeeToArray(preloadedAttendees);
       }
       setAttendees(preloadedAttendees);
+    } else if (localAttendeeArray) {
+      setAttendees(JSON.parse(localAttendeeArray));
     } else {
       handleAddLocations(2, attendees, setAttendees);
     }
   }, []);
+
+  useEffect(() => {
+    if (attendees.length > 0 && attendees[0].name !== "") {
+      localStorage.setItem("attendeesArray", JSON.stringify(attendees));
+    }
+  }, [attendees]);
 
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
     const newOfficeHourBlock = {
