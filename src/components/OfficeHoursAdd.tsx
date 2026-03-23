@@ -4,6 +4,7 @@ import "../styles/OfficeHoursAdd.css";
 export function OfficeHoursAdd({
   attendee,
   handleAddOfficeHourBlock,
+  handleDeleteOfficeHourBlock,
   handleOfficeHourChange,
 }: OfficeHourAddImports) {
   const updateOfficeHours = (
@@ -68,6 +69,15 @@ export function OfficeHoursAdd({
                   }}
                 />
               </label>
+              <button
+                type="button"
+                className="delete-hours-button"
+                onClick={() => {
+                  handleDeleteOfficeHourBlock(attendee.id, officeHourBlock.id);
+                }}
+              >
+                ❌ Delete
+              </button>
             </div>
           );
         })}

@@ -7,6 +7,7 @@ export function SingleAttendeeSection({
   attendee,
   handleAddOfficeHourBlock,
   handleDeleteAttendee,
+  handleDeleteOfficeHourBlock,
   handleOfficeHourChange,
   handleUpdateLocation,
   handleUpdateName,
@@ -40,6 +41,7 @@ export function SingleAttendeeSection({
       <OfficeHoursAdd
         attendee={attendee}
         handleAddOfficeHourBlock={handleAddOfficeHourBlock}
+        handleDeleteOfficeHourBlock={handleDeleteOfficeHourBlock}
         handleOfficeHourChange={handleOfficeHourChange}
       />
       <button

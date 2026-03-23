@@ -6,6 +6,10 @@ div.office-hour-block {
   gap: var(--spacing-xs);
 }
 
+div.office-hour-block > button {
+  align-self: flex-end;
+}
+
 div.office-hours-container {
   display: flex;
   flex-wrap: wrap;

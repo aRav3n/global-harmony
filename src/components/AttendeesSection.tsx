@@ -41,7 +41,10 @@ export function AttendeesSection({
     const newOfficeHourBlock = {
       start: "06:00",
       end: "23:00",
-      id: attendee.officeHours.length,
+      id:
+        attendee.officeHours.length === 0
+          ? attendee.officeHours.length
+          : attendee.officeHours[attendee.officeHours.length - 1].id + 1,
     };
 
     const newAttendeesArray = [];
@@ -59,6 +62,25 @@ export function AttendeesSection({
     }
 
     setAttendees(newAttendeesArray);
+  };
+
+  const handleDeleteOfficeHourBlock = (
+    attendeeId: number,
+    hourBlockId: number,
+  ) => {
+    const newAttendeeArray: AttendeeArray = attendees.map((attendee) => {
+      if (attendee.id === attendeeId) {
+        return {
+          ...attendee,
+          officeHours: attendee.officeHours.filter(
+            (hourBlock) => hourBlock.id !== hourBlockId,
+          ),
+        };
+      }
+      return attendee;
+    });
+
+    setAttendees(newAttendeeArray);
   };
 
   const handleDeleteAttendee = (attendeeId: number) => {
@@ -154,6 +176,7 @@ export function AttendeesSection({
             attendee={attendee}
             handleAddOfficeHourBlock={handleAddOfficeHourBlock}
             handleDeleteAttendee={handleDeleteAttendee}
+            handleDeleteOfficeHourBlock={handleDeleteOfficeHourBlock}
             handleOfficeHourChange={handleOfficeHourChange}
             handleUpdateLocation={handleUpdateLocation}
             handleUpdateName={handleUpdateName}

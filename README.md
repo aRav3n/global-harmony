@@ -74,8 +74,6 @@ Here is what our meeting looks like in Google calendar. Keep in mind that the ti
 
 ## Future Improvements
 
-- Add functionality to delete attendees
-- Add functionality to delete single office hour blocks
 - Add local storage to save users location
 - Add method to get users current location so they don't have to fill it in
 
