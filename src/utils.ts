@@ -119,11 +119,21 @@ const convertUndesirableCharactersForUrl = (
   const symbolConversionArray = [
     ["%20", " "],
     ["%2F", "/"],
-    ["~DASH~", "-"],
-    ["~UNDERSCORE~", "_"],
     ["%3A", ":"],
-    ["~AMPERSAND~", "&"],
     ["%3F", "?"],
+    ["~AMPERSAND~", "&"],
+    ["~APOSTROPHE~", "'"],
+    ["~AT~", "@"],
+    ["~DASH~", "-"],
+    ["~EQUALS~", "="],
+    ["~EXCLAMATION", "!"],
+    ["~HASH~", "#"],
+    ["~PARENTHESEScLOSE", ")"],
+    ["~PARENTHESESoPEN", "("],
+    ["~PERIOD~", "."],
+    ["~PLUS~", "+"],
+    ["~SEMICOLON~", ";"],
+    ["~UNDERSCORE~", "_"],
   ];
 
   let stringToReturn = stringToConvert;
