@@ -6,6 +6,7 @@ import { ShareHoursButton } from "./ShareHoursButton";
 export function SingleAttendeeSection({
   attendee,
   handleAddOfficeHourBlock,
+  handleDeleteAttendee,
   handleOfficeHourChange,
   handleUpdateLocation,
   handleUpdateName,
@@ -41,6 +42,14 @@ export function SingleAttendeeSection({
         handleAddOfficeHourBlock={handleAddOfficeHourBlock}
         handleOfficeHourChange={handleOfficeHourChange}
       />
+      <button
+        type="button"
+        onClick={() => {
+          handleDeleteAttendee(attendee.id);
+        }}
+      >
+        ❌ Remove Person
+      </button>
     </>
   );
 }

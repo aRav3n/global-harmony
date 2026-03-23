@@ -61,6 +61,17 @@ export function AttendeesSection({
     setAttendees(newAttendeesArray);
   };
 
+  const handleDeleteAttendee = (attendeeId: number) => {
+    const attendeesArrayWithoutUser: AttendeeArray = [];
+    for (const attendee of attendees) {
+      if (attendeeId !== attendee.id) {
+        const copyOfAttendee = { ...attendee };
+        attendeesArrayWithoutUser.push(copyOfAttendee);
+      }
+    }
+    setAttendees(attendeesArrayWithoutUser);
+  };
+
   const handleOfficeHourChange = (
     attendee: Attendee,
     newOfficeHourBlock: OfficeHourBlock,
@@ -142,6 +153,7 @@ export function AttendeesSection({
             key={attendee.id}
             attendee={attendee}
             handleAddOfficeHourBlock={handleAddOfficeHourBlock}
+            handleDeleteAttendee={handleDeleteAttendee}
             handleOfficeHourChange={handleOfficeHourChange}
             handleUpdateLocation={handleUpdateLocation}
             handleUpdateName={handleUpdateName}
@@ -155,7 +167,7 @@ export function AttendeesSection({
             handleAddLocations(1, attendees, setAttendees);
           }}
         >
-          📍 Add More Locations
+          📍 Add More People
         </button>
         <button tabIndex={0} onClick={handlePickATime}>
           ⏱️ Pick a Time

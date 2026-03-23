@@ -145,6 +145,7 @@ export type SingleAttendeeSectionImports = {
   attendee: Attendee;
   handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
   handleOfficeHourChange: handleOfficeHourChange;
+  handleDeleteAttendee: (attendeeId: number) => void;
   handleUpdateLocation: (
     id: number,
     city: string,
