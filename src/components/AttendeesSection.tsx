@@ -25,11 +25,12 @@ export function AttendeesSection({
   const userParams = searchParams.getAll("user");
 
   useEffect(() => {
+    console.log(userParams);
     if (userParams.length > 0) {
       const preloadedAttendees =
         generateAttendeeArrayFromParamString(userParams);
       if (preloadedAttendees.length < 2) {
-        addNewAttendeeToArray(preloadedAttendees)
+        addNewAttendeeToArray(preloadedAttendees);
       }
       setAttendees(preloadedAttendees);
     } else {
@@ -47,10 +48,13 @@ export function AttendeesSection({
     const newAttendeesArray = [];
 
     for (let i = 0; i < attendees.length; i++) {
-      const currentAttendee = {...attendees[i]};
+      const currentAttendee = { ...attendees[i] };
       if (attendee.id === currentAttendee.id) {
         const updatedAttendee = currentAttendee;
-        updatedAttendee.officeHours = [...currentAttendee.officeHours, newOfficeHourBlock];
+        updatedAttendee.officeHours = [
+          ...currentAttendee.officeHours,
+          newOfficeHourBlock,
+        ];
       }
       newAttendeesArray.push(currentAttendee);
     }

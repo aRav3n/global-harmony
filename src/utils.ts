@@ -112,6 +112,35 @@ const convertDateToString = function convertUtcDateToLocalStringWithOptions(
   return dateTimeString;
 };
 
+const convertUndesirableCharactersForUrl = (
+  stringToConvert: string,
+  convertingFromUrlForState: boolean,
+) => {
+  if (convertingFromUrlForState) {
+    const stringToReturn = stringToConvert;
+
+    return stringToReturn
+      .replaceAll("%20", " ")
+      .replaceAll("%2F", "/")
+      .replaceAll("~DASH~", "-")
+      .replaceAll("~UNDERSCORE~", "_")
+      .replaceAll("%3A", ":")
+      .replaceAll("~AMPERSAND~", "&")
+      .replaceAll("%3F", "?");
+  } else {
+    const stringToReturn = stringToConvert
+      .replaceAll(" ", "%20")
+      .replaceAll("/", "%2F")
+      .replaceAll("-", "~DASH~")
+      .replaceAll("_", "~UNDERSCORE~")
+      .replaceAll(":", "%3A")
+      .replaceAll("?", "%3F")
+      .replaceAll("&", "~AMPERSAND~");
+
+    return stringToReturn;
+  }
+};
+
 const copyStringToClipboard = async (stringToCopy: string) => {
   try {
     await navigator.clipboard.writeText(stringToCopy);
@@ -154,13 +183,10 @@ const generateAttendeeObjectFromParamString = (userParamsString: string) => {
   };
 
   const convertValueFromValueString = (valueString: string) => {
-    const finalizedString = valueString
-      .replaceAll("%20", " ")
-      .replaceAll("%2F", "/")
-      .replaceAll("~DASH~", "-")
-      .replaceAll("~UNDERSCORE~", "_")
-      .replaceAll("%3A", ":")
-      .replaceAll("%3F", "?");
+    const finalizedString = convertUndesirableCharactersForUrl(
+      valueString,
+      true,
+    );
 
     return finalizedString;
   };
@@ -219,20 +245,12 @@ const generatePreloadStringSegmentForAttendee = (attendee: Attendee | null) => {
     return "";
   }
 
-  // replace characters, %20 = space, %30 = backslash, %40 = dash,
-  // %50 = underscore, %60 = colon
   const replaceUndesirableCharacters = (string: string | number) => {
     if (typeof string === "number") {
       return string.toString();
     }
 
-    const finalizedString = string
-      .replaceAll(" ", "%20")
-      .replaceAll("/", "%2F")
-      .replaceAll("-", "~DASH~")
-      .replaceAll("_", "~UNDERSCORE~")
-      .replaceAll(":", "%3A")
-      .replaceAll("?", "%3F");
+    const finalizedString = convertUndesirableCharactersForUrl(string, false);
 
     return finalizedString;
   };
