@@ -116,29 +116,28 @@ const convertUndesirableCharactersForUrl = (
   stringToConvert: string,
   convertingFromUrlForState: boolean,
 ) => {
+  const symbolConversionArray = [
+    ["%20", " "],
+    ["%2F", "/"],
+    ["~DASH~", "-"],
+    ["~UNDERSCORE~", "_"],
+    ["%3A", ":"],
+    ["~AMPERSAND~", "&"],
+    ["%3F", "?"],
+  ];
+
+  let stringToReturn = stringToConvert;
   if (convertingFromUrlForState) {
-    const stringToReturn = stringToConvert;
-
-    return stringToReturn
-      .replaceAll("%20", " ")
-      .replaceAll("%2F", "/")
-      .replaceAll("~DASH~", "-")
-      .replaceAll("~UNDERSCORE~", "_")
-      .replaceAll("%3A", ":")
-      .replaceAll("~AMPERSAND~", "&")
-      .replaceAll("%3F", "?");
+    for (const symbolPair of symbolConversionArray) {
+      stringToReturn = stringToReturn.replaceAll(symbolPair[0], symbolPair[1]);
+    }
   } else {
-    const stringToReturn = stringToConvert
-      .replaceAll(" ", "%20")
-      .replaceAll("/", "%2F")
-      .replaceAll("-", "~DASH~")
-      .replaceAll("_", "~UNDERSCORE~")
-      .replaceAll(":", "%3A")
-      .replaceAll("?", "%3F")
-      .replaceAll("&", "~AMPERSAND~");
-
-    return stringToReturn;
+    for (const symbolPair of symbolConversionArray) {
+      stringToReturn = stringToReturn.replaceAll(symbolPair[1], symbolPair[0]);
+    }
   }
+
+  return stringToReturn;
 };
 
 const copyStringToClipboard = async (stringToCopy: string) => {

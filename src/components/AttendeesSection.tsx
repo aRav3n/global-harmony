@@ -25,7 +25,6 @@ export function AttendeesSection({
   const userParams = searchParams.getAll("user");
 
   useEffect(() => {
-    console.log(userParams);
     if (userParams.length > 0) {
       const preloadedAttendees =
         generateAttendeeArrayFromParamString(userParams);
