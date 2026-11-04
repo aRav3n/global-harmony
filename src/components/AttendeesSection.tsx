@@ -22,10 +22,15 @@ export function AttendeesSection({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const createInitialAttendeeArray = () => {
+    handleAddLocations(2, attendees, setAttendees);
+  };
+
   const userParams = searchParams.getAll("user");
-  const localAttendeeArray = localStorage.getItem("attendeesArray");
 
   useEffect(() => {
+    const localAttendeeArray = localStorage.getItem("attendeesArray");
+
     if (userParams.length > 0) {
       const preloadedAttendees =
         generateAttendeeArrayFromParamString(userParams);
@@ -36,7 +41,7 @@ export function AttendeesSection({
     } else if (localAttendeeArray) {
       setAttendees(JSON.parse(localAttendeeArray));
     } else {
-      handleAddLocations(2, attendees, setAttendees);
+      createInitialAttendeeArray();
     }
   }, []);
 
