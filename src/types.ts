@@ -144,6 +144,8 @@ export type ScheduleTableDataImports = {
   time: Date;
 };
 
+export type ResetAttendeesButtonImports = { setAttendees: SetAttendees };
+
 export type ShareHoursButtonImports = {
   fullTeam: boolean;
   attendeeArray: AttendeeArray | null;

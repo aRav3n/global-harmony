@@ -307,6 +307,19 @@ const handleAddLocations = (
   setAttendees(newAttendeeArray);
 };
 
+const handleResetLocations = (
+  numberOfLocationsToAdd: number,
+  setAttendees: SetAttendees,
+) => {
+  const newAttendeeArray: AttendeeArray = [];
+
+  for (let i = 0; i < numberOfLocationsToAdd; i++) {
+    addNewAttendeeToArray(newAttendeeArray);
+  }
+
+  setAttendees(newAttendeeArray);
+};
+
 const updateMeetingTimeFromString = ({
   meetingTime,
   setMeetingTime,
@@ -330,6 +343,7 @@ export {
   generateAttendeeArrayFromParamString,
   generatePreloadStringSegmentForAttendee,
   handleAddLocations,
+  handleResetLocations,
 
   // Meeting time functions
   checkIfAcceptableMeetingTime,

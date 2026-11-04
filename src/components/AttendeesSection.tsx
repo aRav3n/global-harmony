@@ -14,6 +14,7 @@ import {
 } from "../utils";
 import { ShareHoursButton } from "./ShareHoursButton";
 import { useEffect } from "react";
+import { ResetAttendeesButton } from "./ResetAttendeesButton";
 
 export function AttendeesSection({
   attendees,
@@ -184,6 +185,7 @@ export function AttendeesSection({
   return (
     <>
       <div className="attendees-section">
+        <ResetAttendeesButton setAttendees={setAttendees} />
         {attendees.map((attendee) => (
           <SingleAttendeeSection
             key={attendee.id}
