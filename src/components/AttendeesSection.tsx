@@ -23,11 +23,11 @@ export function AttendeesSection({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const userParams = searchParams.getAll("user");
+
   const createInitialAttendeeArray = () => {
     handleAddLocations(2, attendees, setAttendees);
   };
-
-  const userParams = searchParams.getAll("user");
 
   useEffect(() => {
     const localAttendeeArray = localStorage.getItem("attendeesArray");
@@ -45,12 +45,6 @@ export function AttendeesSection({
       createInitialAttendeeArray();
     }
   }, []);
-
-  useEffect(() => {
-    if (attendees.length > 0 && attendees[0].name !== "") {
-      localStorage.setItem("attendeesArray", JSON.stringify(attendees));
-    }
-  }, [attendees]);
 
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
     const newOfficeHourBlock = {

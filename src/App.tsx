@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./styles/App.css";
@@ -10,6 +10,12 @@ import { NotFound } from "./pages/NotFound";
 import { ScheduleViewer } from "./pages/ScheduleViewer";
 
 import type { AttendeeArray, MeetingInfo } from "./types";
+import {
+  addNewAttendeeToArray,
+  generateAttendeeArrayFromParamString,
+  handleAddLocations,
+  updateAttendeesInLocalStorage,
+} from "./utils";
 
 function App() {
   const initialMeetingInfo = {
@@ -25,6 +31,10 @@ function App() {
   const [meetingInfo, setMeetingInfo] =
     useState<MeetingInfo>(initialMeetingInfo);
   const [meetingTime, setMeetingTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    updateAttendeesInLocalStorage(attendees);
+  }, [attendees]);
 
   return (
     <Router>

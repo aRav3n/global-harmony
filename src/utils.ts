@@ -320,6 +320,12 @@ const handleResetLocations = (
   setAttendees(newAttendeeArray);
 };
 
+const updateAttendeesInLocalStorage = (attendees: AttendeeArray) => {
+  if (attendees.length > 0) {
+    localStorage.setItem("attendeesArray", JSON.stringify(attendees));
+  }
+};
+
 const updateMeetingTimeFromString = ({
   meetingTime,
   setMeetingTime,
@@ -344,6 +350,7 @@ export {
   generatePreloadStringSegmentForAttendee,
   handleAddLocations,
   handleResetLocations,
+  updateAttendeesInLocalStorage,
 
   // Meeting time functions
   checkIfAcceptableMeetingTime,
