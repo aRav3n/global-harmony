@@ -1,0 +1,13 @@
+@import "./theme.css";
+
+.meeting-creator-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.meeting-creator-main {
+  flex: 1;
+  padding: var(--spacing-2xl);
+}
+

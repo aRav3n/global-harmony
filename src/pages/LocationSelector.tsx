@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
+import { PageWrapper } from "../components/PageWrapper";
 import { AttendeesSection } from "../components/AttendeesSection";
 import "../styles/LocationSelector.css";
 import type { LocationSelectorImports } from "../types";
@@ -188,30 +187,26 @@ export function LocationSelector({
   }
 
   return (
-    <div className="location-selector-container">
-      <Header />
-      <main className="location-selector-main">
-        <div className="location-selector-content">
-          <div className="date-section">
-            <YearSelect />
-            <MonthSelect />
-            <DaySelect />
-            <CalendarSelect />
-            <button
-              className="today-button"
-              onClick={() => {
-                const today = new Date();
-                setDate(today);
-              }}
-            >
-              Today
-            </button>
-          </div>
-
-          <AttendeesSection attendees={attendees} setAttendees={setAttendees} />
+    <PageWrapper>
+      <div className="location-selector-content">
+        <div className="date-section">
+          <YearSelect />
+          <MonthSelect />
+          <DaySelect />
+          <CalendarSelect />
+          <button
+            className="today-button"
+            onClick={() => {
+              const today = new Date();
+              setDate(today);
+            }}
+          >
+            Today
+          </button>
         </div>
-      </main>
-      <Footer />
-    </div>
+
+        <AttendeesSection attendees={attendees} setAttendees={setAttendees} />
+      </div>
+    </PageWrapper>
   );
 }

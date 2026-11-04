@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type OfficeHourBlock = {
   id: number;
   start: string;
@@ -132,6 +134,8 @@ export const officeHourBlockKeyStringTypeGuard = (
 ): key is OfficeHourBlockKeyStrings => {
   return ["id", "start", "end"].includes(key as OfficeHourBlockKeyStrings);
 };
+
+export type PageWrapperImports = { children: ReactNode };
 
 export type ParamArrayType = string[];
 

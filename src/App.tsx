@@ -1,11 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./styles/App.css";
+
+import { Landing } from "./pages/Landing";
 import { LocationSelector } from "./pages/LocationSelector";
-import { ScheduleViewer } from "./pages/ScheduleViewer";
 import { MeetingCreator } from "./pages/MeetingCreator";
 import { NotFound } from "./pages/NotFound";
+import { ScheduleViewer } from "./pages/ScheduleViewer";
+
 import type { AttendeeArray, MeetingInfo } from "./types";
-import "./styles/App.css";
 
 function App() {
   const initialMeetingInfo = {
@@ -25,8 +29,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route
-          path="/"
+          path="/meeting"
           element={
             <LocationSelector
               attendees={attendees}
@@ -37,17 +42,7 @@ function App() {
           }
         />
         <Route
-          path="/schedule"
-          element={
-            <ScheduleViewer
-              attendees={attendees}
-              date={date}
-              setMeetingTime={setMeetingTime}
-            />
-          }
-        />
-        <Route
-          path="/create"
+          path="/meeting/create"
           element={
             <MeetingCreator
               attendees={attendees}
@@ -59,13 +54,23 @@ function App() {
           }
         />
         <Route
-          path="/preload"
+          path="/meeting/preload"
           element={
             <LocationSelector
               attendees={attendees}
               setAttendees={setAttendees}
               date={date}
               setDate={setDate}
+            />
+          }
+        />
+        <Route
+          path="/meeting/schedule"
+          element={
+            <ScheduleViewer
+              attendees={attendees}
+              date={date}
+              setMeetingTime={setMeetingTime}
             />
           }
         />

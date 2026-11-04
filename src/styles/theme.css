@@ -20,6 +20,9 @@
   --color-text-faint: #656363;
   --color-text-hover: #ff6f61;
 
+
+  --color-theme: #78987a;
+
   /* Typography */
   --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   --font-size-base: 1rem;
