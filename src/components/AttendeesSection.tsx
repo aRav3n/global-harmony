@@ -11,6 +11,7 @@ import {
   addNewAttendeeToArray,
   generateAttendeeArrayFromParamString,
   handleAddLocations,
+  updateAttendeesInLocalStorage,
 } from "../utils";
 import { ShareHoursButton } from "./ShareHoursButton";
 import { useEffect } from "react";
@@ -23,14 +24,21 @@ export function AttendeesSection({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const userParams = searchParams.getAll("user");
-
-  const createInitialAttendeeArray = () => {
-    handleAddLocations(2, attendees, setAttendees);
-  };
+  const localStorageKey = "attendeesArray";
 
   useEffect(() => {
-    const localAttendeeArray = localStorage.getItem("attendeesArray");
+    const localAttendeeArrayJson = localStorage.getItem(localStorageKey);
+    const attendeesAsJsonString = JSON.stringify(attendees);
+
+    if (localAttendeeArrayJson !== attendeesAsJsonString) {
+      updateAttendeesInLocalStorage(attendees);
+    }
+  }, [attendees]);
+
+  useEffect(() => {
+    const userParams = searchParams.getAll("user");
+
+    const localAttendeeArray = localStorage.getItem(localStorageKey);
 
     if (userParams.length > 0) {
       const preloadedAttendees =
@@ -40,9 +48,14 @@ export function AttendeesSection({
       }
       setAttendees(preloadedAttendees);
     } else if (localAttendeeArray) {
-      setAttendees(JSON.parse(localAttendeeArray));
-    } else {
-      createInitialAttendeeArray();
+      const jsonArray = JSON.parse(localAttendeeArray);
+      if (jsonArray.length < 2) {
+        addNewAttendeeToArray(jsonArray);
+      }
+      setAttendees(jsonArray);
+    } else if (attendees.length < 2) {
+      const numberOfLocationsToAdd = 2 - attendees.length;
+      handleAddLocations(numberOfLocationsToAdd, attendees, setAttendees);
     }
   }, []);
 
@@ -140,7 +153,7 @@ export function AttendeesSection({
     }
 
     if (newAttendeesArray[0] && newAttendeesArray[0].timezoneName) {
-      navigate("/schedule");
+      navigate("/meeting/schedule");
     }
   };
 
@@ -150,30 +163,32 @@ export function AttendeesSection({
     country: string,
     timezoneName: string,
   ) => {
-    const newAttendeeArray = [...attendees];
-    for (let i = 0; i < newAttendeeArray.length; i++) {
-      const currentAttendee = newAttendeeArray[i];
-      if (currentAttendee.id === id) {
-        currentAttendee.city = city;
-        currentAttendee.country = country;
-        currentAttendee.timezoneName = timezoneName;
-        setAttendees(newAttendeeArray);
-        return;
-      }
-    }
+    // const newAttendeeArray = [...attendees];
+    // for (let i = 0; i < newAttendeeArray.length; i++) {
+    //   const currentAttendee = { ...newAttendeeArray[i] };
+    //   if (currentAttendee.id === id) {
+    //     currentAttendee.city = city;
+    //     currentAttendee.country = country;
+    //     currentAttendee.timezoneName = timezoneName;
+    //     setAttendees(newAttendeeArray);
+    //     return;
+    //   }
+    // }
+    setAttendees((attendees) => {
+      return attendees.map((attendee) => {
+        return attendee.id === id
+          ? { ...attendee, city, country, timezoneName }
+          : attendee;
+      });
+    });
   };
 
   const handleUpdateName = (id: number, newName: string) => {
-    const newAttendeeArray = [...attendees];
-
-    for (let i = 0; i < newAttendeeArray.length; i++) {
-      const currentPerson = newAttendeeArray[i];
-      if (currentPerson.id === id) {
-        currentPerson.name = newName;
-        setAttendees(newAttendeeArray);
-        return;
-      }
-    }
+    setAttendees((attendees) => {
+      return attendees.map((attendee) => {
+        return attendee.id === id ? { ...attendee, name: newName } : attendee;
+      });
+    });
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./styles/App.css";
@@ -8,14 +8,9 @@ import { LocationSelector } from "./pages/LocationSelector";
 import { MeetingCreator } from "./pages/MeetingCreator";
 import { NotFound } from "./pages/NotFound";
 import { ScheduleViewer } from "./pages/ScheduleViewer";
+import { TimeConversion } from "./pages/TimeConversion";
 
 import type { AttendeeArray, MeetingInfo } from "./types";
-import {
-  addNewAttendeeToArray,
-  generateAttendeeArrayFromParamString,
-  handleAddLocations,
-  updateAttendeesInLocalStorage,
-} from "./utils";
 
 function App() {
   const initialMeetingInfo = {
@@ -32,25 +27,11 @@ function App() {
     useState<MeetingInfo>(initialMeetingInfo);
   const [meetingTime, setMeetingTime] = useState<Date | null>(null);
 
-  useEffect(() => {
-    updateAttendeesInLocalStorage(attendees);
-  }, [attendees]);
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route
-          path="/meeting"
-          element={
-            <LocationSelector
-              attendees={attendees}
-              setAttendees={setAttendees}
-              date={date}
-              setDate={setDate}
-            />
-          }
-        />
+        <Route path="/conversion" element={<TimeConversion />} />
         <Route
           path="/meeting/create"
           element={
@@ -81,6 +62,17 @@ function App() {
               attendees={attendees}
               date={date}
               setMeetingTime={setMeetingTime}
+            />
+          }
+        />
+        <Route
+          path="/meeting"
+          element={
+            <LocationSelector
+              attendees={attendees}
+              setAttendees={setAttendees}
+              date={date}
+              setDate={setDate}
             />
           }
         />

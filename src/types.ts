@@ -144,6 +144,11 @@ export type ScheduleTableDataImports = {
   time: Date;
 };
 
+export type SingleTimezoneImports = {
+  dateTime: Date | null;
+  setDateTime: React.Dispatch<React.SetStateAction<Date | null>>;
+};
+
 export type ResetAttendeesButtonImports = { setAttendees: SetAttendees };
 
 export type ShareHoursButtonImports = {

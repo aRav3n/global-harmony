@@ -1,0 +1,115 @@
+@import "./theme.css";
+
+.attendee-input,
+.city-input,
+div.geoapify-container input {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  flex: 1;
+  font-size: 1rem;
+  padding: var(--spacing-sm);
+  width: auto;
+}
+
+.attendee-row {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+.attendee-row > div > button {
+  align-self: end;
+  margin: 0;
+}
+
+.attendees-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.attendees-section > div {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  position: relative;
+}
+
+.attendees-section > div button {
+  margin: 0;
+}
+
+button.today-button {
+  align-self: end;
+  margin: 0;
+}
+
+div.geoapify-autocomplete-items {
+  border: 0px solid black;
+  border-bottom: var(--border-width) solid var(--color-border);
+  border-left: var(--border-width) solid var(--color-border);
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  border-right: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+}
+div.geoapify-autocomplete-items *,
+div.geoapify-autocomplete-items span.secondary-part {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+.date-section {
+  align-items: end;
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+div.geoapify-container {
+  display: flex;
+  flex: 1;
+}
+
+.geoapify-close-button {
+  display: none;
+}
+
+input {
+  padding: var(--spacing-sm);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  min-width: 80px;
+}
+input:hover {
+  border-color: var(--color-border-hover);
+}
+
+.location-selector-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.location-selector-content {
+  align-items: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.location-selector-content > div {
+  position: relative;
+}
+
+.location-selector-main {
+  background-color: var(--color-bg-main);
+  display: flex;
+  flex: 1;
+  gap: var(--spacing-3xl);
+  justify-content: center;
+  padding: var(--spacing-2xl);
+  flex-wrap: wrap;
+}

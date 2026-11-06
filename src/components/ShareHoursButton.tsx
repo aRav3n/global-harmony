@@ -18,7 +18,7 @@ export function ShareHoursButton({
     return null;
   }
 
-  const basePageUrl = `${window.location.origin}/preload?`;
+  const basePageUrl = `${window.location.origin}/meeting/preload?`;
 
   const attendees = attendeeArray ? attendeeArray : [attendee];
 
