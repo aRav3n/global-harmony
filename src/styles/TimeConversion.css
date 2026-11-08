@@ -11,40 +11,6 @@ div.geoapify-container input {
   width: auto;
 }
 
-.attendee-row {
-  align-items: flex-end;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-}
-.attendee-row > div > button {
-  align-self: end;
-  margin: 0;
-}
-
-.attendees-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.attendees-section > div {
-  align-items: flex-end;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-  position: relative;
-}
-
-.attendees-section > div button {
-  margin: 0;
-}
-
-button.today-button {
-  align-self: end;
-  margin: 0;
-}
-
 div.geoapify-autocomplete-items {
   border: 0px solid black;
   border-bottom: var(--border-width) solid var(--color-border);
@@ -75,6 +41,20 @@ div.geoapify-container {
   display: none;
 }
 
+.grid {
+  align-items: stretch;
+  display: grid;
+  gap: 2vmin;
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid > * {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+
 input {
   padding: var(--spacing-sm);
   border: var(--border-width) solid var(--color-border);
@@ -82,6 +62,12 @@ input {
   font-size: 1rem;
   min-width: 80px;
 }
+
+input#current-location {
+  background-color: var(--color-border-hover);
+  border-color: var(--color-border-hover);
+}
+
 input:hover {
   border-color: var(--color-border-hover);
 }

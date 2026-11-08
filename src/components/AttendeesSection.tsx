@@ -11,6 +11,8 @@ import {
   addNewAttendeeToArray,
   generateAttendeeArrayFromParamString,
   handleAddLocations,
+  handleUpdateLocation,
+  setUpInitialLocationArray,
   updateAttendeesInLocalStorage,
 } from "../utils";
 import { ShareHoursButton } from "./ShareHoursButton";
@@ -38,8 +40,6 @@ export function AttendeesSection({
   useEffect(() => {
     const userParams = searchParams.getAll("user");
 
-    const localAttendeeArray = localStorage.getItem(localStorageKey);
-
     if (userParams.length > 0) {
       const preloadedAttendees =
         generateAttendeeArrayFromParamString(userParams);
@@ -47,15 +47,8 @@ export function AttendeesSection({
         addNewAttendeeToArray(preloadedAttendees);
       }
       setAttendees(preloadedAttendees);
-    } else if (localAttendeeArray) {
-      const jsonArray = JSON.parse(localAttendeeArray);
-      if (jsonArray.length < 2) {
-        addNewAttendeeToArray(jsonArray);
-      }
-      setAttendees(jsonArray);
-    } else if (attendees.length < 2) {
-      const numberOfLocationsToAdd = 2 - attendees.length;
-      handleAddLocations(numberOfLocationsToAdd, attendees, setAttendees);
+    } else {
+      setUpInitialLocationArray(localStorageKey, setAttendees, attendees);
     }
   }, []);
 
@@ -105,17 +98,6 @@ export function AttendeesSection({
     setAttendees(newAttendeeArray);
   };
 
-  const handleDeleteAttendee = (attendeeId: number) => {
-    const attendeesArrayWithoutUser: AttendeeArray = [];
-    for (const attendee of attendees) {
-      if (attendeeId !== attendee.id) {
-        const copyOfAttendee = { ...attendee };
-        attendeesArrayWithoutUser.push(copyOfAttendee);
-      }
-    }
-    setAttendees(attendeesArrayWithoutUser);
-  };
-
   const handleOfficeHourChange = (
     attendee: Attendee,
     newOfficeHourBlock: OfficeHourBlock,
@@ -157,54 +139,19 @@ export function AttendeesSection({
     }
   };
 
-  const handleUpdateLocation = (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => {
-    // const newAttendeeArray = [...attendees];
-    // for (let i = 0; i < newAttendeeArray.length; i++) {
-    //   const currentAttendee = { ...newAttendeeArray[i] };
-    //   if (currentAttendee.id === id) {
-    //     currentAttendee.city = city;
-    //     currentAttendee.country = country;
-    //     currentAttendee.timezoneName = timezoneName;
-    //     setAttendees(newAttendeeArray);
-    //     return;
-    //   }
-    // }
-    setAttendees((attendees) => {
-      return attendees.map((attendee) => {
-        return attendee.id === id
-          ? { ...attendee, city, country, timezoneName }
-          : attendee;
-      });
-    });
-  };
-
-  const handleUpdateName = (id: number, newName: string) => {
-    setAttendees((attendees) => {
-      return attendees.map((attendee) => {
-        return attendee.id === id ? { ...attendee, name: newName } : attendee;
-      });
-    });
-  };
-
   return (
     <>
       <div className="attendees-section">
         <ResetAttendeesButton setAttendees={setAttendees} />
-        {attendees.map((attendee) => (
+        {attendees.map((singleAttendee) => (
           <SingleAttendeeSection
-            key={attendee.id}
-            attendee={attendee}
+            key={singleAttendee.id}
+            singleAttendee={singleAttendee}
+            attendees={attendees}
+            setAttendees={setAttendees}
             handleAddOfficeHourBlock={handleAddOfficeHourBlock}
-            handleDeleteAttendee={handleDeleteAttendee}
             handleDeleteOfficeHourBlock={handleDeleteOfficeHourBlock}
             handleOfficeHourChange={handleOfficeHourChange}
-            handleUpdateLocation={handleUpdateLocation}
-            handleUpdateName={handleUpdateName}
           />
         ))}
       </div>

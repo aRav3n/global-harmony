@@ -53,6 +53,12 @@ export type CalendarButtonImports = {
   location: string;
 };
 
+export type CalendarSelectImports = {
+  date: Date;
+  setDate: React.Dispatch<React.SetStateAction<Date>>;
+  timezoneName: string;
+};
+
 export type CalendarUrls = {
   google?: string;
   outlook?: string;
@@ -88,13 +94,8 @@ type handleOfficeHourChange = (
 ) => void;
 
 export type LocationInputProps = {
-  attendee: Attendee;
-  handleUpdateLocation: (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => void;
+  singleAttendee: Attendee;
+  setAttendees: SetAttendees;
 };
 
 export type LocationSelectorImports = {
@@ -144,11 +145,6 @@ export type ScheduleTableDataImports = {
   time: Date;
 };
 
-export type SingleTimezoneImports = {
-  dateTime: Date | null;
-  setDateTime: React.Dispatch<React.SetStateAction<Date | null>>;
-};
-
 export type ResetAttendeesButtonImports = { setAttendees: SetAttendees };
 
 export type ShareHoursButtonImports = {
@@ -157,26 +153,28 @@ export type ShareHoursButtonImports = {
   attendee: Attendee | null;
 };
 
-export type SingleAttendeeSectionImports = {
-  key: number;
-  attendee: Attendee;
-  handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
-  handleDeleteOfficeHourBlock: handleDeleteOfficeHourBlock;
-  handleOfficeHourChange: handleOfficeHourChange;
-  handleDeleteAttendee: (attendeeId: number) => void;
-  handleUpdateLocation: (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => void;
-  handleUpdateName: (id: number, newName: string) => void;
-};
-
 export type ScheduleViewerImports = {
   attendees: Attendee[];
   date: Date;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
+};
+
+export type SingleAttendeeSectionImports = {
+  key: number;
+  singleAttendee: Attendee;
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
+  handleDeleteOfficeHourBlock: handleDeleteOfficeHourBlock;
+  handleOfficeHourChange: handleOfficeHourChange;
+};
+
+export type SingleTimezoneImports = {
+  key: number;
+  singleAttendee: Attendee;
+  setAttendees: SetAttendees;
+  dateTime: Date;
+  setDateTime: React.Dispatch<React.SetStateAction<Date>>;
 };
 
 export type SuccessfulCopyNotificationImports = {

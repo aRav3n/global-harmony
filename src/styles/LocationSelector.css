@@ -66,6 +66,11 @@ div.geoapify-autocomplete-items span.secondary-part {
   flex-wrap: wrap;
 }
 
+.disabled {
+  color: gray;
+  font-style: italic;
+}
+
 div.geoapify-container {
   display: flex;
   flex: 1;

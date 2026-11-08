@@ -40,7 +40,7 @@ export function ScheduleViewer({
         className="time-slot-row"
         onClick={() => {
           setMeetingTime(time);
-          navigate("/create");
+          navigate("/meeting/create");
         }}
       >
         {attendees.map((attendee) => (

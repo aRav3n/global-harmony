@@ -1,3 +1,4 @@
+import type React from "react";
 import {
   attendeeKeyStringTypeGuard,
   officeHourBlockKeyStringTypeGuard,
@@ -237,6 +238,26 @@ const generateAttendeeArrayFromParamString = (paramArray: ParamArrayType) => {
   return attendeeArray;
 };
 
+const generateDateTimeString = (date: Date, timezoneName: string) => {
+  // const dateTimeString = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}T${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+  // return dateTimeString;
+
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: timezoneName,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? "";
+
+  return `${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get("minute")}`;
+};
+
 const generateHeadingTimeString = (dateTime: Date) => {
   const dateTimeString = dateTime.toLocaleString(undefined, {
     day: "numeric",
@@ -293,6 +314,10 @@ const generatePreloadStringSegmentForAttendee = (attendee: Attendee | null) => {
   return preloadStringSegment;
 };
 
+const getLocalTimezoneName = () => {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+};
+
 const handleAddLocations = (
   numberOfLocationsToAdd: number,
   attendees: AttendeeArray,
@@ -307,6 +332,21 @@ const handleAddLocations = (
   setAttendees(newAttendeeArray);
 };
 
+const handleDeleteAttendee = (
+  attendees: AttendeeArray,
+  setAttendees: SetAttendees,
+  attendeeId: number,
+) => {
+  const attendeesArrayWithoutUser: AttendeeArray = [];
+  for (const attendee of attendees) {
+    if (attendeeId !== attendee.id) {
+      const copyOfAttendee = { ...attendee };
+      attendeesArrayWithoutUser.push(copyOfAttendee);
+    }
+  }
+  setAttendees(attendeesArrayWithoutUser);
+};
+
 const handleResetLocations = (
   numberOfLocationsToAdd: number,
   setAttendees: SetAttendees,
@@ -318,6 +358,53 @@ const handleResetLocations = (
   }
 
   setAttendees(newAttendeeArray);
+};
+
+const handleUpdateLocation = (
+  id: number,
+  city: string,
+  country: string,
+  timezoneName: string,
+  setAttendees: SetAttendees,
+) => {
+  setAttendees((attendees) => {
+    return attendees.map((attendee) => {
+      return attendee.id === id
+        ? { ...attendee, city, country, timezoneName }
+        : attendee;
+    });
+  });
+};
+
+const handleUpdateName = (
+  id: number,
+  newName: string,
+  setAttendees: SetAttendees,
+) => {
+  setAttendees((attendees) => {
+    return attendees.map((attendee) => {
+      return attendee.id === id ? { ...attendee, name: newName } : attendee;
+    });
+  });
+};
+
+const setUpInitialLocationArray = (
+  localStorageKey: string,
+  setAttendees: SetAttendees,
+  attendees: AttendeeArray,
+) => {
+  const localAttendeeArray = localStorage.getItem(localStorageKey);
+
+  if (localAttendeeArray) {
+    const jsonArray = JSON.parse(localAttendeeArray);
+    if (jsonArray.length < 2) {
+      addNewAttendeeToArray(jsonArray);
+    }
+    setAttendees(jsonArray);
+  } else if (attendees.length < 2) {
+    const numberOfLocationsToAdd = 2 - attendees.length;
+    handleAddLocations(numberOfLocationsToAdd, attendees, setAttendees);
+  }
 };
 
 const updateAttendeesInLocalStorage = (attendees: AttendeeArray) => {
@@ -349,7 +436,11 @@ export {
   generateAttendeeArrayFromParamString,
   generatePreloadStringSegmentForAttendee,
   handleAddLocations,
+  handleDeleteAttendee,
   handleResetLocations,
+  handleUpdateLocation,
+  handleUpdateName,
+  setUpInitialLocationArray,
   updateAttendeesInLocalStorage,
 
   // Meeting time functions
@@ -359,6 +450,8 @@ export {
   // General dateTime functions
   convertDateTimeToHhMmFormat,
   convertDateToString,
+  generateDateTimeString,
+  getLocalTimezoneName,
 
   // General functions
   copyStringToClipboard,

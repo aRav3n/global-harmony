@@ -1,45 +1,52 @@
 import { LocationInput } from "./LocationInput";
-import type { SingleAttendeeSectionImports } from "../types";
 import { OfficeHoursAdd } from "./OfficeHoursAdd";
 import { ShareHoursButton } from "./ShareHoursButton";
 
+import type { SingleAttendeeSectionImports } from "../types";
+import { handleDeleteAttendee, handleUpdateName } from "../utils";
+
 export function SingleAttendeeSection({
-  attendee,
+  singleAttendee,
+  attendees,
+  setAttendees,
   handleAddOfficeHourBlock,
-  handleDeleteAttendee,
   handleDeleteOfficeHourBlock,
   handleOfficeHourChange,
-  handleUpdateLocation,
-  handleUpdateName,
 }: SingleAttendeeSectionImports) {
   return (
     <>
       <div>
-        <div key={attendee.id} className="attendee-row">
-          <label htmlFor={`${attendee.id}-name`}>
+        <div key={singleAttendee.id} className="attendee-row">
+          <label htmlFor={`${singleAttendee.id}-name`}>
             Name
             <input
               type="text"
-              id={`${attendee.id}-name`}
-              placeholder={`Person ${attendee.name}`}
-              value={attendee.name}
-              onChange={(e) => handleUpdateName(attendee.id, e.target.value)}
+              id={`${singleAttendee.id}-name`}
+              placeholder={`Person ${singleAttendee.name}`}
+              value={singleAttendee.name}
+              onChange={(e) =>
+                handleUpdateName(
+                  singleAttendee.id,
+                  e.target.value,
+                  setAttendees,
+                )
+              }
               className="attendee-input"
             />
           </label>
           <LocationInput
-            attendee={attendee}
-            handleUpdateLocation={handleUpdateLocation}
+            singleAttendee={singleAttendee}
+            setAttendees={setAttendees}
           />
         </div>
         <ShareHoursButton
           fullTeam={false}
           attendeeArray={null}
-          attendee={attendee}
+          attendee={singleAttendee}
         />
       </div>
       <OfficeHoursAdd
-        attendee={attendee}
+        attendee={singleAttendee}
         handleAddOfficeHourBlock={handleAddOfficeHourBlock}
         handleDeleteOfficeHourBlock={handleDeleteOfficeHourBlock}
         handleOfficeHourChange={handleOfficeHourChange}
@@ -47,7 +54,7 @@ export function SingleAttendeeSection({
       <button
         type="button"
         onClick={() => {
-          handleDeleteAttendee(attendee.id);
+          handleDeleteAttendee(attendees, setAttendees, singleAttendee.id);
         }}
       >
         ❌ Remove Person
