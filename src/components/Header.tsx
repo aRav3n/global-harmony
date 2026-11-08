@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
+
+import logo from "../../public/logo.png"
+
 import "../styles/Header.css";
 
 export function Header() {
   return (
     <header>
       <Link to="/">
-        <img src="./logo.png" alt="logo" />
+        <img src={logo} alt="logo" />
       </Link>
       <div>
         <h1>Global Harmony</h1>
