@@ -151,8 +151,8 @@ export function LocationSelector({
           <MonthSelect />
           <DaySelect />
           <CalendarSelect
-            date={date}
-            setDate={setDate}
+            dateTime={date}
+            setDateTime={setDate}
             timezoneName={localTimezoneName}
           />
           <button

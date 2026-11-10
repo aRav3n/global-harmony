@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { DateTime } from "luxon";
 
 import "../styles/LocationSelector.css";
 
@@ -6,8 +7,8 @@ import type { CalendarSelectImports } from "../types";
 import { generateDateTimeString } from "../utils";
 
 export function DateTimeCalendarSelect({
-  date,
-  setDate,
+  dateTime,
+  setDateTime,
   timezoneName,
 }: CalendarSelectImports) {
   const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
@@ -15,21 +16,32 @@ export function DateTimeCalendarSelect({
 
   useEffect(() => {
     if (timezoneName !== "") {
-      setCalendarDisplayDate(generateDateTimeString(date, timezoneName));
+      const displayDateTimeString = generateDateTimeString(
+        dateTime,
+        timezoneName,
+      );
+      setCalendarDisplayDate(displayDateTimeString);
       setDisabled(false);
     }
-  }, [date, timezoneName]);
+  }, [dateTime, timezoneName]);
 
   const handleCalendarDayChange = (dateString: string) => {
-    // dateString = 2026-11-12T11:37
-    console.log(dateString);
+    const dateTimeArray = dateString.split("T");
+    const dateArray = dateTimeArray[0].split("-");
+    const timeArray = dateTimeArray[1].split(":");
 
-    const dateArray = dateString.split("-");
     const year = Number(dateArray[0]);
-    const month = Number(dateArray[1]) - 1;
+    const month = Number(dateArray[1]);
     const day = Number(dateArray[2]);
-    const newDate = new Date(year, month, day);
-    setDate(newDate);
+    const hour = Number(timeArray[0]);
+    const minute = Number(timeArray[1]);
+
+    const newDate = DateTime.fromObject(
+      { year, month, day, hour, minute },
+      { zone: timezoneName },
+    );
+
+    setDateTime(newDate.toJSDate());
   };
 
   return (

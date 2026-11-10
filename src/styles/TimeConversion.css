@@ -41,20 +41,6 @@ div.geoapify-container {
   display: none;
 }
 
-.grid {
-  align-items: stretch;
-  display: grid;
-  gap: 2vmin;
-  grid-template-columns: 1fr 1fr;
-}
-
-.grid > * {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-}
-
 input {
   padding: var(--spacing-sm);
   border: var(--border-width) solid var(--color-border);
@@ -72,13 +58,7 @@ input:hover {
   border-color: var(--color-border-hover);
 }
 
-.location-selector-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.location-selector-content {
+.timezone-content {
   align-items: center;
   flex: 1;
   display: flex;
@@ -86,16 +66,11 @@ input:hover {
   gap: var(--spacing-2xl);
 }
 
-.location-selector-content > div {
+.timezone-content > div {
   position: relative;
 }
 
-.location-selector-main {
-  background-color: var(--color-bg-main);
-  display: flex;
-  flex: 1;
-  gap: var(--spacing-3xl);
-  justify-content: center;
-  padding: var(--spacing-2xl);
-  flex-wrap: wrap;
+.timezone-wrapper {
+  display: grid;
+  gap: var(--spacing-sm);
 }

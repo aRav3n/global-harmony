@@ -239,9 +239,6 @@ const generateAttendeeArrayFromParamString = (paramArray: ParamArrayType) => {
 };
 
 const generateDateTimeString = (date: Date, timezoneName: string) => {
-  // const dateTimeString = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}T${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
-  // return dateTimeString;
-
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: timezoneName,
     year: "numeric",
@@ -316,6 +313,37 @@ const generatePreloadStringSegmentForAttendee = (attendee: Attendee | null) => {
 
 const getLocalTimezoneName = () => {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
+};
+
+const getTimezoneOffsetMs = (momentInTime: Date, timezoneName: string): number => {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: timezoneName,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(momentInTime);
+
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    Number(parts.find((p) => p.type === type)?.value ?? 0);
+
+  const wallClockAsUtc = Date.UTC(
+    get("year"),
+    get("month") - 1,
+    get("day"),
+    get("hour"),
+    get("minute"),
+    get("second"),
+  );
+
+  // Drop milliseconds from the instant so both sides have second precision
+  const instantSeconds =
+    momentInTime.getTime() - momentInTime.getUTCMilliseconds();
+
+  return wallClockAsUtc - instantSeconds;
 };
 
 const handleAddLocations = (
@@ -452,6 +480,7 @@ export {
   convertDateToString,
   generateDateTimeString,
   getLocalTimezoneName,
+  getTimezoneOffsetMs,
 
   // General functions
   copyStringToClipboard,

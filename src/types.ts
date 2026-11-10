@@ -54,8 +54,8 @@ export type CalendarButtonImports = {
 };
 
 export type CalendarSelectImports = {
-  date: Date;
-  setDate: React.Dispatch<React.SetStateAction<Date>>;
+  dateTime: Date;
+  setDateTime: React.Dispatch<React.SetStateAction<Date>>;
   timezoneName: string;
 };
 
@@ -65,6 +65,12 @@ export type CalendarUrls = {
   office365?: string;
   yahoo?: string;
   appleCalendar?: string;
+};
+
+export type DeleteSingleAttendeeButtonImports = {
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  singleAttendeeId: number;
 };
 
 export type GeoAPIfyObject = {
@@ -172,6 +178,7 @@ export type SingleAttendeeSectionImports = {
 export type SingleTimezoneImports = {
   key: number;
   singleAttendee: Attendee;
+  attendees: AttendeeArray;
   setAttendees: SetAttendees;
   dateTime: Date;
   setDateTime: React.Dispatch<React.SetStateAction<Date>>;

@@ -1,60 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { DateTimeCalendarSelect } from "../components/DateTimeSelect";
-import { LocationInput } from "../components/LocationInput";
-import { PageWrapper } from "../components/PageWrapper";
-
-import {
-  addNewAttendeeToArray,
-  convertDateToString,
-  getLocalTimezoneName,
-  handleAddLocations,
-  handleUpdateLocation,
-  setUpInitialLocationArray,
-} from "../utils";
-import type { AttendeeArray, SingleTimezoneImports } from "../types";
-
 import "../styles/TimeConversion.css";
 
-function SingleTimezone({
-  singleAttendee,
-  setAttendees,
-  dateTime,
-  setDateTime,
-}: SingleTimezoneImports) {
-  useEffect(() => {
-    if (singleAttendee.timezoneName) {
-      const localTimeString = convertDateToString(
-        dateTime,
-        singleAttendee.timezoneName,
-      );
-      console.log({ localTimeString });
-    }
-  }, [singleAttendee]);
-
-  useEffect(() => {}, [dateTime, singleAttendee.timezoneName]);
-
-  return (
-    <>
-      <LocationInput
-        singleAttendee={singleAttendee}
-        setAttendees={setAttendees}
-      />
-      <DateTimeCalendarSelect
-        date={dateTime}
-        setDate={setDateTime}
-        timezoneName={singleAttendee.timezoneName}
-      />
-    </>
-  );
-}
+import { handleAddLocations, setUpInitialLocationArray } from "../utils";
+import type { AttendeeArray } from "../types";
+import { PageWrapper } from "../components/PageWrapper";
+import { SingleTimezone } from "../components/SingleTimezone";
 
 export function TimeConversion() {
-  const [utcDateTime, setUtcDateTime] = useState<Date>(new Date());
+  const [dateTime, setDateTime] = useState<Date>(new Date());
   const [attendees, setAttendees] = useState<AttendeeArray>([]);
 
   const localStorageKey = "timezoneConversionAttendeeArray";
-  const localTimezoneName = getLocalTimezoneName();
 
   useEffect(() => {
     setUpInitialLocationArray(localStorageKey, setAttendees, attendees);
@@ -62,31 +19,17 @@ export function TimeConversion() {
 
   return (
     <PageWrapper>
-      <div className="location-selector-content">
-        <div className="grid">
-          <label htmlFor="current-location">
-            City
-            <input
-              type="text"
-              name="current-location"
-              id="current-location"
-              value="Current Location"
-              disabled
-            />
-          </label>
-          <DateTimeCalendarSelect
-            date={utcDateTime}
-            setDate={setUtcDateTime}
-            timezoneName={localTimezoneName}
-          />
+      <div className="timezone-wrapper">
+        <div className="timezone-content">
           {attendees.map((singleAttendeeFromArray) => {
             return (
               <SingleTimezone
                 singleAttendee={singleAttendeeFromArray}
+                attendees={attendees}
                 setAttendees={setAttendees}
                 key={singleAttendeeFromArray.id}
-                dateTime={utcDateTime}
-                setDateTime={setUtcDateTime}
+                dateTime={dateTime}
+                setDateTime={setDateTime}
               />
             );
           })}
