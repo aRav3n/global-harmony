@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./styles/App.css";
 
-import { Landing } from "./pages/Landing";
 import { LocationSelector } from "./pages/LocationSelector";
 import { MeetingCreator } from "./pages/MeetingCreator";
 import { NotFound } from "./pages/NotFound";
@@ -30,8 +29,17 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/conversion" element={<TimeConversion />} />
+        <Route
+          path="/"
+          element={
+            <TimeConversion
+              attendees={attendees}
+              setAttendees={setAttendees}
+              dateTime={date}
+              setDateTime={setDate}
+            />
+          }
+        />
         <Route
           path="/meeting/create"
           element={

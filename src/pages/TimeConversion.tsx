@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import "../styles/TimeConversion.css";
 
 import { handleAddLocations, setUpInitialLocationArray } from "../utils";
-import type { AttendeeArray } from "../types";
+import type { TimeConversionImports } from "../types";
 import { PageWrapper } from "../components/PageWrapper";
 import { SingleTimezone } from "../components/SingleTimezone";
+import { GoToSchedulingPageButton } from "../components/ScheduleMeetingButton";
 
-export function TimeConversion() {
-  const [dateTime, setDateTime] = useState<Date>(new Date());
-  const [attendees, setAttendees] = useState<AttendeeArray>([]);
-
+export function TimeConversion({
+  attendees,
+  setAttendees,
+  dateTime,
+  setDateTime,
+}: TimeConversionImports) {
   const localStorageKey = "timezoneConversionAttendeeArray";
 
   useEffect(() => {
@@ -42,6 +45,8 @@ export function TimeConversion() {
         >
           🕔 Add More TimeZones
         </button>
+
+        <GoToSchedulingPageButton />
       </div>
     </PageWrapper>
   );

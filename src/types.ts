@@ -193,6 +193,13 @@ export type TableRowProps = {
   time: Date;
 };
 
+export type TimeConversionImports = {
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  dateTime: Date;
+  setDateTime: React.Dispatch<React.SetStateAction<Date>>;
+};
+
 export type UpdateMeetingTimeFromStringImports = {
   meetingTime: Date;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
