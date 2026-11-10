@@ -3,7 +3,7 @@ import { OfficeHoursAdd } from "./OfficeHoursAdd";
 import { ShareHoursButton } from "./ShareHoursButton";
 
 import type { SingleAttendeeSectionImports } from "../types";
-import { handleDeleteAttendee, handleUpdateName } from "../utils";
+import { handleUpdateName } from "../utils";
 import { DeleteSingleAttendeeButton } from "./DeleteSingleAttendeeButton";
 
 export function SingleAttendeeSection({
@@ -40,11 +40,15 @@ export function SingleAttendeeSection({
             setAttendees={setAttendees}
           />
         </div>
-        <ShareHoursButton
-          fullTeam={false}
-          attendeeArray={null}
-          attendee={singleAttendee}
-        />
+        {singleAttendee.city &&
+        singleAttendee.timezoneName &&
+        singleAttendee.name ? (
+          <ShareHoursButton
+            fullTeam={false}
+            attendeeArray={null}
+            attendee={singleAttendee}
+          />
+        ) : null}
       </div>
       <OfficeHoursAdd
         attendee={singleAttendee}

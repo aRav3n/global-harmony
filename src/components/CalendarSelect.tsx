@@ -4,7 +4,11 @@ import "../styles/LocationSelector.css";
 
 import type { CalendarSelectImports } from "../types";
 
-export function CalendarSelect({ date, setDate }: CalendarSelectImports) {
+export function CalendarSelect({
+  dateTime,
+  setDateTime,
+  timezoneName,
+}: CalendarSelectImports) {
   const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
 
   const handleSetCalendarDisplayDate = (
@@ -13,23 +17,22 @@ export function CalendarSelect({ date, setDate }: CalendarSelectImports) {
     day: string | null,
   ) => {
     if (year === null && month === null && day === null) {
-      const dateToSet = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+      const dateToSet = `${dateTime.getFullYear()}-${(dateTime.getMonth() + 1).toString().padStart(2, "0")}-${dateTime.getDate().toString().padStart(2, "0")}`;
       setCalendarDisplayDate(dateToSet);
     }
   };
 
   useEffect(() => {
     handleSetCalendarDisplayDate(null, null, null);
-  }, [date]);
+  }, [dateTime]);
 
   const handleCalendarDayChange = (dateString: string) => {
-    // dateString = 2026-11-10
     const dateArray = dateString.split("-");
     const year = Number(dateArray[0]);
     const month = Number(dateArray[1]) - 1;
     const day = Number(dateArray[2]);
     const newDate = new Date(year, month, day);
-    setDate(newDate);
+    setDateTime(newDate);
   };
 
   return (

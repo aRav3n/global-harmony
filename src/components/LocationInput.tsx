@@ -49,14 +49,14 @@ function LocationInputComponent({
   const selectedText =
     singleAttendee.city && singleAttendee.country
       ? `${singleAttendee.city}, ${singleAttendee.country}`
-      : "";
+      : singleAttendee.id === 0 && singleAttendee.timezoneName !== ""
+        ? "-- Your Current Location --"
+        : "";
 
   const placeholder =
     singleAttendee.city && singleAttendee.country
       ? `${singleAttendee.city}, ${singleAttendee.country}`
-      : singleAttendee.id === 0 && singleAttendee.timezoneName !== ""
-        ? "-- Current Location --"
-        : "Search for a city";
+      : "Search for a city";
 
   return (
     <label htmlFor="City">
