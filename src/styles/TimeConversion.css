@@ -1,0 +1,78 @@
+@import "./theme.css";
+
+.attendee-input,
+.city-input,
+div.geoapify-container input {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  flex: 1;
+  font-size: 1rem;
+  padding: var(--spacing-sm);
+  width: auto;
+}
+
+div.geoapify-autocomplete-items {
+  border: 0px solid black;
+  border-bottom: var(--border-width) solid var(--color-border);
+  border-left: var(--border-width) solid var(--color-border);
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  border-right: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+}
+div.geoapify-autocomplete-items *,
+div.geoapify-autocomplete-items span.secondary-part {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+.date-section {
+  align-items: end;
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+div.geoapify-container {
+  display: flex;
+  flex: 1;
+}
+
+.geoapify-close-button {
+  display: none;
+}
+
+input {
+  padding: var(--spacing-sm);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  min-width: 80px;
+}
+
+input#current-location {
+  background-color: var(--color-border-hover);
+  border-color: var(--color-border-hover);
+}
+
+input:hover {
+  border-color: var(--color-border-hover);
+}
+
+.timezone-content {
+  align-items: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.timezone-content > div {
+  position: relative;
+}
+
+.timezone-wrapper {
+  display: grid;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  justify-items: center;
+}

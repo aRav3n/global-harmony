@@ -1,11 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./styles/App.css";
+
 import { LocationSelector } from "./pages/LocationSelector";
-import { ScheduleViewer } from "./pages/ScheduleViewer";
 import { MeetingCreator } from "./pages/MeetingCreator";
 import { NotFound } from "./pages/NotFound";
+import { ScheduleViewer } from "./pages/ScheduleViewer";
+import { TimeConversion } from "./pages/TimeConversion";
+
 import type { AttendeeArray, MeetingInfo } from "./types";
-import "./styles/App.css";
 
 function App() {
   const initialMeetingInfo = {
@@ -28,26 +32,16 @@ function App() {
         <Route
           path="/"
           element={
-            <LocationSelector
+            <TimeConversion
               attendees={attendees}
               setAttendees={setAttendees}
-              date={date}
-              setDate={setDate}
+              dateTime={date}
+              setDateTime={setDate}
             />
           }
         />
         <Route
-          path="/schedule"
-          element={
-            <ScheduleViewer
-              attendees={attendees}
-              date={date}
-              setMeetingTime={setMeetingTime}
-            />
-          }
-        />
-        <Route
-          path="/create"
+          path="/meeting/create"
           element={
             <MeetingCreator
               attendees={attendees}
@@ -59,7 +53,28 @@ function App() {
           }
         />
         <Route
-          path="/preload"
+          path="/meeting/preload"
+          element={
+            <LocationSelector
+              attendees={attendees}
+              setAttendees={setAttendees}
+              date={date}
+              setDate={setDate}
+            />
+          }
+        />
+        <Route
+          path="/meeting/schedule"
+          element={
+            <ScheduleViewer
+              attendees={attendees}
+              date={date}
+              setMeetingTime={setMeetingTime}
+            />
+          }
+        />
+        <Route
+          path="/meeting"
           element={
             <LocationSelector
               attendees={attendees}

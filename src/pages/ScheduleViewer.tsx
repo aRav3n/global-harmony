@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 import type { ScheduleViewerImports, TableRowProps } from "../types";
 import { generateHeadingTimeString } from "../utils";
+
 import { ScheduleTableData } from "../components/ScheduleTableData";
+import { PageWrapper } from "../components/PageWrapper";
+
 import "../styles/ScheduleViewer.css";
 
 export function ScheduleViewer({
@@ -39,7 +40,7 @@ export function ScheduleViewer({
         className="time-slot-row"
         onClick={() => {
           setMeetingTime(time);
-          navigate("/create");
+          navigate("/meeting/create");
         }}
       >
         {attendees.map((attendee) => (
@@ -54,33 +55,29 @@ export function ScheduleViewer({
   }
 
   return (
-    <div className="schedule-viewer-container">
-      <Header />
-      <main className="schedule-viewer-main">
-        <h1>{generateHeadingTimeString(timeSlots[0])}</h1>
+    <PageWrapper>
+      <h1>{generateHeadingTimeString(timeSlots[0])}</h1>
 
-        <p className="instruction-text">
-          Click on a row to select this meeting time.
-        </p>
+      <p className="instruction-text">
+        Click on a row to select this meeting time.
+      </p>
 
-        <div className="schedule-table-container">
-          <table className="schedule-table">
-            <thead>
-              <tr>
-                {attendees.map((attendee) => {
-                  return <th key={attendee.id}>{attendee.name}</th>;
-                })}
-              </tr>
-            </thead>
-            <tbody>
-              {timeSlots.map((time, index) => (
-                <TableRow key={index} time={time} />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </main>
-      <Footer />
-    </div>
+      <div className="schedule-table-container">
+        <table className="schedule-table">
+          <thead>
+            <tr>
+              {attendees.map((attendee) => {
+                return <th key={attendee.id}>{attendee.name}</th>;
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {timeSlots.map((time, index) => (
+              <TableRow key={index} time={time} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </PageWrapper>
   );
 }

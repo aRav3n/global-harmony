@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { AttendeesSection } from "../components/AttendeesSection";
 import "../styles/LocationSelector.css";
+
+import { AttendeesSection } from "../components/AttendeesSection";
+import { CalendarSelect } from "../components/CalendarSelect";
+import { PageWrapper } from "../components/PageWrapper";
+
 import type { LocationSelectorImports } from "../types";
+import { getLocalTimezoneName } from "../utils";
 
 export function LocationSelector({
   attendees,
@@ -12,7 +13,7 @@ export function LocationSelector({
   date,
   setDate,
 }: LocationSelectorImports) {
-  const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
+  const localTimezoneName = getLocalTimezoneName();
 
   const updateDate = (
     year: number | null,
@@ -44,51 +45,6 @@ export function LocationSelector({
       updateDate(Number(year), null, null);
     }
   };
-
-  function CalendarSelect() {
-    const handleSetCalendarDisplayDate = (
-      year: string | null,
-      month: string | null,
-      day: string | null,
-    ) => {
-      if (year === null && month === null && day === null) {
-        const dateToSet = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-        setCalendarDisplayDate(dateToSet);
-      }
-    };
-
-    useEffect(() => {
-      handleSetCalendarDisplayDate(null, null, null);
-    }, [date]);
-
-    const handleCalendarDayChange = (dateString: string) => {
-      const dateArray = dateString.split("-");
-      const year = Number(dateArray[0]);
-      const month = Number(dateArray[1]) - 1;
-      const day = Number(dateArray[2]);
-      const newDate = new Date(year, month, day);
-      setDate(newDate);
-    };
-
-    return (
-      <label htmlFor="calendar">
-        Or select a date
-        <input
-          onKeyDown={(e) => {
-            e.preventDefault();
-          }}
-          type="date"
-          name="calendar"
-          id="calendar"
-          className="date-input"
-          value={calendarDisplayDate}
-          onChange={(e) => {
-            handleCalendarDayChange(e.target.value);
-          }}
-        />
-      </label>
-    );
-  }
 
   function DaySelect() {
     const year = date.getFullYear();
@@ -188,30 +144,30 @@ export function LocationSelector({
   }
 
   return (
-    <div className="location-selector-container">
-      <Header />
-      <main className="location-selector-main">
-        <div className="location-selector-content">
-          <div className="date-section">
-            <YearSelect />
-            <MonthSelect />
-            <DaySelect />
-            <CalendarSelect />
-            <button
-              className="today-button"
-              onClick={() => {
-                const today = new Date();
-                setDate(today);
-              }}
-            >
-              Today
-            </button>
-          </div>
-
-          <AttendeesSection attendees={attendees} setAttendees={setAttendees} />
+    <PageWrapper>
+      <div className="location-selector-content">
+        <div className="date-section">
+          <YearSelect />
+          <MonthSelect />
+          <DaySelect />
+          <CalendarSelect
+            dateTime={date}
+            setDateTime={setDate}
+            timezoneName={localTimezoneName}
+          />
+          <button
+            className="today-button"
+            onClick={() => {
+              const today = new Date();
+              setDate(today);
+            }}
+          >
+            Today
+          </button>
         </div>
-      </main>
-      <Footer />
-    </div>
+
+        <AttendeesSection attendees={attendees} setAttendees={setAttendees} />
+      </div>
+    </PageWrapper>
   );
 }

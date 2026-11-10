@@ -37,3 +37,7 @@ label {
   flex-direction: column;
   gap: var(--spacing-xs);
 }
+
+main {
+  background-color: var(--color-bg-light);
+}

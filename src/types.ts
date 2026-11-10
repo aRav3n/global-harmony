@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type OfficeHourBlock = {
   id: number;
   start: string;
@@ -51,12 +53,24 @@ export type CalendarButtonImports = {
   location: string;
 };
 
+export type CalendarSelectImports = {
+  dateTime: Date;
+  setDateTime: React.Dispatch<React.SetStateAction<Date>>;
+  timezoneName: string;
+};
+
 export type CalendarUrls = {
   google?: string;
   outlook?: string;
   office365?: string;
   yahoo?: string;
   appleCalendar?: string;
+};
+
+export type DeleteSingleAttendeeButtonImports = {
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  singleAttendeeId: number;
 };
 
 export type GeoAPIfyObject = {
@@ -86,13 +100,8 @@ type handleOfficeHourChange = (
 ) => void;
 
 export type LocationInputProps = {
-  attendee: Attendee;
-  handleUpdateLocation: (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => void;
+  singleAttendee: Attendee;
+  setAttendees: SetAttendees;
 };
 
 export type LocationSelectorImports = {
@@ -133,6 +142,8 @@ export const officeHourBlockKeyStringTypeGuard = (
   return ["id", "start", "end"].includes(key as OfficeHourBlockKeyStrings);
 };
 
+export type PageWrapperImports = { children: ReactNode };
+
 export type ParamArrayType = string[];
 
 export type ScheduleTableDataImports = {
@@ -140,32 +151,37 @@ export type ScheduleTableDataImports = {
   time: Date;
 };
 
+export type ResetAttendeesButtonImports = { setAttendees: SetAttendees };
+
 export type ShareHoursButtonImports = {
   fullTeam: boolean;
   attendeeArray: AttendeeArray | null;
   attendee: Attendee | null;
 };
 
-export type SingleAttendeeSectionImports = {
-  key: number;
-  attendee: Attendee;
-  handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
-  handleDeleteOfficeHourBlock: handleDeleteOfficeHourBlock;
-  handleOfficeHourChange: handleOfficeHourChange;
-  handleDeleteAttendee: (attendeeId: number) => void;
-  handleUpdateLocation: (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => void;
-  handleUpdateName: (id: number, newName: string) => void;
-};
-
 export type ScheduleViewerImports = {
   attendees: Attendee[];
   date: Date;
   setMeetingTime: React.Dispatch<React.SetStateAction<Date | null>>;
+};
+
+export type SingleAttendeeSectionImports = {
+  key: number;
+  singleAttendee: Attendee;
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  handleAddOfficeHourBlock: HandleAddOfficeHourBlock;
+  handleDeleteOfficeHourBlock: handleDeleteOfficeHourBlock;
+  handleOfficeHourChange: handleOfficeHourChange;
+};
+
+export type SingleTimezoneImports = {
+  key: number;
+  singleAttendee: Attendee;
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  dateTime: Date;
+  setDateTime: React.Dispatch<React.SetStateAction<Date>>;
 };
 
 export type SuccessfulCopyNotificationImports = {
@@ -175,6 +191,13 @@ export type SuccessfulCopyNotificationImports = {
 
 export type TableRowProps = {
   time: Date;
+};
+
+export type TimeConversionImports = {
+  attendees: AttendeeArray;
+  setAttendees: SetAttendees;
+  dateTime: Date;
+  setDateTime: React.Dispatch<React.SetStateAction<Date>>;
 };
 
 export type UpdateMeetingTimeFromStringImports = {

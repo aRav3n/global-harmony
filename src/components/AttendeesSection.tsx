@@ -11,9 +11,13 @@ import {
   addNewAttendeeToArray,
   generateAttendeeArrayFromParamString,
   handleAddLocations,
+  handleUpdateLocation,
+  setUpInitialLocationArray,
+  updateAttendeesInLocalStorage,
 } from "../utils";
 import { ShareHoursButton } from "./ShareHoursButton";
 import { useEffect } from "react";
+import { ResetAttendeesButton } from "./ResetAttendeesButton";
 
 export function AttendeesSection({
   attendees,
@@ -22,10 +26,20 @@ export function AttendeesSection({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const userParams = searchParams.getAll("user");
-  const localAttendeeArray = localStorage.getItem("attendeesArray");
+  const localStorageKey = "attendeesArray";
 
   useEffect(() => {
+    const localAttendeeArrayJson = localStorage.getItem(localStorageKey);
+    const attendeesAsJsonString = JSON.stringify(attendees);
+
+    if (localAttendeeArrayJson !== attendeesAsJsonString) {
+      updateAttendeesInLocalStorage(attendees);
+    }
+  }, [attendees]);
+
+  useEffect(() => {
+    const userParams = searchParams.getAll("user");
+
     if (userParams.length > 0) {
       const preloadedAttendees =
         generateAttendeeArrayFromParamString(userParams);
@@ -33,18 +47,10 @@ export function AttendeesSection({
         addNewAttendeeToArray(preloadedAttendees);
       }
       setAttendees(preloadedAttendees);
-    } else if (localAttendeeArray) {
-      setAttendees(JSON.parse(localAttendeeArray));
     } else {
-      handleAddLocations(2, attendees, setAttendees);
+      setUpInitialLocationArray(localStorageKey, setAttendees, attendees);
     }
   }, []);
-
-  useEffect(() => {
-    if (attendees.length > 0 && attendees[0].name !== "") {
-      localStorage.setItem("attendeesArray", JSON.stringify(attendees));
-    }
-  }, [attendees]);
 
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
     const newOfficeHourBlock = {
@@ -92,17 +98,6 @@ export function AttendeesSection({
     setAttendees(newAttendeeArray);
   };
 
-  const handleDeleteAttendee = (attendeeId: number) => {
-    const attendeesArrayWithoutUser: AttendeeArray = [];
-    for (const attendee of attendees) {
-      if (attendeeId !== attendee.id) {
-        const copyOfAttendee = { ...attendee };
-        attendeesArrayWithoutUser.push(copyOfAttendee);
-      }
-    }
-    setAttendees(attendeesArrayWithoutUser);
-  };
-
   const handleOfficeHourChange = (
     attendee: Attendee,
     newOfficeHourBlock: OfficeHourBlock,
@@ -140,55 +135,23 @@ export function AttendeesSection({
     }
 
     if (newAttendeesArray[0] && newAttendeesArray[0].timezoneName) {
-      navigate("/schedule");
-    }
-  };
-
-  const handleUpdateLocation = (
-    id: number,
-    city: string,
-    country: string,
-    timezoneName: string,
-  ) => {
-    const newAttendeeArray = [...attendees];
-    for (let i = 0; i < newAttendeeArray.length; i++) {
-      const currentAttendee = newAttendeeArray[i];
-      if (currentAttendee.id === id) {
-        currentAttendee.city = city;
-        currentAttendee.country = country;
-        currentAttendee.timezoneName = timezoneName;
-        setAttendees(newAttendeeArray);
-        return;
-      }
-    }
-  };
-
-  const handleUpdateName = (id: number, newName: string) => {
-    const newAttendeeArray = [...attendees];
-
-    for (let i = 0; i < newAttendeeArray.length; i++) {
-      const currentPerson = newAttendeeArray[i];
-      if (currentPerson.id === id) {
-        currentPerson.name = newName;
-        setAttendees(newAttendeeArray);
-        return;
-      }
+      navigate("/meeting/schedule");
     }
   };
 
   return (
     <>
       <div className="attendees-section">
-        {attendees.map((attendee) => (
+        <ResetAttendeesButton setAttendees={setAttendees} />
+        {attendees.map((singleAttendee) => (
           <SingleAttendeeSection
-            key={attendee.id}
-            attendee={attendee}
+            key={singleAttendee.id}
+            singleAttendee={singleAttendee}
+            attendees={attendees}
+            setAttendees={setAttendees}
             handleAddOfficeHourBlock={handleAddOfficeHourBlock}
-            handleDeleteAttendee={handleDeleteAttendee}
             handleDeleteOfficeHourBlock={handleDeleteOfficeHourBlock}
             handleOfficeHourChange={handleOfficeHourChange}
-            handleUpdateLocation={handleUpdateLocation}
-            handleUpdateName={handleUpdateName}
           />
         ))}
       </div>
