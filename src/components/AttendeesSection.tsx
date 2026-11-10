@@ -11,7 +11,6 @@ import {
   addNewAttendeeToArray,
   generateAttendeeArrayFromParamString,
   handleAddLocations,
-  handleUpdateLocation,
   setUpInitialLocationArray,
   updateAttendeesInLocalStorage,
 } from "../utils";

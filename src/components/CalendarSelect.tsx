@@ -7,7 +7,6 @@ import type { CalendarSelectImports } from "../types";
 export function CalendarSelect({
   dateTime,
   setDateTime,
-  timezoneName,
 }: CalendarSelectImports) {
   const [calendarDisplayDate, setCalendarDisplayDate] = useState<string>("");
 
