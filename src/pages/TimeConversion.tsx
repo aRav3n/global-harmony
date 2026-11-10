@@ -1,12 +1,11 @@
-import { useEffect } from "react";
-
 import "../styles/TimeConversion.css";
 
-import { handleAddLocations, setUpInitialLocationArray } from "../utils";
+import { handleAddLocations } from "../utils";
 import type { TimeConversionImports } from "../types";
 import { PageWrapper } from "../components/PageWrapper";
 import { SingleTimezone } from "../components/SingleTimezone";
 import { GoToSchedulingPageButton } from "../components/ScheduleMeetingButton";
+import { ResetAttendeesButton } from "../components/ResetAttendeesButton";
 
 export function TimeConversion({
   attendees,
@@ -14,15 +13,10 @@ export function TimeConversion({
   dateTime,
   setDateTime,
 }: TimeConversionImports) {
-  const localStorageKey = "timezoneConversionAttendeeArray";
-
-  useEffect(() => {
-    setUpInitialLocationArray(localStorageKey, setAttendees, attendees);
-  }, []);
-
   return (
     <PageWrapper>
       <div className="timezone-wrapper">
+        <ResetAttendeesButton setAttendees={setAttendees} />
         <div className="timezone-content">
           {attendees.map((singleAttendeeFromArray) => {
             return (

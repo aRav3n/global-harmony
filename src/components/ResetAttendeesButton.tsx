@@ -11,7 +11,7 @@ export function ResetAttendeesButton({
         handleResetLocations(2, setAttendees);
       }}
     >
-      🗑️ Reset People
+      🗑️ Reset
     </button>
   );
 }

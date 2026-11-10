@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import type {
   Attendee,
@@ -7,15 +7,8 @@ import type {
   OfficeHourBlock,
 } from "../types";
 import { SingleAttendeeSection } from "./SingleAttendeeSection";
-import {
-  addNewAttendeeToArray,
-  generateAttendeeArrayFromParamString,
-  handleAddLocations,
-  setUpInitialLocationArray,
-  updateAttendeesInLocalStorage,
-} from "../utils";
+import { handleAddLocations } from "../utils";
 import { ShareHoursButton } from "./ShareHoursButton";
-import { useEffect } from "react";
 import { ResetAttendeesButton } from "./ResetAttendeesButton";
 
 export function AttendeesSection({
@@ -23,33 +16,6 @@ export function AttendeesSection({
   setAttendees,
 }: AttendeesSectionImports) {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const localStorageKey = "attendeesArray";
-
-  useEffect(() => {
-    const localAttendeeArrayJson = localStorage.getItem(localStorageKey);
-    const attendeesAsJsonString = JSON.stringify(attendees);
-
-    if (localAttendeeArrayJson !== attendeesAsJsonString) {
-      updateAttendeesInLocalStorage(attendees);
-    }
-  }, [attendees]);
-
-  useEffect(() => {
-    const userParams = searchParams.getAll("user");
-
-    if (userParams.length > 0) {
-      const preloadedAttendees =
-        generateAttendeeArrayFromParamString(userParams);
-      if (preloadedAttendees.length < 2) {
-        addNewAttendeeToArray(preloadedAttendees);
-      }
-      setAttendees(preloadedAttendees);
-    } else {
-      setUpInitialLocationArray(localStorageKey, setAttendees, attendees);
-    }
-  }, []);
 
   const handleAddOfficeHourBlock = (attendee: Attendee) => {
     const newOfficeHourBlock = {

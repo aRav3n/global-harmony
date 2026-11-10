@@ -1,11 +1,18 @@
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+
 import "../styles/LocationSelector.css";
 
 import { AttendeesSection } from "../components/AttendeesSection";
 import { CalendarSelect } from "../components/CalendarSelect";
 import { PageWrapper } from "../components/PageWrapper";
-
 import type { LocationSelectorImports } from "../types";
-import { getLocalTimezoneName } from "../utils";
+import {
+  addNewAttendeeToArray,
+  generateAttendeeArrayFromParamString,
+  getLocalTimezoneName,
+  updateAttendeesInLocalStorage,
+} from "../utils";
 
 export function LocationSelector({
   attendees,
@@ -14,6 +21,22 @@ export function LocationSelector({
   setDate,
 }: LocationSelectorImports) {
   const localTimezoneName = getLocalTimezoneName();
+  const [searchParams] = useSearchParams();
+
+  const userParams = searchParams.getAll("user");
+
+  useEffect(() => {
+    if (userParams.length > 0) {
+      const preloadedAttendees =
+        generateAttendeeArrayFromParamString(userParams);
+      if (preloadedAttendees.length < 2) {
+        addNewAttendeeToArray(preloadedAttendees);
+      }
+
+      updateAttendeesInLocalStorage(preloadedAttendees);
+      setAttendees(preloadedAttendees);
+    }
+  }, []);
 
   const updateDate = (
     year: number | null,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./styles/App.css";
@@ -10,6 +10,10 @@ import { ScheduleViewer } from "./pages/ScheduleViewer";
 import { TimeConversion } from "./pages/TimeConversion";
 
 import type { AttendeeArray, MeetingInfo } from "./types";
+import {
+  setUpInitialLocationArray,
+  updateAttendeesInLocalStorage,
+} from "./utils";
 
 function App() {
   const initialMeetingInfo = {
@@ -25,6 +29,21 @@ function App() {
   const [meetingInfo, setMeetingInfo] =
     useState<MeetingInfo>(initialMeetingInfo);
   const [meetingTime, setMeetingTime] = useState<Date | null>(null);
+
+  const localStorageKey = "attendeesArray";
+
+  useEffect(() => {
+    const localAttendeeArrayJson = localStorage.getItem(localStorageKey);
+    const attendeesAsJsonString = JSON.stringify(attendees);
+
+    if (localAttendeeArrayJson !== attendeesAsJsonString) {
+      updateAttendeesInLocalStorage(attendees);
+    }
+  }, [attendees]);
+
+  useEffect(() => {
+    setUpInitialLocationArray(localStorageKey, setAttendees, attendees);
+  }, []);
 
   return (
     <Router>
