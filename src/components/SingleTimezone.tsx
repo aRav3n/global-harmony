@@ -1,3 +1,5 @@
+import "../styles/SingleTimezone.css";
+
 import { DateTimeCalendarSelect } from "../components/DateTimeSelect";
 import { LocationInput } from "../components/LocationInput";
 import { DeleteSingleAttendeeButton } from "../components/DeleteSingleAttendeeButton";
@@ -11,21 +13,23 @@ export function SingleTimezone({
   setDateTime,
 }: SingleTimezoneImports) {
   return (
-    <>
-      <LocationInput
-        singleAttendee={singleAttendee}
-        setAttendees={setAttendees}
-      />
-      <DateTimeCalendarSelect
-        dateTime={dateTime}
-        setDateTime={setDateTime}
-        timezoneName={singleAttendee.timezoneName}
-      />
+    <div>
+      <div className="single-timezone">
+        <LocationInput
+          singleAttendee={singleAttendee}
+          setAttendees={setAttendees}
+        />
+        <DateTimeCalendarSelect
+          dateTime={dateTime}
+          setDateTime={setDateTime}
+          timezoneName={singleAttendee.timezoneName}
+        />
+      </div>
       <DeleteSingleAttendeeButton
         attendees={attendees}
         setAttendees={setAttendees}
         singleAttendeeId={singleAttendee.id}
       />
-    </>
+    </div>
   );
 }

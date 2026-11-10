@@ -73,4 +73,6 @@ input:hover {
 .timezone-wrapper {
   display: grid;
   gap: var(--spacing-sm);
+  justify-content: center;
+  justify-items: center;
 }

@@ -1,0 +1,10 @@
+@import "./theme.css";
+
+div.single-timezone {
+  align-content: end;
+  align-items: end;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}

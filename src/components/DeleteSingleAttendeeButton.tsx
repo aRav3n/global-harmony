@@ -13,7 +13,7 @@ export function DeleteSingleAttendeeButton({
         handleDeleteAttendee(attendees, setAttendees, singleAttendeeId);
       }}
     >
-      ❌ Remove Person
+      ❌ Delete
     </button>
   );
 }
