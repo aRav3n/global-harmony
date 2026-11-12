@@ -26,6 +26,11 @@ export function CalendarSelect({
   }, [dateTime]);
 
   const handleCalendarDayChange = (dateString: string) => {
+    if (dateString === "") {
+      setDateTime(new Date());
+      return;
+    }
+
     const dateArray = dateString.split("-");
     const year = Number(dateArray[0]);
     const month = Number(dateArray[1]) - 1;
