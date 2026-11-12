@@ -16,6 +16,11 @@ export function TimeConversion({
   return (
     <PageWrapper>
       <div className="timezone-wrapper">
+        <GoToSchedulingPageButton />
+        <h3>
+          Convert between timezones below or click the button above to use our
+          multi-timezone meeting scheduler.
+        </h3>
         <ResetAttendeesButton setAttendees={setAttendees} />
         <div className="timezone-content">
           {attendees.map((singleAttendeeFromArray) => {
@@ -39,8 +44,6 @@ export function TimeConversion({
         >
           🕔 Add More TimeZones
         </button>
-
-        <GoToSchedulingPageButton />
       </div>
     </PageWrapper>
   );

@@ -59,6 +59,13 @@ div.geoapify-autocomplete-items span.secondary-part {
   color: var(--color-text);
 }
 
+.date-picking-container {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
 .date-section {
   align-items: end;
   display: flex;

@@ -169,24 +169,28 @@ export function LocationSelector({
   return (
     <PageWrapper>
       <div className="location-selector-content">
-        <div className="date-section">
-          <YearSelect />
-          <MonthSelect />
-          <DaySelect />
-          <CalendarSelect
-            dateTime={date}
-            setDateTime={setDate}
-            timezoneName={localTimezoneName}
-          />
-          <button
-            className="today-button"
-            onClick={() => {
-              const today = new Date();
-              setDate(today);
-            }}
-          >
-            Today
-          </button>
+        <div className="date-picking-container">
+          <div className="date-section">
+            <YearSelect />
+            <MonthSelect />
+            <DaySelect />
+            <button
+              className="today-button"
+              onClick={() => {
+                const today = new Date();
+                setDate(today);
+              }}
+            >
+              Today
+            </button>
+          </div>
+          <div className="date-section">
+            <CalendarSelect
+              dateTime={date}
+              setDateTime={setDate}
+              timezoneName={localTimezoneName}
+            />
+          </div>
         </div>
 
         <AttendeesSection attendees={attendees} setAttendees={setAttendees} />
